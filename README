@@ -1,0 +1,64 @@
+=============================
+GALex pre-alpha release notes
+=============================
+
+
+-----------
+About GALex
+-----------
+
+GALex stands for 'Genetic Algorithms Library Extended'. As its name
+suggests it's a library that provides building blocks for developing genetic algorithms in C++.
+
+-------------
+About release
+-------------
+
+This is pre-alpha release of GALex aimed to get feedback from developers.
+There are some issues to be resolved, changes to be made and a lot of
+testing to be done. This release contains all the features intended for
+the final release, but some of them might not actually work. Your feed is
+important, so if you have any questions, please send mail to
+kataklinger[at]gmail[dot]com.
+
+Actual TODO list will hopefully come soon.
+
+-----------
+What is new
+-----------
+
+GALex is built on an older library simply called "Genetic Algorithms
+Library" or "GAL" but with major changes done to the core that simply changing version number was not enough. Some of the major changes:
+
+ - custom fitness/objective values which now supports multi-objective
+   optimization [MOO]
+ - better support for customization and parallel execution of algorithms
+   with workflow concepts implemented by the library
+ - added implementations of many popular MOO GAs like NSGA(2), SPEA(2),
+   PAES, PESA(2), RDGA... multi-objective optimization
+ - framework for implementing multi-population GA and custom migrations
+ - better control and support for building custom chromosome
+   representations
+ - many changes to the core and support classes
+
+-------------
+Documentation
+-------------
+
+As it stands now, your best source of information is source code itself
+as it contains decent amount of comments. _ALL_ classes, structures,
+functions, members, private or public and macros etc. are documented.
+HTML documentation (generated from code comments) will come soon. Also
+some basic examples are available in the package, but in a mean time you
+can look at the article describing internal workings of the previous
+library which is available at CodeProject.
+
+http://www.codeproject.com/Articles/26203/Genetic-Algorithm-Library
+
+
+-------
+License
+-------
+
+Source code is distributed according to GPL2 license. Terms of the
+license are available in gpl-2_0.txt file.
