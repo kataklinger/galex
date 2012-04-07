@@ -5,8 +5,8 @@
 
 /*
 * 
-* website: http://www.coolsoft-sd.com/
-* contact: support@coolsoft-sd.com
+* website: N/A
+* contact: kataklinger@gmail.com
 *
 */
 
