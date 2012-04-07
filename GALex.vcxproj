@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{55D67B0E-145C-4CDD-BC27-0DE87A86D821}</ProjectGuid>
+    <RootNamespace>GALex</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <SccProjectName>
+    </SccProjectName>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccProvider>
+    </SccProvider>
+    <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)build\$(Configuration)\msvc\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)build\$(Configuration)\msvc\objs\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</GenerateManifest>
+    <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</EmbedManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)build\$(Configuration)\msvc\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)build\$(Configuration)\msvc\objs\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GENETICLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;_DO_NOT_DECLARE_INTERLOCKED_INTRINSICS_IN_MEMORY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <AssemblerOutput>
+      </AssemblerOutput>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CallingConvention>FastCall</CallingConvention>
+    </ClCompile>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>libmmdd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <Profile>false</Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GENETICLIBRARY_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <AssemblerOutput>
+      </AssemblerOutput>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>FastCall</CallingConvention>
+    </ClCompile>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>libmmd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="source\AlgorithmStub.h" />
+    <ClInclude Include="source\FPEqual.h" />
+    <ClInclude Include="source\Hashmap.h" />
+    <ClInclude Include="source\Initialization.h" />
+    <ClInclude Include="source\NSGAStub.h" />
+    <ClInclude Include="source\PAES.h" />
+    <ClInclude Include="source\PAESStub.h" />
+    <ClInclude Include="source\PESAStub.h" />
+    <ClInclude Include="source\Platform.h" />
+    <ClInclude Include="source\Operation.h" />
+    <ClInclude Include="source\GlobalRandomGenerator.h" />
+    <ClInclude Include="source\Random.h" />
+    <ClInclude Include="source\RandomSequence.h" />
+    <ClInclude Include="source\AtomicOperations.h" />
+    <ClInclude Include="source\Barrier.h" />
+    <ClInclude Include="source\EventPool.h" />
+    <ClInclude Include="source\RDGAStub.h" />
+    <ClInclude Include="source\SimpleStub.h" />
+    <ClInclude Include="source\SPEAStub.h" />
+    <ClInclude Include="source\Synchronization.h" />
+    <ClInclude Include="source\SysInfo.h" />
+    <ClInclude Include="source\Threading.h" />
+    <ClInclude Include="source\ThreadPool.h" />
+    <ClInclude Include="source\ObjectPool.h" />
+    <ClInclude Include="source\SmartPtr.h" />
+    <ClInclude Include="source\Workflows.h" />
+    <ClInclude Include="source\Exceptions.h" />
+    <ClInclude Include="source\Sorting.h" />
+    <ClInclude Include="source\Array.h" />
+    <ClInclude Include="source\AtomicList.h" />
+    <ClInclude Include="source\Catalogue.h" />
+    <ClInclude Include="source\Flags.h" />
+    <ClInclude Include="source\List.h" />
+    <ClInclude Include="source\Node.h" />
+    <ClInclude Include="source\Tags.h" />
+    <ClInclude Include="source\Tree.h" />
+    <ClInclude Include="source\Observing.h" />
+    <ClInclude Include="source\Grid.h" />
+    <ClInclude Include="source\Timing.h" />
+    <ClInclude Include="source\ChromosomeGroup.h" />
+    <ClInclude Include="source\ChromosomeStorage.h" />
+    <ClInclude Include="source\Population.h" />
+    <ClInclude Include="source\PopulationOperations.h" />
+    <ClInclude Include="source\PopulationStatistics.h" />
+    <ClInclude Include="source\Selections.h" />
+    <ClInclude Include="source\FitnessSharing.h" />
+    <ClInclude Include="source\Scalings.h" />
+    <ClInclude Include="source\Replacements.h" />
+    <ClInclude Include="source\CellularCoupling.h" />
+    <ClInclude Include="source\Couplings.h" />
+    <ClInclude Include="source\Chromosome.h" />
+    <ClInclude Include="source\ChromosomeOperations.h" />
+    <ClInclude Include="source\Alleles.h" />
+    <ClInclude Include="source\Representation.h" />
+    <ClInclude Include="source\Mutations.h" />
+    <ClInclude Include="source\Crossovers.h" />
+    <ClInclude Include="source\Matings.h" />
+    <ClInclude Include="source\StopCriteria.h" />
+    <ClInclude Include="source\Fitness.h" />
+    <ClInclude Include="source\FitnessComparators.h" />
+    <ClInclude Include="source\FitnessValues.h" />
+    <ClInclude Include="source\Statistics.h" />
+    <ClInclude Include="source\Multiobjective.h" />
+    <ClInclude Include="source\NSGA.h" />
+    <ClInclude Include="source\PESA.h" />
+    <ClInclude Include="source\RDGA.h" />
+    <ClInclude Include="source\SPEA.h" />
+    <ClInclude Include="source\VEGA.h" />
+    <ClInclude Include="source\Adoptions.h" />
+    <ClInclude Include="source\Coevolution.h" />
+    <ClInclude Include="source\Migrations.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\AlgorithmStub.cpp" />
+    <ClCompile Include="source\Array.cpp" />
+    <ClCompile Include="source\Initialization.cpp" />
+    <ClCompile Include="source\GlobalRandomGenerator.cpp" />
+    <ClCompile Include="source\NSGAStub.cpp" />
+    <ClCompile Include="source\PAES.cpp" />
+    <ClCompile Include="source\PAESStub.cpp" />
+    <ClCompile Include="source\PESAStub.cpp" />
+    <ClCompile Include="source\Random.cpp" />
+    <ClCompile Include="source\RandomSequence.cpp" />
+    <ClCompile Include="source\Barrier.cpp" />
+    <ClCompile Include="source\RDGAStub.cpp" />
+    <ClCompile Include="source\SimpleStub.cpp" />
+    <ClCompile Include="source\SPEAStub.cpp" />
+    <ClCompile Include="source\SysInfo.cpp" />
+    <ClCompile Include="source\Threading.cpp" />
+    <ClCompile Include="source\ThreadPool.cpp" />
+    <ClCompile Include="source\Workflows.cpp" />
+    <ClCompile Include="source\Exceptions.cpp" />
+    <ClCompile Include="source\List.cpp" />
+    <ClCompile Include="source\Tags.cpp" />
+    <ClCompile Include="source\Tree.cpp" />
+    <ClCompile Include="source\Observing.cpp" />
+    <ClCompile Include="source\Grid.cpp" />
+    <ClCompile Include="source\Timing.cpp" />
+    <ClCompile Include="source\ChromosomeGroup.cpp" />
+    <ClCompile Include="source\ChromosomeStorage.cpp" />
+    <ClCompile Include="source\Population.cpp" />
+    <ClCompile Include="source\PopulationOperations.cpp" />
+    <ClCompile Include="source\PopulationStatistics.cpp" />
+    <ClCompile Include="source\Selections.cpp" />
+    <ClCompile Include="source\FitnessSharing.cpp" />
+    <ClCompile Include="source\Scalings.cpp" />
+    <ClCompile Include="source\Replacements.cpp" />
+    <ClCompile Include="source\CellularCoupling.cpp" />
+    <ClCompile Include="source\Couplings.cpp" />
+    <ClCompile Include="source\Mutations.cpp" />
+    <ClCompile Include="source\Crossovers.cpp" />
+    <ClCompile Include="source\Matings.cpp" />
+    <ClCompile Include="source\StopCriteria.cpp" />
+    <ClCompile Include="source\FitnessComparators.cpp" />
+    <ClCompile Include="source\Statistics.cpp" />
+    <ClCompile Include="source\NSGA.cpp" />
+    <ClCompile Include="source\PESA.cpp" />
+    <ClCompile Include="source\RDGA.cpp" />
+    <ClCompile Include="source\SPEA.cpp" />
+    <ClCompile Include="source\VEGA.cpp" />
+    <ClCompile Include="source\Adoptions.cpp" />
+    <ClCompile Include="source\Migrations.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="gcc_bsd_debug" />
+    <None Include="gcc_bsd_release" />
+    <None Include="gcc_linux_debug" />
+    <None Include="gcc_linux_release" />
+    <None Include="gcc_macos_debug" />
+    <None Include="gcc_macos_release" />
+    <None Include="gcc_solaris_debug" />
+    <None Include="gcc_solaris_release" />
+    <None Include="icc_linux_debug" />
+    <None Include="icc_linux_release" />
+    <None Include="icc_macos_debug" />
+    <None Include="icc_macos_release" />
+    <None Include="scc_solaris_debug" />
+    <None Include="scc_solaris_release" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="F1">
+      <UniqueIdentifier>{c594172a-94a9-4aec-855c-e1d91da64f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TNG">
+      <UniqueIdentifier>{0daa288b-c954-4ddc-8064-fe5606fbef67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CSP">
+      <UniqueIdentifier>{51864325-dc93-4dc6-ab84-4546fb9f6916}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="F1.h">
+      <Filter>F1</Filter>
+    </ClInclude>
+    <ClInclude Include="TNG.h">
+      <Filter>TNG</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="F1.cpp">
+      <Filter>F1</Filter>
+    </ClCompile>
+    <ClCompile Include="TNG.cpp">
+      <Filter>TNG</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
