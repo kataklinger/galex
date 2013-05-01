@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -22,7 +22,7 @@ namespace Common
 	{
 
 		/// <summary><c>GaDeletionPolicy</c> is interface for classes that implements deletion policies for objects managed by smart pointers.</summary>
-		/// <param name="T">type of object managed by this policy.</param>
+		/// <typeparam name="T">type of object managed by this policy.</typeparam>
 		template<typename T>
 		class GaDeletionPolicy
 		{
@@ -36,7 +36,7 @@ namespace Common
 		};
 
 		/// <summary><c>GaObjectDeletionPolicy</c> class implements default deletion policy using <c>delete</c> operator.</summary>
-		/// <param name="T">type of object managed by this policy.</param>
+		/// <typeparam name="T">type of object managed by this policy.</typeparam>
 		template<typename T>
 		class GaObjectDeletionPolicy : public GaDeletionPolicy<T>
 		{
@@ -74,7 +74,7 @@ namespace Common
 		//#endif
 
 		/// <summary><c>GaArrayDeletionPolicy</c> class implements default deletion policy for arrays using <c>delete[]</c> operator.</summary>
-		/// <param name="T">type of objects in the array managed by this policy.</param>
+		/// <typeparam name="T">type of objects in the array managed by this policy.</typeparam>
 		template<typename T>
 		class GaArrayDeletionPolicy : public GaDeletionPolicy<T>
 		{
@@ -112,7 +112,7 @@ namespace Common
 		//#endif
 
 		/// <summary><c>GaNoDeletionPolicy</c> class implements policy that does not perform any operations on provided object.</summary>
-		/// <param name="T">type of object managed by this policy.</param>
+		/// <typeparam name="T">type of object managed by this policy.</typeparam>
 		template<typename T>
 		class GaNoDeletionPolicy : public GaDeletionPolicy<T>
 		{

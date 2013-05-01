@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -23,7 +23,7 @@ namespace Common
 	{
 
 		/// <summary><c>GaPoolObjectCreate</c> template provides basic creation and initialization of object using using <c>operator new</c> and default constructor.</summary>
-		/// <param name="T">type of object.</param>
+		/// <typeparam name="T">type of object.</typeparam>
 		template<typename T>
 		class GaPoolObjectCreate
 		{
@@ -39,7 +39,7 @@ namespace Common
 		};
 
 		/// <summary><c>GaPoolObjectDelete</c> template provides basic deletion policy for object pool using <c>operator delete</c> and destructor of the specified type.</summary>
-		/// <param name="T">type of object.</param>
+		/// <typeparam name="T">type of object.</typeparam>
 		template<typename T>
 		class GaPoolObjectDelete
 		{
@@ -56,7 +56,7 @@ namespace Common
 
 		/// <summary><c>GaPoolObjectInit</c> template proveds default initialization policy for the object pool that does not perform any initialization
 		/// when object is retreived from the pool.</summary>
-		/// <param name="T">type of object.</param>
+		/// <typeparam name="T">type of object.</typeparam>
 		template<typename T>
 		class GaPoolObjectInit
 		{
@@ -71,7 +71,7 @@ namespace Common
 
 		/// <summary><c>GaPoolObjectClean</c> template proveds default cleaning policy for the object pool that does not perform any clean up
 		/// when object is returned to the pool.</summary>
-		/// <param name="T">type of object.</param>
+		/// <typeparam name="T">type of object.</typeparam>
 		template<typename T>
 		class GaPoolObjectClean
 		{
@@ -86,7 +86,7 @@ namespace Common
 
 		/// <summary><c>GaPoolObjectUpdate</c> template is used as an interface by object pools to apply changes to the objects in the pool.
 		/// This class does not implement any behaviors.</summary>
-		/// <param name="T">type of object.</param>
+		/// <typeparam name="T">type of object.</typeparam>
 		template<typename T>
 		class GaPoolObjectUpdate
 		{
@@ -106,11 +106,11 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros
 		/// cannot be used with instances of this class. Only <c>AcquireObject</c> and <c>ReleaseObject</c> methods are thread-safe other methods are not thread-safe.</summary>
-		/// <param name="TYPE">type of objects in the pool.</param>
-		/// <param name="CREATE_POLICY">type of creation policy.</param>
-		/// <param name="DELETE_POLICY">type of deletion policy.</param>
-		/// <param name="INIT_POLICY">type initialization policy.</param>
-		/// <param name="CLEAN_POLICY">type of cleanup policy.</param>
+		/// <typeparam name="TYPE">type of objects in the pool.</typeparam>
+		/// <typeparam name="CREATE_POLICY">type of creation policy.</typeparam>
+		/// <typeparam name="DELETE_POLICY">type of deletion policy.</typeparam>
+		/// <typeparam name="INIT_POLICY">type initialization policy.</typeparam>
+		/// <typeparam name="CLEAN_POLICY">type of cleanup policy.</typeparam>
 		template<typename TYPE,
 			typename CREATE_POLICY = GaPoolObjectCreate<TYPE>,
 			typename DELETE_POLICY = GaPoolObjectDelete<TYPE>,

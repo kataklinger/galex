@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -201,7 +201,7 @@ namespace Fitness
 		GaFitnessOperationConfig(const GaFitnessParams* fitnessParams) { SetFitnessParams( fitnessParams ); }
 
 		/// <summary>This constructor creates new configuration and makes copy fitness parameters.</summary>
-		/// <params name="rhs">configuration that should be copied.</params>
+		/// <param name="rhs">configuration that should be copied.</param>
 		GaFitnessOperationConfig(const GaFitnessOperationConfig& rhs) { SetFitnessParams( rhs._fitnessParams.GetRawPtr() ); }
 
 		/// <summary>Default configuration initializes configuration without fitness parameters.</summary>
@@ -251,7 +251,7 @@ namespace Fitness
 	};
 
 	/// <summary><c>GaFitnessOperation</c> class is interface for operations that calculates raw fitness values of an object of specified type.</summary>
-	/// <param name="OBJECT_TYPE">type of object whose fitness value should be calculated.</param>
+	/// <typeparam name="OBJECT_TYPE">type of object whose fitness value should be calculated.</typeparam>
 	template<typename OBJECT_TYPE>
 	class GaRawFitnessOperation : public GaFitnessOperation
 	{

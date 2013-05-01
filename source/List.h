@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -66,7 +66,7 @@ namespace Common
 			/// <summary><c>SetPrevious</c> method sets the previous node.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="next">node that should be linked as previous.</param>
+			/// <param name="previous">node that should be linked as previous.</param>
 			inline void GACALL SetPrevious(GaListNodeBase* previous) { _previous = previous; }
 
 			/// <summary>This method is not thread-safe.</summary>
@@ -356,7 +356,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of stored value.</param>
+		/// <typeparam name="VALUE_TYPE">type of stored value.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaListNode : public GaListNodeBase
 		{
@@ -454,7 +454,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of stored value.</param>
+		/// <typeparam name="VALUE_TYPE">type of stored value.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaList : public GaListBase
 		{
@@ -496,7 +496,7 @@ namespace Common
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="position">position (index) at which the value should be inserted. If position is out of range, node will be inserted at the first or value node.</param>
-			/// <param name="node">value that should be inserted.</param>
+			/// <param name="value">value that should be inserted.</param>
 			inline void GACALL InsertAt(int position,
 				GaValueType value) { InsertAt( position, new GaListNode<GaValueType>( value ) ); }
 
@@ -505,7 +505,7 @@ namespace Common
 			/// <summary><c>InsertBefore</c> method method inserts new value before specified node in the list.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="baseNode">node before which the new value should be inserted. If this parameter is set to <c>NULL</c>
+			/// <param name="node">node before which the new value should be inserted. If this parameter is set to <c>NULL</c>
 			/// new value will be added at the end of the list.</param>
 			/// <param name="value">value that should be inserted.</param>
 			inline void GACALL InsertBefore(GaListNode<GaValueType>* node,
@@ -516,7 +516,7 @@ namespace Common
 			/// <summary><c>InsertAfter</c> method method inserts new value after specified node in the list.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="baseNode">node after which the new value should be inserted. If this parameter is set to <c>NULL</c>
+			/// <param name="node">node after which the new value should be inserted. If this parameter is set to <c>NULL</c>
 			/// new value will be added at the beggining of the list.</param>
 			/// <param name="value">value that should be inserted.</param>
 			inline void GACALL InsertAfter(GaListNode<GaValueType>* node,
@@ -565,7 +565,7 @@ namespace Common
 			/// This method is not thread-safe.</summary>
 			/// <param name="value">value which should be found.</param>
 			/// <param name="start">node from which the search starts. If this paramenter is set to <c>NULL</c> search starts form list's head.</param>
-			/// <returns>Method returns pointer to the first node that contains specified value or </c>NULL</c> if list does not contain value.</returns>
+			/// <returns>Method returns pointer to the first node that contains specified value or <c>NULL</c> if list does not contain value.</returns>
 			GaListNode<GaValueType>* GACALL Find(GaValueType value,
 				GaListNode<GaValueType>* start = NULL)
 			{
@@ -585,7 +585,7 @@ namespace Common
 			/// This method is not thread-safe.</summary>
 			/// <param name="value">value which should be found.</param>
 			/// <param name="start">node from which the search starts. If this paramenter is set to <c>NULL</c> search starts form list's head.</param>
-			/// <returns>Method returns pointer to the first node that contains specified value or </c>NULL</c> if list does not contain value.</returns>
+			/// <returns>Method returns pointer to the first node that contains specified value or <c>NULL</c> if list does not contain value.</returns>
 			const GaListNode<GaValueType>* GACALL Find(GaValueType value,
 				const GaListNode<GaValueType>* start = NULL) const
 			{

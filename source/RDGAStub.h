@@ -1,4 +1,15 @@
 
+/*! \file RDGAStub.h
+    \brief This file conatins declaration of classes that implement algorithm stubs for Rank-Desity based Genetic Algorithm (RDGA).
+*/
+
+/*
+ * 
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
+ *
+ */
+
 #ifndef __GA_PESA_STUB_H__
 #define __GA_PESA_STUB_H__
 
@@ -138,7 +149,7 @@ namespace Algorithm
 			/// <summary><c>SetFitnessComparator</c> method sets new fitness comparator used by the population.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="fitnessOperation">new fitness comparator.</param>
+			/// <param name="comparator">new fitness comparator.</param>
 			inline void GACALL SetFitnessComparator(const Fitness::GaFitnessComparatorSetup& comparator) { UpdateFitnessComparator( comparator ); }
 
 			/// <summary><c>SetMating</c> method sets new mating operation used by the algorithm.

@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -66,7 +66,7 @@ namespace Common
 			int* generated);
 
 		/// <summary><c>GaShuffle</c> method shuffles array of elements of specified type.</summary>
-		/// <param name="TYPE">type of elements in the array.</param>
+		/// <typeparam name="TYPE">type of elements in the array.</typeparam>
 		/// <param name="arr">pointer to array of elements that should be shuffled.</param>
 		/// <param name="count">number of elements in the array.</param>
 		/// <exception cref="GaNullArgumentException" />Thrown if <c>arr</c> is set to <c>NULL</c>.</exception>
@@ -92,7 +92,7 @@ namespace Common
 		}
 
 		/// <summary><c>GaShuffleTo</c> method shuffles input array of elements of specified type and stores result to provided output array.</summary>
-		/// <param name="TYPE">type of elements in the array.</param>
+		/// <typeparam name="TYPE">type of elements in the array.</typeparam>
 		/// <param name="inputArray">pointer to array of elements that should be shuffled.</param>
 		/// <param name="outputArray">pointer to array that will stores shuffled elements.</param>
 		/// <param name="count">number of elements in the array.</param>

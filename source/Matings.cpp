@@ -5,8 +5,8 @@
 
 /*
 * 
-* website: N/A
-* contact: kataklinger@gmail.com
+* website: http://kataklinger.com/
+* contact: me[at]kataklinger.com
 *
 */
 

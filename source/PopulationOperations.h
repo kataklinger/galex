@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -481,7 +481,7 @@ namespace Population
 
 		/// <summary><c>GetSelectionCount</c> method calculate number of chromosomes that operation should select.</summary>
 		/// <param name="params">parameters of selection operation.</param>
-		/// <param name="configuration">pointer to mating configuration if selection operation should also produce offspring chromosomes.
+		/// <param name="matingConfig">pointer to mating configuration if selection operation should also produce offspring chromosomes.
 		/// If the operation just selects parent chromosome this parameter should be set to <c>NULL</c>.</param>
 		/// <returns>Method returns number fo chromosomes that should be selected.</returns>
 		inline int GACALL GetSelectionCount(const GaSelectionParams& params,
@@ -555,10 +555,10 @@ namespace Population
 	public:
 
 		/// <summary><c>Prepare</c> method prepares input and output data object for execution of the coupling operation based on provided parameters and configuration.</summary>
-		/// <param name="population">reference to population over which the selection is performed.</param>
-		/// <param name="output">chromosome that will store selected or offspring chromosomes.</param>
-		/// <param name="parameters">parameters of selection operation.</param>
-		/// <param name="configuration">reference to configuration of selection operations.</param>
+		/// <param name="input">chromosome group that stores parents for coupling operation.</param>
+		/// <param name="output">chromosome group that is used for storing offspring chromosomes produced by the operation.</param>
+		/// <param name="parameters">parameters of coupling operation.</param>
+		/// <param name="configuration">reference to configuration of coupling operations.</param>
 		/// <param name="branchCount">number of workflow branches that executes operation.</param>
 		GAL_API
 		virtual void GACALL Prepare(GaChromosomeGroup& input,
@@ -568,10 +568,10 @@ namespace Population
 			int branchCount) const;
 
 		/// <summary><c>Clear</c> method reverse changes made by coupling operation to input and output data object.</summary>
-		/// <param name="population">reference to population over which the selection is performed.</param>
-		/// <param name="output">chromosome that will store selected or offspring chromosomes.</param>
-		/// <param name="parameters">parameters of selection operation.</param>
-		/// <param name="configuration">reference to configuration of selection operations.</param>
+		/// <param name="input">chromosome group that stores parents for coupling operation.</param>
+		/// <param name="output">chromosome group that is used for storing offspring chromosomes produced by the operation.</param>
+		/// <param name="parameters">parameters of coupling operation.</param>
+		/// <param name="configuration">reference to configuration of coupling operations.</param>
 		/// <param name="branchCount">number of workflow branches that executes operation.</param>
 		GAL_API
 		virtual void GACALL Clear(GaChromosomeGroup& input,
@@ -581,10 +581,10 @@ namespace Population
 			int branchCount) const;
 
 		/// <summary><c>Update</c> method updates input and output data object to reflect changes in the workflow.</summary>
-		/// <param name="population">reference to population over which the selection is performed.</param>
-		/// <param name="output">chromosome that will store selected or offspring chromosomes.</param>
-		/// <param name="parameters">parameters of selection operation.</param>
-		/// <param name="configuration">reference to configuration of selection operations.</param>
+		/// <param name="input">chromosome group that stores parents for coupling operation.</param>
+		/// <param name="output">chromosome group that is used for storing offspring chromosomes produced by the operation.</param>
+		/// <param name="parameters">parameters of coupling operation.</param>
+		/// <param name="configuration">reference to configuration of coupling operations.</param>
 		/// <param name="branchCount">number of workflow branches that executes operation.</param>
 		GAL_API
 		virtual void GACALL Update(GaChromosomeGroup& input,
@@ -594,9 +594,9 @@ namespace Population
 			int branchCount) const;
 
 		/// <summary><c>operator ()</c> performs replacement operation.</summary>
-		/// <param name="input">chromosome group that store parents for coupling operation.</param>
+		/// <param name="input">chromosome group that stores parents for coupling operation.</param>
 		/// <param name="output">chromosome group that is used for storing offspring chromosomes produced by the operation.</param>
-		/// <param name="parameters">parameters of the operation.</param>
+		/// <param name="parameters">parameters of coupling operation.</param>
 		/// <param name="configuration">reference to configuration of coupling operations.</param>
 		/// <param name="branch">pointer to workflow barnch that executes operation.</param>
 		virtual void GACALL operator ()(GaChromosomeGroup& input,
@@ -717,10 +717,10 @@ namespace Population
 	public:
 
 		/// <summary><c>Prepare</c> method prepares input and output data object for execution of the replacement operation based on provided parameters and configuration.</summary>
-		/// <param name="population">reference to population over which the selection is performed.</param>
-		/// <param name="output">chromosome that will store selected or offspring chromosomes.</param>
-		/// <param name="parameters">parameters of selection operation.</param>
-		/// <param name="configuration">reference to configuration of selection operations.</param>
+		/// <param name="input">new chromosomes that should be inserted into the population</param>
+		/// <param name="population">population over which replacement operation is performed.</param>
+		/// <param name="parameters">parameters of the replacement operation.</param>
+		/// <param name="configuration">reference to configuration of replacement operations.</param>
 		/// <param name="branchCount">number of workflow branches that executes operation.</param>
 		virtual void GACALL Prepare(GaChromosomeGroup& input,
 			GaPopulation& population,
@@ -729,10 +729,10 @@ namespace Population
 			int branchCount) const { }
 
 		/// <summary><c>Clear</c> method reverse changes made by replacement operation to input and output data object.</summary>
-		/// <param name="population">reference to population over which the selection is performed.</param>
-		/// <param name="output">chromosome that will store selected or offspring chromosomes.</param>
-		/// <param name="parameters">parameters of selection operation.</param>
-		/// <param name="configuration">reference to configuration of selection operations.</param>
+		/// <param name="input">new chromosomes that should be inserted into the population</param>
+		/// <param name="population">population over which replacement operation is performed.</param>
+		/// <param name="parameters">parameters of the replacement operation.</param>
+		/// <param name="configuration">reference to configuration of replacement operations.</param>
 		/// <param name="branchCount">number of workflow branches that executes operation.</param>
 		virtual void GACALL Clear(GaChromosomeGroup& input,
 			GaPopulation& population,
@@ -741,10 +741,10 @@ namespace Population
 			int branchCount) const { }
 
 		/// <summary><c>Update</c> method updates input and output data object to reflect changes in the workflow.</summary>
-		/// <param name="population">reference to population over which the selection is performed.</param>
-		/// <param name="output">chromosome that will store selected or offspring chromosomes.</param>
-		/// <param name="parameters">parameters of selection operation.</param>
-		/// <param name="configuration">reference to configuration of selection operations.</param>
+		/// <param name="input">new chromosomes that should be inserted into the population</param>
+		/// <param name="population">population over which replacement operation is performed.</param>
+		/// <param name="parameters">parameters of the replacement operation.</param>
+		/// <param name="configuration">reference to configuration of replacement operations.</param>
 		/// <param name="branchCount">number of workflow branches that executes operation.</param>
 		virtual void GACALL Update(GaChromosomeGroup& input,
 			GaPopulation& population,
@@ -755,7 +755,7 @@ namespace Population
 		/// <summary><c>operator ()</c> performs replacement operation.</summary>
 		/// <param name="input">new chromosomes that should be inserted into the population</param>
 		/// <param name="population">population over which replacement operation is performed.</param>
-		/// <param name="parameters">parameters of the operation.</param>
+		/// <param name="parameters">parameters of the replacement operation.</param>
 		/// <param name="configuration">reference to configuration of replacement operations.</param>
 		/// <param name="branch">pointer to workflow barnch that executes operation.</param>
 		virtual void GACALL operator ()(GaChromosomeGroup& input,
@@ -797,7 +797,7 @@ namespace Population
 		GaScalingConfig(const Fitness::GaFitnessParams* fitnessParams) : GaFitnessOperationConfig(fitnessParams) { }
 
 		/// <summary>This constructor creates new configuration and makes copy fitness parameters.</summary>
-		/// <params name="rhs">configuration that should be copied.</params>
+		/// <param name="rhs">configuration that should be copied.</param>
 		GaScalingConfig(const GaFitnessOperationConfig& rhs) : GaFitnessOperationConfig(rhs) { }
 
 		/// <summary>Default configuration initializes configuration without fitness parameters.</summary>
@@ -876,7 +876,7 @@ namespace Population
 	/// 
 	/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 	/// No public or private methods are thread-safe.</summary>
-	/// <param name="CRITERIA">type of sort criteria.</param>
+	/// <typeparam name="CRITERIA">type of sort criteria.</typeparam>
 	template<typename CRITERIA>
 	class GaSortCriteriaHolder
 	{
@@ -957,7 +957,7 @@ namespace Population
 	/// 
 	/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 	/// No public or private methods are thread-safe.</summary>
-	/// <param name="CRITERIA">type of sort criteria used for sorting population.</param>
+	/// <typeparam name="CRITERIA">type of sort criteria used for sorting population.</typeparam>
 	template<typename CRITERIA>
 	class GaSortPopulationStep : public Common::Workflows::GaSimpleWorkStep
 	{

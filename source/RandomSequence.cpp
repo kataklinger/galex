@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -20,7 +20,7 @@ namespace Common
 		/// <summary><c>GaGenerateRandomSequenceSort</c> method generates sequence of unique random integer numbers in sorted order withing given interval (<c>min</c>, <c>max</c>).
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="T">type of sorting of random sequence.</param>
+		/// <typeparam name="T">type of sorting of random sequence.</typeparam>
 		/// <param name="min">minimal value that can be generated.</param>
 		/// <param name="max">maximal value that can be generated.</param>
 		/// <param name="count">size of sequence (number of generated numbers).</param>

@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -265,6 +265,7 @@ namespace Multiobjective
 			/// <summary>Chromosome tag that contains coordinates of hyperbox to which the chromosome belongs.</summary>
 			Population::GaChromosomeTagGetter<Common::Grid::GaHyperBox> _hyperBox;
 
+			/// <summary>Chromosome tag that contains pointer to cell of gird density matrix to which it belongs.</summary>
 			Population::GaChromosomeTagGetter<Population::GaBestChromosomesMatrix::GaCell*> _cell;
 
 			/// <summary>Lowest point that is contained by the grid.</summary>
@@ -287,10 +288,12 @@ namespace Multiobjective
 			/// <summary>Initializes operation.</summary>
 			/// <param name="hyperGrid">hypergrid that splits fitness hyperspace.</param>
 			/// <param name="hyperBox">chromosome tag that contains coordinates of hyperbox to which the chromosome belongs.</param>
+			/// <param name="cell">chromosome tag that contains pointer to cell of gird density matrix to which it belongs.</param>
 			/// <param name="gridOrigin">lowest point that is contained by the grid.</param>
 			/// <param name="unranked">list that stores chromosomes which belongs to current pareto front.</param>
 			/// <param name="domCount">chromosome tag that stores number of chromosomes that dominates the chromosome.</param>
 			/// <param name="rank">chromosome tag that stores chromosome's rank.</param>
+			/// <param name="bestChromosome">matrix that stores grid density.</param>
 			GaRDGAFrontOp(const GaFitnessHyperGrid& hyperGrid,
 				const Population::GaChromosomeTagGetter<Common::Grid::GaHyperBox>& hyperBox,
 				const Population::GaChromosomeTagGetter<Population::GaBestChromosomesMatrix::GaCell*>& cell,

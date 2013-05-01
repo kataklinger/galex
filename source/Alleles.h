@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -24,7 +24,7 @@ namespace Chromosome
 		/// 
 		/// This class has built-in synchronizator so it is allowed to use <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros
 		/// with instances of this class, but no public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in the set.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in the set.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaAlleleSet
 		{
@@ -65,7 +65,7 @@ namespace Chromosome
 		};
 
 		/// <summary><c>AbsDiff</c> method calculates absolute value of diffrence between two provided values.</summary>
-		/// <param name="VALUE_TYPE">type of values.</param>
+		/// <typeparam name="VALUE_TYPE">type of values.</typeparam>
 		/// <param name="value1">the first value.</param>
 		/// <param name="value2">the seconf value.</param>
 		/// <returns>Method returns the diferrence.</returns>
@@ -78,7 +78,7 @@ namespace Chromosome
 		/// 
 		/// This class has built-in synchronizator so it is allowed to use <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros
 		/// with instances of this class, but no public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in the set. This type must support unary <c>operators -</c>.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in the set. This type must support unary <c>operators -</c>.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaUnrestrictedAlleleSet : public GaAlleleSet<VALUE_TYPE>
 		{
@@ -91,7 +91,7 @@ namespace Chromosome
 		public:
 
 			/// <summary>This constructor initializes value set with random nuber generator.</summary>
-			/// <param name="randomGenerator">random generator which is used for generating of random values.</summary>
+			/// <param name="randomGenerator">random generator which is used for generating of random values.</param>
 			GaUnrestrictedAlleleSet(Common::Random::GaRandom<GaType>* randomGenerator) : _randomGenerator(randomGenerator) { }
 
 			/// <summary>This constructor initializes value set without random nuber generator.</summary>
@@ -142,7 +142,7 @@ namespace Chromosome
 		/// 
 		/// This class has built-in synchronizator so it is allowed to use <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros
 		/// with instances of this class, but no public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in the set. This type must support unary <c>operators -</c>.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in the set. This type must support unary <c>operators -</c>.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaSinglePairAlleleSet : public GaAlleleSet<VALUE_TYPE>
 		{
@@ -162,8 +162,8 @@ namespace Chromosome
 				_inverted() { }
 
 			/// <summary>This constructor initializes value set with value and its counterpart.</summary>
-			/// <param name="value">original value.</param>
-			/// <param name="invertedValue">inverted value.</param>
+			/// <param name="original">original value.</param>
+			/// <param name="inverted">inverted value.</param>
 			GaSinglePairAlleleSet(const GaType& original,
 				const GaType& inverted) : _original(original),
 				_inverted(inverted) { }
@@ -255,7 +255,7 @@ namespace Chromosome
 		/// 
 		/// This class has built-in synchronizator so it is allowed to use <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros
 		/// with instances of this class, but no public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in the set. This type must support unary <c>operators -</c>.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in the set. This type must support unary <c>operators -</c>.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaMultiPairsAlleleSet : public GaAlleleSet<VALUE_TYPE>
 		{
@@ -731,7 +731,7 @@ namespace Chromosome
 			/// <summary><c>GetBounds</c> method returns bounds of both intervals.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="originals">reference to object that will store bounds of original values interval.</param>
+			/// <param name="original">reference to object that will store bounds of original values interval.</param>
 			/// <param name="inverted">reference to variable that will store bounds of inverted values interval.</param>
 			inline void GACALL GetBounds(GaValueIntervalBounds<GaType>& original,
 				GaValueIntervalBounds<GaType>& inverted) const
@@ -743,7 +743,7 @@ namespace Chromosome
 			/// <summary><c>SetBounds</c> method sets bounds of both intervals.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="originals">new bounds of interval of original values.</param>
+			/// <param name="original">new bounds of interval of original values.</param>
 			/// <param name="inverted">new bounds of interval of inverted values.</param>
 			inline void GACALL SetBounds(const GaValueIntervalBounds<GaType>& original,
 				const GaValueIntervalBounds<GaType>& inverted)

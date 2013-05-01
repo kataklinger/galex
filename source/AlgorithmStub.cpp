@@ -1,4 +1,15 @@
 
+/*! \file AlgorithmStub.cpp
+	\brief This file conatins implementation of basic classes for algorithm stubs.
+*/
+
+/*
+ * 
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
+ *
+ */
+
 #include "AlgorithmStub.h"
 
 namespace Algorithm

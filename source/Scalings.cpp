@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -21,6 +21,7 @@ namespace Population
 	{
 
 		/// <summary><c>GaPerformScaling</c> function performs provided scaling operation on chromosomes in the population.</summary>
+		/// <typeparam name="OPERATION">type of scaling operation.</typeparam>
 		/// <param name="operation">scaling operation that should be performed on chromosomes.</param>
 		/// <param name="completeUpdate">it this paramenter is set to <c>true</c> it instructs function to perform scalin on all chromosomes in the population.</param>
 		/// <param name="population">population on whose chromosomes scaling is performed.</param>
@@ -99,7 +100,7 @@ namespace Population
 		public:
 
 			/// <summary>Initalizes operation.</summary>
-			/// <param name="worst">probability base of the worst chromosome's raw fitness.</para>
+			/// <param name="worst">probability base of the worst chromosome's raw fitness.</param>
 			GaWindowScalingOp(float worst) : _worst(worst) { }
 
 			/// <summary><c>operator ()</c> perform scaling operation on chromosome.</summary>

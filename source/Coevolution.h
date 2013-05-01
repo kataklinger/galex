@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -219,7 +219,6 @@ namespace Coevolution
 		/// <param name="population">population which adopts migrated chromosome.</param>
 		/// <param name="parameters">paramenters of adoption operation.</param>
 		/// <param name="configuration">configuration of adoption operation.</param>
-		/// <param name="branchCount">number of workflow branches that executes operation.</param>
 		/// <param name="branch">pointer to workflow barnch that executes operation.</param>
 		virtual void GACALL operator ()(GaMigrationPort& port,
 			Population::GaPopulation& population,

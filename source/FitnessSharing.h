@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -116,7 +116,7 @@ namespace Population
 				_comparator(comparator) { }
 
 			/// <summary>This constructor creates new configuration and makes copy fitness parameters and chromosome comparator setup.</summary>
-			/// <params name="rhs">configuration that should be copied.</params>
+			/// <param name="rhs">configuration that should be copied.</param>
 			GaShareFitnessScalingConfig(const GaShareFitnessScalingConfig& rhs) : GaScalingConfig(rhs),
 				_comparator(rhs._comparator) { }
 
@@ -244,7 +244,7 @@ namespace Population
 		};
 
 		/// <summary><c>GaSumFitnessSharingOp</c> class represents operation that calculates shared fitness.</summary>
-		/// <param name="STOR_OPERATION">operation that defines the way the shared fitness is stored to chromosome storage object.</param>
+		/// <typeparam name="STOR_OPERATION">operation that defines the way the shared fitness is stored to chromosome storage object.</typeparam>
 		template<typename STOR_OPERATION>
 		class GaSumFitnessSharingOp
 		{

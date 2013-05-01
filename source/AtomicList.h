@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -31,7 +31,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// Because this object are stateless all public method are thread-safe.</summary>
-		/// <param name="TYPE">type of node.</param>
+		/// <typeparam name="TYPE">type of node.</typeparam>
 		template<typename TYPE>
 		class GaDefaultNextAccessor
 		{
@@ -51,8 +51,8 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but all public method are thread-safe.</summary>
-		/// <param name="TYPE">type of queue node.</param>
-		/// <param name="NEXT_ACCESSOR">mechanism for extracing pointer to next node.</param>
+		/// <typeparam name="TYPE">type of queue node.</typeparam>
+		/// <typeparam name="NEXT_ACCESSOR">mechanism for extracing pointer to next node.</typeparam>
 		template<typename TYPE,
 			typename NEXT_ACCESSOR = GaDefaultNextAccessor<TYPE> >
 		class GaAtomicList

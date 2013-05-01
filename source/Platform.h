@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -250,7 +250,7 @@
 #endif
 
 /// <summary>Defines data type to which the pointer should be converted for performing integer operation.</summary>
-/// <param name="PTR_SIZE">size of pointer in bytes.</param>
+/// <typeparam name="PTR_SIZE">size of pointer in bytes.</typeparam>
 template<int PTR_SIZE> struct GaIntPtr { };
 
 #ifndef __GAL_DOCUMENTATION__

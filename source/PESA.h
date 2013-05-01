@@ -1,12 +1,12 @@
 
 /*! \file PESA.h
-    \brief This file conatins declaration of classes that implement Pareto Archived Evolution Strategy (PAES).
+    \brief This file conatins declaration of classes that implement Pareto Envelope-based Selection Algorithm and Region-based Selection (PESA-I and PESA-II).
 */
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -186,7 +186,7 @@ namespace Multiobjective
 				const Fitness::GaFitnessParams* fitnessParams) : GaScalingConfig(fitnessParams) { SetGrid( grid ); }
 
 			/// <summary>This constructor creates new configuration and makes copy fitness parameters and hypergrid.</summary>
-			/// <params name="rhs">configuration that should be copied.</params>
+			/// <param name="rhs">configuration that should be copied.</param>
 			GaPESAConfig(const GaPESAConfig& rhs)
 			{
 				if( !rhs._grid.IsNull() )

@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -15,7 +15,7 @@
 
 #include "Exceptions.h"
 
-/// <summary><c>GetCacheLineSize</c> method queries CPU cache line size.</summry>
+/// <summary><c>GetCacheLineSize</c> method queries CPU cache line size.</summary>
 /// <returns>Method returns size of the largest CPU cache line in bytes.</returns>
 int GACALL GetCacheLineSize();
 

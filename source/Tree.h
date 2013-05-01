@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -60,7 +60,7 @@ namespace Common
 			GAL_API
 			int GACALL GetCount() const;
 
-			/// <summay><c>InsertChild</c> method attaches a child to the node.
+			/// <summary><c>InsertChild</c> method attaches a child to the node.
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="node">node that should be attached as child to this node.</param>
@@ -70,7 +70,7 @@ namespace Common
 			void GACALL InsertChild(GaTreeNodeBase* node,
 				int position = -1);
 
-			/// <summay><c>DetachChild</c> method detaches specified child from node.
+			/// <summary><c>DetachChild</c> method detaches specified child from node.
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="node">child that should be detached.</param>
@@ -341,7 +341,7 @@ namespace Common
 			/// <returns>Method returns pointer to root node of the tree.</returns>
 			inline const GaTreeNodeBase* GACALL GetRoot() const { return _root; }
 
-			/// <summary><c>GetCount<c> method calculates and returns current number of nodes in the tree.
+			/// <summary><c>GetCount</c> method calculates and returns current number of nodes in the tree.
 			///
 			/// This method is not thread-safe.</summary>
 			/// <returns>Method returns number of nodes in the tree.</returns>
@@ -420,7 +420,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of stored value.</param>
+		/// <typeparam name="VALUE_TYPE">type of stored value.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaTreeNode : public GaTreeNodeBase
 		{
@@ -518,7 +518,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of stored value.</param>
+		/// <typeparam name="VALUE_TYPE">type of stored value.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaTree : public GaTreeBase
 		{
@@ -540,7 +540,7 @@ namespace Common
 			/// <summary><c>Insert</c> method inserts new value as child of specified node in the tree.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="node">value that should be inserted.</param>
+			/// <param name="value">value that should be inserted.</param>
 			/// <param name="parent">parent of the new node. If this paramenter is <c>NULL</c> new node will be the root of the tree and
 			/// current root will be the child of the new node.</param>
 			/// <param name="position">position in child list at which the new node is inserted. If this value is negative, new node will be inserted as last child.</param>

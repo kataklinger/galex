@@ -1,12 +1,12 @@
 
 /*! \file PAES.h
-    \brief This file conatins declaration of classes that implement Pareto Envelope-based Selection Algorithm and Region-based Selection (PESA-I and PESA-II).
+    \brief This file conatins declaration of classes that implement Pareto Archived Evolution Strategy (PAES).
 */
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -19,6 +19,8 @@
 
 namespace Multiobjective
 {
+
+	/// <summary>Contains classes and datatypes that implement Pareto Archived Evolution Strategy (PAES).</summary>
 	namespace PAES
 	{
 
@@ -82,7 +84,7 @@ namespace Multiobjective
 
 		};
 
-		/// <summary><c>GaPAESSelectionParams</c> class represents parameters for selection  operation that produces new solutions for Pareto Archived Evolution Strategy.
+		/// <summary><c>GaPAESSelectionParams</c> class represents parameters for selection operation that produces new solutions for Pareto Archived Evolution Strategy.
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
@@ -292,7 +294,7 @@ namespace Multiobjective
 			GaPAESConfig(const GaFitnessHyperGrid& grid) { SetGrid( grid ); }
 
 			/// <summary>This constructor creates new configuration and makes of hypergrid.</summary>
-			/// <params name="rhs">configuration that should be copied.</params>
+			/// <param name="rhs">configuration that should be copied.</param>
 			GaPAESConfig(const GaPAESConfig& rhs)
 			{
 				if( !rhs._grid.IsNull() )

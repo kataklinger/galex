@@ -1,4 +1,15 @@
 
+/*! \file SimpleStub.h
+    \brief This file conatins declaration of classes that implement algorithm stubs for simple GA with overlapping population.
+*/
+
+/*
+ * 
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
+ *
+ */
+
 #ifndef __GA_SIMPLE_STUB_H__
 #define __GA_SIMPLE_STUB_H__
 
@@ -9,11 +20,16 @@ namespace Algorithm
 	namespace Stubs
 	{
 
+		/// <summary><c>GaSimpleGAStub</c> class represents a simple genetic algorithm for single-objective optimization that uses an overlapping population.
+		///
+		/// This class has no built-in synchronizator, so <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
+		/// No public or private methods are thread-safe.</summary>
 		class GaSimpleGAStub : public GaBasicStub
 		{
 
 		public:
 
+			/// <summary>Hash map that stores trackers for statistical information that are required by the algorithm.</summary>
 			typedef STLEXT::hash_map<int, Population::GaPopulationStatTracker*> GaStatTrackersCollection;
 
 		protected:
@@ -36,6 +52,7 @@ namespace Algorithm
 			/// <summary>Flow step that performs selection operation.</summary>
 			Population::GaSelectionStep* _selectionStep;
 
+			/// <summary>Flow connection between selection operation and coupling operation. Indicates whether the coupling operation is used.</summary>
 			Common::Workflows::GaFlowConnection* _couplingConnection;
 
 			/// <summary>Setup of the coupling operation used by the algorithm.</summary>
@@ -142,7 +159,7 @@ namespace Algorithm
 			/// <summary><c>SetFitnessComparator</c> method sets new fitness comparator used by the population.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="fitnessOperation">new fitness comparator.</param>
+			/// <param name="comparator">new fitness comparator.</param>
 			inline void GACALL SetFitnessComparator(const Fitness::GaFitnessComparatorSetup& comparator) { UpdateFitnessComparator( comparator ); }
 
 			/// <summary><c>SetMating</c> method sets new mating operation used by the algorithm.

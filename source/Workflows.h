@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -102,7 +102,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but all public method and operators are thread-safe.</summary>
-		/// <param name="DATA_TYPE">type of data that entry stores.</param>
+		/// <typeparam name="DATA_TYPE">type of data that entry stores.</typeparam>
 		template<typename DATA_TYPE>
 		class GaDataEntry : public GaDataEntryBase
 		{
@@ -330,7 +330,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but all public methods are thread-safe.</summary>
-		/// <param name="DATA_TYPE">type of cached data.</param>
+		/// <typeparam name="DATA_TYPE">type of cached data.</typeparam>
 		template<typename DATA_TYPE>
 		class GaDataCache
 		{
@@ -366,7 +366,7 @@ namespace Common
 			/// <summary><c>Clear</c> method clears cache object and removes references to cached data.</summary>
 			~GaDataCache() { Clear(); }
 
-			/// <summary><c>SetData</c> method caches data from specified storage boject with defined data ID.
+			/// <summary><c>SetData</c> method caches data from specified storage object with defined data ID.
 			/// If the cache object already contains cached data they are cleared and references to these data are removed.
 			///
 			/// This method is thread-safe.</summary>
@@ -432,8 +432,8 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// Public methods are not thread-safe.</summary>
-		/// <param name="SOURCE_TYPE">type of source data.</param>
-		/// <param name="DESTINATION_TYPE">type of destination data.</param>
+		/// <typeparam name="SOURCE_TYPE">type of source data.</typeparam>
+		/// <typeparam name="DESTINATION_TYPE">type of destination data.</typeparam>
 		template<typename SOURCE_TYPE,
 			typename DESTINATION_TYPE>
 		class GaDataBinder
@@ -680,7 +680,7 @@ namespace Common
 			virtual void GACALL FlowUpdated() { }
 
 			/// <summary><c>GetNextStep</c> method should return pointer to the next step which should be performed by the branch.
-			/// Returned step does not have to be same all the thim it can depend of the state of the branch which requests the next step.
+			/// Returned step does not have to be same each time. It can depend of the state of the branch which requests the next step.
 			/// This method should be overridden by classes that inherits this class.</summary>
 			/// <param name="branch">pointer to branch that has executed this step.</param>
 			/// <returns>Method returns pointer to next step, or <c>NULL</c> if there is no next step for the branch to execute.</returns>
@@ -1222,7 +1222,7 @@ namespace Common
 			/// <returns>Method returns <c>true</c> if the branch with specified ID is allowed.</returns>
 			inline bool GACALL GetBranchMask(int branchID) const { return _filter[ branchID ]._allowed; }
 
-			/// <summary><c>CanExecute</c> method verifies whthter the branch with specified ID is allowed.
+			/// <summary><c>CanExecute</c> method verifies whether the branch with specified ID is allowed.
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="branchID">ID of the branch.</param>
@@ -1507,15 +1507,7 @@ namespace Common
 			GAL_API
 			void GACALL StartBranches(GaFlowStep* firstStep = NULL);
 
-			/// <summary>Notifies branch group that one of its branches has finished execution. If this is the last running branch
-			/// this method also signals the end of branch group.
-			///
-			/// This method is thread-safe.</summary>
-			/// <param name="branch">pointer to branch of this group which has finished execution.</param>
-			GAL_API
-			void GACALL BranchEnd(GaBranch* branch);
-
-			/// <summary><c>SetLastStep</c> sets step that should be executed last by all branches fo this group. If there is already some branches that waits
+			/// <summary><c>SetLastStep</c> sets step that should be executed last by all branches of this group. If there is already some branches that waits
 			/// for the last step to be set, this method releases them. It the step is already set call to this method has on effect.
 			///
 			/// This method is thread-safe.</summary>
@@ -1843,8 +1835,8 @@ namespace Common
 
 		};
 
-		/// <summary><c>GaMethodExecPassBranch</c> class is used for executing methods methods that requires pointer branch as additional parameter.</summary>
-		/// <param name="OBJECT_TYPE">object whose method is executed</param>
+		/// <summary><c>GaMethodExecPassBranch</c> class is used for executing methods methods that requires pointer to branch as additional parameter.</summary>
+		/// <typeparam name="OBJECT_TYPE">object whose method is executed</typeparam>
 		template<typename OBJECT_TYPE>
 		class GaMethodExecPassBranch
 		{
@@ -1867,8 +1859,8 @@ namespace Common
 
 		};
 
-		/// <summary><c>GaMethodExecIgnoreBranch</c> class is used for executing methods methods that does not require pointer branch as additional parameter.</summary>
-		/// <param name="OBJECT_TYPE">object whose method is executed</param>
+		/// <summary><c>GaMethodExecIgnoreBranch</c> class is used for executing methods methods that does not require pointer to branch as additional parameter.</summary>
+		/// <typeparam name="OBJECT_TYPE">object whose method is executed</typeparam>
 		template<typename OBJECT_TYPE>
 		class GaMethodExecIgnoreBranch
 		{
@@ -1899,8 +1891,8 @@ namespace Common
 		/// 
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="OBJECT_TYPE">type of object on which the step is executed.</param>
-		/// <param name="METHOD_EXEC">type of method execution.</param>
+		/// <typeparam name="OBJECT_TYPE">type of object on which the step is executed.</typeparam>
+		/// <typeparam name="METHOD_EXEC">type of method execution.</typeparam>
 		template<typename OBJECT_TYPE,
 			typename METHOD_EXEC = GaMethodExecPassBranch<OBJECT_TYPE> >
 		class GaSimpleMethodExecStep: public Common::Workflows::GaSimpleWorkStep
@@ -2069,8 +2061,8 @@ namespace Common
 		/// 
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="SETUP_TYPE">operation setup type.</param>
-		/// <param name="DATA_TYPE">type of data on which this step operates.</param>
+		/// <typeparam name="SETUP_TYPE">operation setup type.</typeparam>
+		/// <typeparam name="DATA_TYPE">type of data on which this step operates.</typeparam>
 		template<typename SETUP_TYPE,
 			typename DATA_TYPE>
 		class GaOperationStep1 : public GaFilteredStep
@@ -2210,10 +2202,12 @@ namespace Common
 		/// 
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="SETUP_TYPE">operation setup type.</param>
-		/// <param name="IN_DATA_TYPE">type of input data.</param>
-		/// <param name="OUT_DATA_TYPE">type of output data.</param>
-		template<typename SETUP_TYPE, typename IN_DATA_TYPE, typename OUT_DATA_TYPE>
+		/// <typeparam name="SETUP_TYPE">operation setup type.</typeparam>
+		/// <typeparam name="IN_DATA_TYPE">type of input data.</typeparam>
+		/// <typeparam name="OUT_DATA_TYPE">type of output data.</typeparam>
+		template<typename SETUP_TYPE,
+			typename IN_DATA_TYPE,
+			typename OUT_DATA_TYPE>
 		class GaOperationStep2 : public GaFilteredStep
 		{
 
@@ -2396,9 +2390,9 @@ namespace Common
 
 		};
 		
-		/// <summary><c>GaBranchGroupTransition</c> class represents flow step which transfers control from parent branch group to attachet outgoing brach group.
-		/// Parent and outgoing branch groups must be compatible branch groups. This step uses <see cref="GaBranchGroupTransitionConnection" /> to connect 
-		/// parent branch group to single step (which is executed first whent the control is transfered) of the outgoing branch group flow.
+		/// <summary><c>GaBranchGroupTransition</c> class represents flow step which transfers control from current branch group to outgoing brach group.
+		/// current and outgoing branch groups must be compatible branch groups. This step uses <see cref="GaBranchGroupTransitionConnection" /> to connect 
+		/// current branch group to single step (which is executed first whent the control is transfered) of the outgoing branch group flow.
 		/// 
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// Only some methods are thread-safe.</summary>
@@ -2407,7 +2401,7 @@ namespace Common
 
 		public:
 
-			/// <summary><c>operator ()</c> transfers control from parent branch group to outgoing branch group.
+			/// <summary><c>operator ()</c> transfers control from current branch group to outgoing branch group.
 			/// More details are given in specification of <see cref="GaAbstractBarrier::operator ()" />.
 			///
 			/// This operator is not thread-safe.</summary>
@@ -2829,8 +2823,8 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but because objects are stateless, all methods are thread-safe.</summary>
-		/// <param name="STORAGE">type of the storage object.</param>
-		/// <param name="ITEM">type of items in the storage.</param>
+		/// <typeparam name="STORAGE">type of the storage object.</typeparam>
+		/// <typeparam name="ITEM">type of items in the storage.</typeparam>
 		template<typename STORAGE,
 			typename ITEM>
 		class GaDefaultItemProvider
@@ -2864,8 +2858,8 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but because objects are stateless, all methods are thread-safe.</summary>
-		/// <param name="STORAGE">type of the storage object.</param>
-		/// <param name="ITEM">type of items in the storage.</param>
+		/// <typeparam name="STORAGE">type of the storage object.</typeparam>
+		/// <typeparam name="ITEM">type of items in the storage.</typeparam>
 		template<typename STORAGE,
 			typename ITEM>
 		class GaLimitedItemProvider1
@@ -2908,8 +2902,8 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but because objects are stateless, all methods are thread-safe.</summary>
-		/// <param name="STORAGE">type of the storage object.</param>
-		/// <param name="ITEM">type of items in the storage.</param>
+		/// <typeparam name="STORAGE">type of the storage object.</typeparam>
+		/// <typeparam name="ITEM">type of items in the storage.</typeparam>
 		template<typename STORAGE,
 			typename ITEM>
 		class GaLimitedItemProvider2
@@ -2957,9 +2951,9 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but because objects of this class are immutable, all methods are thread-safe.</summary>
-		/// <param name="STORAGE">type of storage object.</param>
-		/// <param name="ITEM">type of item in the storage.</param>
-		/// <param name="PROVIDER">type of object used for extracting items from the storage.</param>
+		/// <typeparam name="STORAGE">type of storage object.</typeparam>
+		/// <typeparam name="ITEM">type of item in the storage.</typeparam>
+		/// <typeparam name="PROVIDER">type of object used for extracting items from the storage.</typeparam>
 		template<typename STORAGE,
 			typename ITEM,
 			typename PROVIDER>
@@ -3017,9 +3011,9 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but still some public methods are thread-safe.</summary>
-		/// <param name="STORAGE">type of storage object.</param>
-		/// <param name="ITEM">type of item in the storage.</param>
-		/// <param name="PROVIDER">type of object used for extracting items from the storage.</param>
+		/// <typeparam name="STORAGE">type of storage object.</typeparam>
+		/// <typeparam name="ITEM">type of item in the storage.</typeparam>
+		/// <typeparam name="PROVIDER">type of object used for extracting items from the storage.</typeparam>
 		template<typename STORAGE,
 			typename ITEM,
 			typename PROVIDER = GaDefaultItemProvider<STORAGE, ITEM> >
@@ -3047,10 +3041,10 @@ namespace Common
 			/// <summary><c>Execute</c> method executes specified operation over each item in the storage.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="OPERATION">type of the operation performed.</param>
-			/// <param name="operation">operation that is performed.</param>
-			/// <param name="syncOnEnd">if this parameter is set to <c>true</c> branch will wait for other branches in the same group 
-			/// to finish execution of their portion of workload.</param>
+			/// <typeparam name="OPERATION">type of the operation performed.</typeparam>
+			/// <typeparam name="operation">operation that is performed.</typeparam>
+			/// <typeparam name="syncOnEnd">if this parameter is set to <c>true</c> branch will wait for other branches in the same group 
+			/// to finish execution of their portion of workload.</typeparam>
 			template<typename OPERATION>
 			void GACALL Execute(OPERATION& operation,
 				bool syncOnEnd)
@@ -3079,9 +3073,9 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but still some public methods are thread-safe.</summary>
-		/// <param name="STORAGE">type of storage object.</param>
-		/// <param name="ITEM">type of item in the storage.</param>
-		/// <param name="PROVIDER">type of object used for extracting items from the storage.</param>
+		/// <typeparam name="STORAGE">type of storage object.</typeparam>
+		/// <typeparam name="ITEM">type of item in the storage.</typeparam>
+		/// <typeparam name="PROVIDER">type of object used for extracting items from the storage.</typeparam>
 		template<typename STORAGE,
 			typename ITEM,
 			typename PROVIDER = GaDefaultItemProvider<STORAGE, ITEM> >
@@ -3112,8 +3106,8 @@ namespace Common
 			/// <summary><c>Execute</c> method executes operations over all items and each pair of items in the storage.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="OPERATION1">type of operation that should be performed only on the first items of pairs.</param>
-			/// <param name="OPERATION2">type of operation that should be performed pairs of items.</param>
+			/// <typeparam name="OPERATION1">type of operation that should be performed only on the first items of pairs.</typeparam>
+			/// <typeparam name="OPERATION2">type of operation that should be performed pairs of items.</typeparam>
 			/// <param name="operation1">operation that should be performed on the first items on the pairs.</param>
 			/// <param name="operation2">operation that should be performed on pairs.</param>
 			/// <param name="syncOnEnd">if this parameter is set to <c>true</c> branch will wait for other branches in the same group 
@@ -3151,7 +3145,7 @@ namespace Common
 			/// <summary><c>Execute</c> method executes same operation over all items and each pair of items in the storage.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="OPERATION">type of operation that should be performed.</param>
+			/// <typeparam name="OPERATION">type of operation that should be performed.</typeparam>
 			/// <param name="operation">operation that should be performed on the first items of pairs and all pairs</param>
 			/// <param name="syncOnEnd">if this parameter is set to <c>true</c> branch will wait for other branches in the same group 
 			/// to finish execution of their portion of workload.</param>

@@ -1,4 +1,15 @@
 
+/*! \file NSGAStub.h
+    \brief This file conatins declaration of classes that implement algorithm stubs for Nondominated Sorting Genetic Algorithm I and II (NSGA-I and NSGA-II).
+*/
+
+/*
+ * 
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
+ *
+ */
+
 #ifndef __GA_NSGA_STUB_H__
 #define __GA_NSGA_STUB_H__
 
@@ -80,7 +91,6 @@ namespace Algorithm
 			/// <param name="initializator">initialization operation for the population.</param>
 			/// <param name="fitnessOperation">fitness operation that evaluates chromosomes in the population.</param>
 			/// <param name="comparator">fitness comparator used by the population.</param>
-			/// <param name="populationParameters">parameters of the population on which the stub operates.</param>
 			/// <param name="mating">mating operation that produce offspring chromosomes.</param>
 			/// <param name="coupling">coupling operation used by the stub.</param>
 			GAL_API
@@ -111,7 +121,7 @@ namespace Algorithm
 			/// <summary><c>SetFitnessComparator</c> method sets new fitness comparator used by the population.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="fitnessOperation">new fitness comparator.</param>
+			/// <param name="comparator">new fitness comparator.</param>
 			inline void GACALL SetFitnessComparator(const Fitness::GaFitnessComparatorSetup& comparator) { UpdateFitnessComparator( comparator ); }
 
 			/// <summary><c>SetMating</c> method sets new mating operation used by the algorithm.
@@ -307,7 +317,6 @@ namespace Algorithm
 			/// <param name="mating">mating operation that produce offspring chromosomes.</param>
 			/// <param name="coupling">coupling operation used by the stub.</param>
 			/// <param name="selectionParameters">parameters of the selection operation.</param>
-			/// <param name="chromosomeComparator">comparator that measures distance between chromosomes.</param>
 			/// <param name="nsgaParameters">NSGA parameters.</param>
 			GAL_API
 			GaNSGA2Stub(int populationID,

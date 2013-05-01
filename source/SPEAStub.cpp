@@ -1,4 +1,15 @@
 
+/*! \file SPEAStub.cpp
+    \brief This file conatins implementation of classes that implement algorithm stubs for Strength Pareto Evolutionary Algorithm I and II (SPEA-I and SPEA-II).
+*/
+
+/*
+ * 
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
+ *
+ */
+
 #include "SPEAStub.h"
 
 namespace Algorithm

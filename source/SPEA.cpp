@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -1151,7 +1151,7 @@ namespace Multiobjective
 		public:
 
 			/// <summary>Initializes operation.</summary>
-			/// <param name="population">population over which the dominance operation is performed.</param>
+			/// <param name="strength">chromosome tag that stores strength value of the chromosome used to calculate scaled fitness.</param>
 			/// <param name="domList">chromosome tag that contains partial list of dominated chromosome.</param>
 			/// <param name="dominated">chromosome tag that stores information whether the chromosome is dominated by any other chromosome in the population.</param>
 			/// <param name="kthNeighbour">chromosome tag that stores chromosome's neighbour buffer.</param>

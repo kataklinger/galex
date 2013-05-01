@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -56,7 +56,7 @@ namespace Chromosome
 		};
 
 		/// <summary><c>GaGeneVisitorBase</c> is base class for iterators that exposes interface for accessing current gene of the chromosome.</summary>
-		/// <param name="GENE_INTERFACE">interface that provides access to chromosome's genes.</param>
+		/// <typeparam name="GENE_INTERFACE">interface that provides access to chromosome's genes.</typeparam>
 		template<typename GENE_INTERFACE>
 		class GaGeneVisitorBase : public GaGeneVisitorInterface
 		{
@@ -73,9 +73,9 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="GENE_INTERFACE">interface that provides access to chromosome's genes.</param>
-		/// <param name="GENE_TYPE">type of chromosome's genes.</param>
-		/// <param name="GENE_SET_TYPE">type of collection used by chromosome to store genes.</param>
+		/// <typeparam name="GENE_INTERFACE">interface that provides access to chromosome's genes.</typeparam>
+		/// <typeparam name="GENE_TYPE">type of chromosome's genes.</typeparam>
+		/// <typeparam name="GENE_SET_TYPE">type of collection used by chromosome to store genes.</typeparam>
 		template<typename GENE_INTERFACE,
 			typename GENE_TYPE,
 			template<typename> class GENE_SET_TYPE>
@@ -136,8 +136,8 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="GENE_INTERFACE">interface that provides access to chromosome's genes.</param>
-		/// <param name="GENE_TYPE">type of chromosome's genes.</param>
+		/// <typeparam name="GENE_INTERFACE">interface that provides access to chromosome's genes.</typeparam>
+		/// <typeparam name="GENE_TYPE">type of chromosome's genes.</typeparam>
 		template<typename GENE_INTERFACE,
 			typename GENE_TYPE>
 		class GaGeneVisitor<GENE_INTERFACE, GENE_TYPE, Common::Data::GaList> : public GaGeneVisitorBase<GENE_INTERFACE>
@@ -196,10 +196,10 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="GENE_SET_TYPE">type of collection used by chromosome to store genes.</param>
-		/// <param name="VALUE_TYPE">type of value stored in the chromosome's genes.</param>
-		/// <param name="GENE_INTERFACE">interface that provides access to chromosome's genes.</param>
-		/// <param name="GENE_TYPE">type of chromosome's genes.</param>
+		/// <typeparam name="GENE_SET_TYPE">type of collection used by chromosome to store genes.</typeparam>
+		/// <typeparam name="VALUE_TYPE">type of value stored in the chromosome's genes.</typeparam>
+		/// <typeparam name="GENE_INTERFACE">interface that provides access to chromosome's genes.</typeparam>
+		/// <typeparam name="GENE_TYPE">type of chromosome's genes.</typeparam>
 		template<template<typename> class GENE_SET_TYPE,
 			typename VALUE_TYPE,
 			template<typename> class GENE_TYPE,
@@ -228,7 +228,7 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of value stored in the gene.</param>
+		/// <typeparam name="VALUE_TYPE">type of value stored in the gene.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaGene
 		{
@@ -322,7 +322,7 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of value stored in the gene.</param>
+		/// <typeparam name="VALUE_TYPE">type of value stored in the gene.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaLocusGene : virtual public GaGene<VALUE_TYPE>,
 			public GaLocusBase
@@ -386,7 +386,7 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of value stored in the gene.</param>
+		/// <typeparam name="VALUE_TYPE">type of value stored in the gene.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaAlleleGene : virtual public GaGene<VALUE_TYPE>,
 			public GaAlleleSetBase
@@ -480,7 +480,7 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of value stored in the gene.</param>
+		/// <typeparam name="VALUE_TYPE">type of value stored in the gene.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaDoubleDominanceGene : virtual public GaGene<VALUE_TYPE>,
 			public GaDominanceBase
@@ -599,7 +599,6 @@ namespace Chromosome
 				_dominant(GAGDS_UNDETERMINED) { }
 
 			/// <summary>This constructor initializes gene with default function in the chromosome and stores default value.</summary>
-			/// <param name="locus">function of the gene in the chromosome.</param>
 			GaLocusDominance() : _dominant(GAGDS_UNDETERMINED) { }
 
 			/// <summary><c>ClearDominance</c> function sets gene dominance to undetermined state.
@@ -631,6 +630,7 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
+		/// <typeparam name="VALUE_TYPE">type of value stored in the gene.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaLocusDominanceGene : virtual public GaGene<VALUE_TYPE>,
 			public GaLocusDominance,
@@ -703,7 +703,7 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of value stored in the gene.</param>
+		/// <typeparam name="VALUE_TYPE">type of value stored in the gene.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaDoubleDominanceWithAlleleSetGene : public GaAlleleSetBase,
 			public GaDoubleDominanceGene<VALUE_TYPE>
@@ -719,6 +719,7 @@ namespace Chromosome
 			/// <summary>This constructor initializes gene with specified allele set and stores closest values to specified values that exists in the set.</summary>
 			/// <param name="dValue1">the first value of the dominance pair.</param>
 			/// <param name="dValue2">the second value of the dominance pair.</param>
+			/// <param name="allele">allele set of the gene.</param>
 			GaDoubleDominanceWithAlleleSetGene(const GaValueType& dValue1,
 				const GaValueType& dValue2,
 				GaAlleleSet<GaValueType>* allele) : GaDoubleDominanceGene(dValue1, dValue2),
@@ -774,7 +775,7 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="GENE_TYPE">type of chromosome's gene.</param>
+		/// <typeparam name="GENE_TYPE">type of chromosome's gene.</typeparam>
 		template<typename GENE_TYPE>
 		class GaSingleGeneChromosome : public GaChromosome
 		{
@@ -876,7 +877,7 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="BASE_STRUCTURE">base class of data structure that stores chromosome's genes.</param>
+		/// <typeparam name="BASE_STRUCTURE">base class of data structure that stores chromosome's genes.</typeparam>
 		template<typename BASE_STRUCTURE>
 		class GaStructuredChromosome : public GaMultiGeneChromosome
 		{
@@ -908,9 +909,9 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="GENE_TYPE">type of chromosome's gene.</param>
-		/// <param name="STRUCTURE">data structure that stores chromosome's genes.</param>
-		/// <param name="BASE_STRUCTURE">base class of data structure that stores chromosome's genes.</param>
+		/// <typeparam name="GENE_TYPE">type of chromosome's gene.</typeparam>
+		/// <typeparam name="STRUCTURE">data structure that stores chromosome's genes.</typeparam>
+		/// <typeparam name="BASE_STRUCTURE">base class of data structure that stores chromosome's genes.</typeparam>
 		template<typename GENE_TYPE,
 			template<typename> class STRUCTURE,
 			typename BASE_STRUCTURE = typename STRUCTURE<GENE_TYPE>::GaBaseStructure>
@@ -1006,10 +1007,10 @@ namespace Chromosome
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in chromosome's genes.</param>
-		/// <param name="GENE_TYPE">gene class that will wrap values.</param>
-		/// <param name="STRUCTURE">data structure that stores chromosome's genes.</param>
-		/// <param name="BASE_STRUCTURE">base class of data structure that stores chromosome's genes.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in chromosome's genes.</typeparam>
+		/// <typeparam name="GENE_TYPE">gene class that will wrap values.</typeparam>
+		/// <typeparam name="STRUCTURE">data structure that stores chromosome's genes.</typeparam>
+		/// <typeparam name="BASE_STRUCTURE">base class of data structure that stores chromosome's genes.</typeparam>
 		template<typename VALUE_TYPE,
 			template<typename> class GENE_TYPE,
 			template<typename> class STRUCTURE,
@@ -1106,7 +1107,7 @@ namespace Chromosome
 		typedef GaStructuredChromosome<Common::Data::GaArrayBase> GaArrayStructureChromosome;
 
 		/// <summary><c>GaSDAChromosome</c> struct defines type of chromosome that stores genes in single-dimensional array.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in chromosome's genes.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in chromosome's genes.</typeparam>
 		template<typename VALUE_TYPE>
 		struct GaSDAChromosome
 		{
@@ -1117,8 +1118,8 @@ namespace Chromosome
 		};
 
 		/// <summary><c>GaAdvanceSDAChromosome</c> struct defines type of chromosome that stores genes in single-dimensional array with advance access to chromosome's genes.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in chromosome's genes.</param>
-		/// <param name="GENE_TYPE">gene class that will wrap values.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in chromosome's genes.</typeparam>
+		/// <typeparam name="GENE_TYPE">gene class that will wrap values.</typeparam>
 		template<typename VALUE_TYPE,
 			template<typename> class GENE_TYPE>
 		struct GaAdvanceSDAChromosome
@@ -1212,7 +1213,7 @@ namespace Chromosome
 		};
 
 		/// <summary><c>GaMDAChromosome</c> struct defines type of chromosome that stores genes in multi-dimensional-array.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in chromosome's genes.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in chromosome's genes.</typeparam>
 		template<typename VALUE_TYPE>
 		struct GaMDAChromosome
 		{
@@ -1223,8 +1224,8 @@ namespace Chromosome
 		};
 
 		/// <summary><c>GaAdvanceMDAChromosome</c> struct defines type of chromosome that stores genes in multi-dimensional array with advance access to chromosome's genes.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in chromosome's genes.</param>
-		/// <param name="GENE_TYPE">gene class that will wrap values.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in chromosome's genes.</typeparam>
+		/// <typeparam name="GENE_TYPE">gene class that will wrap values.</typeparam>
 		template<typename VALUE_TYPE,
 			template<typename> class GENE_TYPE>
 		struct GaAdvanceMDAChromosome
@@ -1286,7 +1287,7 @@ namespace Chromosome
 		typedef GaSDAChromosome<bool> GaBinaryChromosome;
 
 		/// <summary><c>GaAdvanceBinaryChromosome</c> struct defines type of chromosome that stores binary string as single-dimansional array of genes.</summary>
-		/// <param name="GENE_TYPE">gene class that will wrap string's bits.</param>
+		/// <typeparam name="GENE_TYPE">gene class that will wrap string's bits.</typeparam>
 		template<template<typename> class GENE_TYPE>
 		struct GaAdvanceBinaryChromosome
 		{
@@ -1301,7 +1302,7 @@ namespace Chromosome
 		typedef GaStructuredChromosome<Common::Data::GaListBase> GaListStructureChromosome;
 
 		/// <summary><c>GaListChromosome</c> struct defines type of chromosome that stores genes in linked list.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in chromosome's genes.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in chromosome's genes.</typeparam>
 		template<typename VALUE_TYPE>
 		struct GaListChromosome
 		{
@@ -1312,8 +1313,8 @@ namespace Chromosome
 		};
 
 		/// <summary><c>GaAdvanceListChromosome</c> struct defines type of chromosome that stores genes in linked list with advance access to chromosome's genes.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in chromosome's genes.</param>
-		/// <param name="GENE_TYPE">gene class that will wrap values.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in chromosome's genes.</typeparam>
+		/// <typeparam name="GENE_TYPE">gene class that will wrap values.</typeparam>
 		template<typename VALUE_TYPE,
 			template<typename> class GENE_TYPE>
 		struct GaAdvanceListChromosome
@@ -1328,7 +1329,7 @@ namespace Chromosome
 		typedef GaStructuredChromosome<Common::Data::GaTreeBase> GaTreeStructureChromosome;
 
 		/// <summary><c>GaTreeChromosome</c> struct defines type of chromosome that stores genes in  tree data structure.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in chromosome's genes.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in chromosome's genes.</typeparam>
 		template<typename VALUE_TYPE>
 		struct GaTreeChromosome
 		{
@@ -1339,8 +1340,8 @@ namespace Chromosome
 		};
 
 		/// <summary><c>GaAdvanceTreeChromosome</c> struct defines type of chromosome that stores genes in tree data structure with advance access to chromosome's genes.</summary>
-		/// <param name="VALUE_TYPE">type of values stored in chromosome's genes.</param>
-		/// <param name="GENE_TYPE">gene class that will wrap values.</param>
+		/// <typeparam name="VALUE_TYPE">type of values stored in chromosome's genes.</typeparam>
+		/// <typeparam name="GENE_TYPE">gene class that will wrap values.</typeparam>
 		template<typename VALUE_TYPE,
 			template<typename> class GENE_TYPE>
 		struct GaAdvanceTreeChromosome

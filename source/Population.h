@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -744,7 +744,7 @@ namespace Population
 		/// <summary><c>Sort</c> method sorts population using provided sorting criteria.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="CRITERIA">type of sorting criteria used for sorting.</param>
+		/// <typeparam name="CRITERIA">type of sorting criteria used for sorting.</typeparam>
 		/// <param name="criteria">reference to criteria used for sorting population.</param>
 		template<typename CRITERIA>
 		inline void GACALL Sort(const CRITERIA& criteria) { _chromosomes = _sorting.Sort( criteria ); }
@@ -753,7 +753,7 @@ namespace Population
 		/// Method can be executed concurently from different threads only when sorting non-overlapping portions of the array.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="CRITERIA">type of sorting criteria used for sorting.</param>
+		/// <typeparam name="CRITERIA">type of sorting criteria used for sorting.</typeparam>
 		/// <param name="begin">index of the first chromosome in the population that should be sorted.</param>
 		/// <param name="end">index of the last chromosome in the population that should be sorted.</param>
 		/// <param name="criteria">reference to criteria used for sorting population.</param>
@@ -1006,7 +1006,7 @@ namespace Population
 		/// <summary><c>SetTagByID</c> method stores data in tag with specified ID.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="DATA_TYPE">type of data that tag stores.</param>
+		/// <typeparam name="DATA_TYPE">type of data that tag stores.</typeparam>
 		/// <param name="id">ID of the tag.</param>
 		/// <param name="data">data that should be stored in the tag.</param>
 		template<typename DATA_TYPE>
@@ -1016,7 +1016,7 @@ namespace Population
 		/// <summary><c>GetTagByID</c> method returns data that is stored by tag with sepcified ID.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="DATA_TYPE">type of data that tag stores.</param>
+		/// <typeparam name="DATA_TYPE">type of data that tag stores.</typeparam>
 		/// <param name="id">ID of queried tag.</param>
 		/// <returns>Method returns reference to data stored in the tag.</returns>
 		template<typename DATA_TYPE>
@@ -1025,7 +1025,7 @@ namespace Population
 		/// <summary><c>GetTagByID</c> method returns data that is stored by tag with sepcified ID.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="DATA_TYPE">type of data that tag stores.</param>
+		/// <typeparam name="DATA_TYPE">type of data that tag stores.</typeparam>
 		/// <param name="id">ID of queried tag.</param>
 		/// <returns>Method returns reference to data stored in the tag.</returns>
 		template<typename DATA_TYPE>
@@ -1034,7 +1034,7 @@ namespace Population
 		/// <summary><c>SetTagByIndex</c> method stores data in tag at specified position in tag buffer.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="DATA_TYPE">type of data that tag stores.</param>
+		/// <typeparam name="DATA_TYPE">type of data that tag stores.</typeparam>
 		/// <param name="index">index of tag in tag buffer.</param>
 		/// <param name="data">data that should be stored in the tag.</param>
 		template<typename DATA_TYPE>
@@ -1044,7 +1044,7 @@ namespace Population
 		/// <summary><c>GetTagByIndex</c> method returns data that is stored in tag at specified position in tag buffer.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="DATA_TYPE">type of data that tag stores.</param>
+		/// <typeparam name="DATA_TYPE">type of data that tag stores.</typeparam>
 		/// <param name="index">index of tag in tag buffer.</param>
 		/// <returns>Method returns reference to data stored in the tag.</returns>
 		template<typename DATA_TYPE>
@@ -1053,7 +1053,7 @@ namespace Population
 		/// <summary><c>GetTagByIndex</c> method returns data that is stored in tag at specified position in tag buffer.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="DATA_TYPE">type of data that tag stores.</param>
+		/// <typeparam name="DATA_TYPE">type of data that tag stores.</typeparam>
 		/// <param name="index">index of tag in tag buffer.</param>
 		/// <returns>Method returns reference to data stored in the tag.</returns>
 		template<typename DATA_TYPE>
@@ -1435,7 +1435,7 @@ namespace Population
 	///
 	/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 	/// No public or private methods are thread-safe.</summary>
-	/// <param name="DATA_TYPE">type of data stored in tag.</param>
+	/// <typeparam name="DATA_TYPE">type of data stored in tag.</typeparam>
 	template<typename DATA_TYPE>
 	class GaPopulationTagGetter : public Common::Data::GaTagGetter<DATA_TYPE, GaPopulation>
 	{

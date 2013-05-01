@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -20,6 +20,7 @@ namespace Population
 	{
 
 		/// <summary><c>GaCouplingFlow</c> function is template for coupling operation. It provides customization of the way the parent pairs are made.</summary>
+		/// <typeparam name="TO_INDEX">type of functor.</typeparam>
 		/// <param name="toIndex">functor that defines the way parent pairs are made.</param>
 		/// <param name="input">group that stores parent chromosomes.</param>
 		/// <param name="output">group that will store offspring chromosomes.</param>

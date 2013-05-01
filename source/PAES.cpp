@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -109,7 +109,7 @@ namespace Multiobjective
 
 			/// <summary>Initializes operation.</summary>
 			/// <param name="population">population over whose chromosomes dominance is determined.</param>
-			/// <param name="dominated">chromosome tag that indicates dominance status of chromosome compared to others.</param>
+			/// <param name="dominance">chromosome tag that indicates dominance status of chromosome compared to others.</param>
 			/// <param name="newSolution">new solution that should be checked whether it should be archived.</param>
 			GaPAESDominanceOp(Population::GaPopulation& population,
 				const Population::GaChromosomeTagGetter<Common::Threading::GaAtomic<int> >& dominance,

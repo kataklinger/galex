@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -29,7 +29,7 @@ namespace Statistics
 	///
 	/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 	/// No public or private methods are thread-safe.</summary>
-	/// <param name="TYPE">type of stored value.</param>
+	/// <typeparam name="TYPE">type of stored value.</typeparam>
 	template<typename TYPE>
 	class GaValue
 	{
@@ -133,6 +133,7 @@ namespace Statistics
 	};
 
 	/// <summary>Addition operatotor for stored statistical values.</summary>
+	/// <typeparam name="T">type of value.</typeparam>
 	/// <param name="lhs">reference to object that stores the first operand.</param>
 	/// <param name="rhs">reference to the second operand.</param>
 	/// <returns>Operator returns new object that stores results of addition.</returns>
@@ -141,6 +142,7 @@ namespace Statistics
 		typename GaValue<T>::GaConstType& rhs) { return lhs.GetValue() + rhs; }
 
 	/// <summary>Addition operatotor for stored statistical values.</summary>
+	/// <typeparam name="T">type of value.</typeparam>
 	/// <param name="lhs">reference to object that is destination of the operation.</param>
 	/// <param name="rhs">reference to the second operand.</param>
 	/// <returns>Operator returns reference to object that stores destination operand.</returns>
@@ -149,6 +151,7 @@ namespace Statistics
 		typename GaValue<T>::GaConstType& rhs) { lhs.GetValue() += rhs; return lhs; }
 
 	/// <summary>Subtraction operatotor for stored statistical values.</summary>
+	/// <typeparam name="T">type of value.</typeparam>
 	/// <param name="lhs">reference to object that stores the first operand.</param>
 	/// <param name="rhs">reference to the second operand.</param>
 	/// <returns>Operator returns new object that stores results of subtraction.</returns>
@@ -157,6 +160,7 @@ namespace Statistics
 		typename GaValue<T>::GaConstType& rhs) { return lhs.GetValue() - rhs; }
 
 	/// <summary>Subtraction operatotor for stored statistical values.</summary>
+	/// <typeparam name="T">type of value.</typeparam>
 	/// <param name="lhs">reference to object that is destination of the operation.</param>
 	/// <param name="rhs">reference to the second operand.</param>
 	/// <returns>Operator returns reference to object that stores destination operand.</returns>
@@ -165,6 +169,7 @@ namespace Statistics
 		typename GaValue<T>::GaConstType& rhs) { lhs.GetValue() -= rhs; return lhs; }
 
 	/// <summary>Multiplication operatotor for stored statistical values.</summary>
+	/// <typeparam name="T">type of value.</typeparam>
 	/// <param name="lhs">reference to object that stores the first operand.</param>
 	/// <param name="rhs">reference to the second operand.</param>
 	/// <returns>Operator returns new object that stores results of multiplication.</returns>
@@ -173,6 +178,7 @@ namespace Statistics
 		typename GaValue<T>::GaConstType& rhs) { return lhs.GetValue() * rhs; }
 
 	/// <summary>Multiplication operatotor for stored statistical values.</summary>
+	/// <typeparam name="T">type of value.</typeparam>
 	/// <param name="lhs">reference to object that is destination of the operation.</param>
 	/// <param name="rhs">reference to the second operand.</param>
 	/// <returns>Operator returns reference to object that stores destination operand.</returns>
@@ -181,6 +187,7 @@ namespace Statistics
 		typename GaValue<T>::GaConstType& rhs) { lhs.GetValue() *= rhs; return lhs; }
 
 	/// <summary>Division operatotor for stored statistical values.</summary>
+	/// <typeparam name="T">type of value.</typeparam>
 	/// <param name="lhs">reference to object that stores the first operand.</param>
 	/// <param name="rhs">reference to the second operand.</param>
 	/// <returns>Operator returns new object that stores results of division.</returns>
@@ -189,6 +196,7 @@ namespace Statistics
 		typename GaValue<T>::GaConstType& rhs) { return lhs.GetValue() / rhs; }
 
 	/// <summary>Division operatotor for stored statistical values.</summary>
+	/// <typeparam name="T">type of value.</typeparam>
 	/// <param name="lhs">reference to object that is destination of the operation.</param>
 	/// <param name="rhs">reference to the second operand.</param>
 	/// <returns>Operator returns reference to object that stores destination operand.</returns>
@@ -197,6 +205,7 @@ namespace Statistics
 		typename GaValue<T>::GaConstType& rhs) { lhs.GetValue() /= rhs; return lhs; }
 
 	/// <summary>This operator divides statistical value with an integer number.</summary>
+	/// <typeparam name="T">type of value.</typeparam>
 	/// <param name="lhs">reference to object that is destination of the operation.</param>
 	/// <param name="rhs">reference to the second operand.</param>
 	/// <returns>Operator returns reference to object that stores destination operand.</returns>
@@ -205,6 +214,7 @@ namespace Statistics
 		int rhs) { return lhs.GetValue() / rhs; }
 
 	/// <summary><c>operator ==</c> compares to values equality.</summary>
+	/// <typeparam name="T">type of value.</typeparam>
 	/// <param name="lhs">reference to object that stores the first operand.</param>
 	/// <param name="rhs">reference to the second operand.</param>
 	/// <returns>This method returns <c>true</c> if the values are equal.</returns>
@@ -213,6 +223,7 @@ namespace Statistics
 		typename GaValue<T>::GaConstType& rhs) { return lhs.GetValue() == rhs; }
 
 	/// <summary><c>operator !=</c> compares to values inequality.</summary>
+	/// <typeparam name="T">type of value.</typeparam>
 	/// <param name="lhs">reference to object that stores the first operand.</param>
 	/// <param name="rhs">reference to the second operand.</param>
 	/// <returns>This method returns <c>true</c> if the values are not equal.</returns>
@@ -1125,7 +1136,7 @@ namespace Statistics
 		/// <summary><c>GetValue</c> method returns statistical value with specified ID that is stored in this group.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of value.</param>
+		/// <typeparam name="VALUE_TYPE">type of value.</typeparam>
 		/// <param name="id">ID of the queried value.</param>
 		/// <returns>Method returns reference to queried statistical value.</returns>
 		/// <exception cref="GaArgumentOutOfRangeException" />Thrown if there is no value with specified ID.</exception>
@@ -1149,7 +1160,7 @@ namespace Statistics
 		/// <summary><c>GetValue</c> method returns statistical value with specified ID that is stored in this group.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of value.</param>
+		/// <typeparam name="VALUE_TYPE">type of value.</typeparam>
 		/// <param name="id">ID of the queried value.</param>
 		/// <returns>Method returns reference to queried statistical value.</returns>
 		/// <exception cref="GaArgumentOutOfRangeException" />Thrown if there is no value with specified ID.</exception>
@@ -1346,9 +1357,9 @@ namespace Statistics
 	///
 	/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 	/// Because this evaluator is stateless all public method are thread-safe.</summary>
-	/// <param name="INPUT_VALUE_TYPE1">type of the first operand.</param>
-	/// <param name="INPUT_VALUE_TYPE2">type of the the operand.</param>
-	/// <param name="OUTPUT_VALUE_TYPE">type of result.</param>
+	/// <typeparam name="INPUT_VALUE_TYPE1">type of the first operand.</typeparam>
+	/// <typeparam name="INPUT_VALUE_TYPE2">type of the the operand.</typeparam>
+	/// <typeparam name="OUTPUT_VALUE_TYPE">type of result.</typeparam>
 	template<typename INPUT_VALUE_TYPE1,
 		typename INPUT_VALUE_TYPE2,
 		typename OUTPUT_VALUE_TYPE>
@@ -1437,8 +1448,8 @@ namespace Statistics
 	///
 	/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 	/// Because this evaluator is stateless all public method are thread-safe.</summary>
-	/// <param name="INPUT_VALUE_TYPE">type of source operand.</param>
-	/// <param name="OUTPUT_VALUE_TYPE">type of output result.</param>
+	/// <typeparam name="INPUT_VALUE_TYPE">type of source operand.</typeparam>
+	/// <typeparam name="OUTPUT_VALUE_TYPE">type of output result.</typeparam>
 	template<typename INPUT_VALUE_TYPE,
 		typename OUTPUT_VALUE_TYPE>
 	class SqrtEvaluator : public GaValueEvaluator

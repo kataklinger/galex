@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -37,7 +37,7 @@ namespace Multiobjective
 	typedef Common::Grid::GaHyperGridBounds<Fitness::GaFitness> GaFitnessGridBounds;
 
 	/// <summary><c>GaFitnessCoordiantesGetter</c> class provides access to values stored in fitness object that can be used as coordinates of hyperspace.</summary>
-	/// <param name="COORDINATE">type of values that are stored in fitness object.</param>
+	/// <typeparam name="COORDINATE">type of values that are stored in fitness object.</typeparam>
 	template<typename COORDINATE>
 	class GaFitnessCoordiantesGetter
 	{
@@ -168,7 +168,7 @@ namespace Multiobjective
 	};
 
 	/// <summary><c>GaGridDensityOp</c> function calculate density of provided collection by counting chromosomes in hyperboxes.</summary>
-	/// <param name="COLLECTION">type of collection whose density is calculated.</param>
+	/// <typeparam name="COLLECTION">type of collection whose density is calculated.</typeparam>
 	/// <param name="collection">collection whose density is calculated.</param>
 	/// <param name="infoBuffer">buffer that stores hyperbox info objects.</param>
 	/// <param name="hyperBox">chromosome tag that contains coordinates of hyperbox to which the chromosome belongs.</param>

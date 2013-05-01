@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -48,7 +48,7 @@ namespace Fitness
 		///
 		/// This class has no built-in synchronizator, so <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of value that stores fitness.</param>
+		/// <typeparam name="VALUE_TYPE">type of value that stores fitness.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaSVFitness : public GaSVFitnessBase
 		{
@@ -296,7 +296,7 @@ namespace Fitness
 		///
 		/// This class has no built-in synchronizator, so <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of values that store fitness.</param>
+		/// <typeparam name="VALUE_TYPE">type of values that store fitness.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaMVFitness : public GaMVFitnessBase
 		{
@@ -500,8 +500,8 @@ namespace Fitness
 			/// <summary><c>SetValue</c> method stores new value at specifed position in fitness object.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="value">new value.</para>
-			/// <param name="index">index at which the new value should be stored.</para>
+			/// <param name="value">new value.</param>
+			/// <param name="index">index at which the new value should be stored.</param>
 			inline void GACALL SetValue(const GaValueType& value,
 				int index) { _values[ index ] = value; }
 
@@ -536,7 +536,7 @@ namespace Fitness
 		///
 		/// This class has no built-in synchronizator, so <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="WEIGHT_TYPE">type of value weights.</param>
+		/// <typeparam name="WEIGHT_TYPE">type of value weights.</typeparam>
 		template<typename WEIGHT_TYPE>
 		class GaWeightedFitnessParams : public GaMVFitnessParams
 		{
@@ -587,8 +587,8 @@ namespace Fitness
 		///
 		/// This class has no built-in synchronizator, so <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of values that store fitness.</param>
-		/// <param name="WEIGHT_TYPE">type of value weights.</param>
+		/// <typeparam name="VALUE_TYPE">type of values that store fitness.</typeparam>
+		/// <typeparam name="WEIGHT_TYPE">type of value weights.</typeparam>
 		template<typename VALUE_TYPE,
 			typename WEIGHT_TYPE>
 		class GaWeightedFitness : public GaSVFitnessBase, private GaMVFitness<VALUE_TYPE>
@@ -745,8 +745,8 @@ namespace Fitness
 			/// <summary><c>SetValue</c> method stores new value at specifed position in fitness object.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="value">new value.</para>
-			/// <param name="index">index at which the new value should be stored.</para>
+			/// <param name="value">new value.</param>
+			/// <param name="index">index at which the new value should be stored.</param>
 			inline void GACALL SetValue(const GaValueType& value,
 				int index)
 			{

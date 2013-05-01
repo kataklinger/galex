@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -112,7 +112,7 @@ namespace Common
 		public:
 
 			/// <summary>Initializes event handler with underlying function.</summary>
-			/// <param name="function">function which should be called when handler is executed.</para>
+			/// <param name="function">function which should be called when handler is executed.</param>
 			GaNonmemberEventHandler(GaFunctionPtr function = NULL) { SetFunction( function ); }
 
 			/// <summary><c>Execute</c> method calls underlying function and pass the parameters.
@@ -125,7 +125,7 @@ namespace Common
 			/// <summary><c>SetFunction</c> method sets function that should be called when handler is executed.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="function">function which should be called when handler is executed.</para>
+			/// <param name="function">function which should be called when handler is executed.</param>
 			inline void GACALL SetFunction(GaFunctionPtr function) { _function = function; }
 
 			/// <summary>This method is not thread-safe.</summary>
@@ -135,6 +135,7 @@ namespace Common
 		};
 
 		/// <summary><c>GaMethodPtrWrapper</c> defines pointer to method of specified object type that can handle events.</summary>
+		/// <typeparam name="OBJECT_TYPE">object type which contains method.</typeparam>
 		template<typename OBJECT_TYPE>
 		struct GaMethodPtrWrapper
 		{
@@ -146,6 +147,7 @@ namespace Common
 
 		/// <summary><c>GaMethodPtrWrapper</c> defines pointer to <c>const</c> method of specified object type that can handle events
 		/// that does not have to change state of an object.</summary>
+		/// <typeparam name="OBJECT_TYPE">object type which contains method.</typeparam>
 		template<typename OBJECT_TYPE>
 		struct GaMethodPtrWrapper<const OBJECT_TYPE>
 		{
@@ -159,7 +161,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="OBJECT_TYPE">type of object that handles events.</name>
+		/// <typeparam name="OBJECT_TYPE">type of object that handles events.</typeparam>
 		template<typename OBJECT_TYPE>
 		class GaMemberEventHandler : public GaEventHandler
 		{

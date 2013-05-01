@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -48,20 +48,20 @@ namespace Common
 		struct GaNonscalarType { };
 
 		/// <summary>This verison of <c>GaTypeCategoryHelper</c> function is triggered by scalar types.</summary>
-		/// <param name="T">type of object.</param>
+		/// <typeparam name="T">type of object.</typeparam>
 		/// <param name="...">dummy paramenter.</param>
 		/// <returns>Method returns helper object which indicates that provided type is scalar type.</returns>
 		template<typename T>
 		inline static GaScalarType GaTypeCategoryHelper(...) { return GaScalarType(); }
 
 		/// <summary>This verison of <c>GaTypeCategoryHelper</c> function is triggered by nonscalar types.</summary>
-		/// <param name="T">type of object.</param>
+		/// <typeparam name="T">type of object.</typeparam>
 		/// <returns>Method returns helper object which indicates that provided type is not scalar type.</returns>
 		template<typename T>
 		inline static GaNonscalarType GaTypeCategoryHelper(void ( T::* )()) { return GaNonscalarType(); }
 
 		/// <summary><c>GaConstructObject</c> method constructs and initialize object of specified type on provided address.</summary>
-		/// <param name="T">type object that should be constructed.</param>
+		/// <typeparam name="T">type object that should be constructed.</typeparam>
 		/// <param name="addr">address on whic the object should be constructed.</param>
 		/// <param name="val">value to which the object should be initialized.</param>
 		template<typename T>
@@ -69,7 +69,7 @@ namespace Common
 			const T& val) { new ( addr, GaAllocatorHelper() ) T( val ); }
 
 		/// <summary><c>GaDestructObject</c> method destorys objects of nonscalar types.</summary>
-		/// <param name="T">type object that should be destoryed.</param>
+		/// <typeparam name="T">type object that should be destoryed.</typeparam>
 		/// <param name="data">pointer to object that should be destoryed.</param>
 		/// <param name="t">dummy paramenter that indicates that object destruction is trigered by nonscalar type.</param>
 		template<typename T>
@@ -77,7 +77,7 @@ namespace Common
 			GaNonscalarType t) { data->~T(); }
 
 		/// <summary><c>GaDestructObject</c> method destorys objects of scalar types.</summary>
-		/// <param name="T">type object that should be destoryed.</param>
+		/// <typeparam name="T">type object that should be destoryed.</typeparam>
 		/// <param name="data">pointer to object that should be destoryed.</param>
 		/// <param name="t">dummy paramenter that indicates that object destruction is trigered by nonscalar type.</param>
 		template<typename T>
@@ -85,13 +85,13 @@ namespace Common
 			GaScalarType t) { }
 
 		/// <summary><c>GaDestructObject</c> function destorys objects stored in an array.</summary>
-		/// <param name="T">type of object that should be destoryed.</param>
+		/// <typeparam name="T">type of object that should be destoryed.</typeparam>
 		/// <param name="data">pointer to object that should be destoryed.</param>
 		template<typename T>
 		inline void GaDestructObject(T* data) { GaDestructObject( data, GaTypeCategoryHelper<T>( 0 ) ); }
 
 		/// <summary><c>GaGetObject</c> method calculates address of an element in the array at specified index.</summary>
-		/// <param name="T">type of elements in the array.</param>
+		/// <typeparam name="T">type of elements in the array.</typeparam>
 		/// <param name="arr">address of the first element.</param>
 		/// <param name="index">index of the element.</param>
 		/// <param name="step">number of bytes that is required for a single element.</param>
@@ -101,7 +101,7 @@ namespace Common
 			int step) { return (T*)( (const char*)arr + index * step ); }
 
 		/// <summary><c>GaDestructArray</c> method destructs elements of the specified array.</summary>
-		/// <param name="T">type of elements in the array.</param>
+		/// <typeparam name="T">type of elements in the array.</typeparam>
 		/// <param name="arr">address of the first element.</param>
 		/// <param name="count">number of elements in the array.</param>
 		/// <param name="step">number of bytes that is required for a single element.</param>
@@ -116,7 +116,7 @@ namespace Common
 		}
 
 		/// <summary><c>GaInitializeArray</c> method constructs and initializes elements of the array.</summary>
-		/// <param name="T">type of elements in the array.</param>
+		/// <typeparam name="T">type of elements in the array.</typeparam>
 		/// <param name="dst">address of the first element.</param>
 		/// <param name="count">number of elements in the array.</param>
 		/// <param name="step">number of bytes that is required for a single element.</param>
@@ -143,7 +143,7 @@ namespace Common
 		}
 
 		/// <summary><c>GaCopyArray</c> method copies elements from one array to another.</summary>
-		/// <param name="T">type of elements in the arrays.</param>
+		/// <typeparam name="T">type of elements in the arrays.</typeparam>
 		/// <param name="dst">address of the first element of destination array.</param>
 		/// <param name="src">address of the first element of source array.</param>
 		/// <param name="count">number of elements that should be copied.</param>
@@ -245,7 +245,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of elements stored in the array.</param>
+		/// <typeparam name="VALUE_TYPE">type of elements stored in the array.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaArray : public GaArrayBase
 		{
@@ -437,7 +437,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of elements stored in the array.</param>
+		/// <typeparam name="VALUE_TYPE">type of elements stored in the array.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaSingleDimensionArray : public GaArray<VALUE_TYPE>
 		{
@@ -535,7 +535,7 @@ namespace Common
 		};
 
 		/// <summary><c>operator ==</c> compares elements of the two single-dimensional arrays.</summary>
-		/// <param name="VALUE_TYPE">type of elements stored in the arrays.</param>
+		/// <typeparam name="VALUE_TYPE">type of elements stored in the arrays.</typeparam>
 		/// <param name="lhs">the first array.</param>
 		/// <param name="rhs">the second array.</param>
 		/// <returns>Method returns <c>true</c> if elements in both arrays are equal.</returns>
@@ -558,7 +558,7 @@ namespace Common
 		}
 
 		/// <summary><c>operator !=</c> compares elements of the two single-dimensional arrays.</summary>
-		/// <param name="VALUE_TYPE">type of elements stored in the arrays.</param>
+		/// <typeparam name="VALUE_TYPE">type of elements stored in the arrays.</typeparam>
 		/// <param name="lhs">the first array.</param>
 		/// <param name="rhs">the second array.</param>
 		/// <returns>Method returns <c>true</c> if arrays conatin elements that are not equal.</returns>
@@ -570,7 +570,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of elements stored in the array.</param>
+		/// <typeparam name="VALUE_TYPE">type of elements stored in the array.</typeparam>
 		template<typename DATA_TYPE>
 		class GaAlignedArray : public GaArrayBase
 		{
@@ -849,7 +849,7 @@ namespace Common
 		};
 
 		/// <summary><c>operator ==</c> compares elements of the two single-dimensional aligned arrays.</summary>
-		/// <param name="VALUE_TYPE">type of elements stored in the arrays.</param>
+		/// <typeparam name="VALUE_TYPE">type of elements stored in the arrays.</typeparam>
 		/// <param name="lhs">the first array.</param>
 		/// <param name="rhs">the second array.</param>
 		/// <returns>Method returns <c>true</c> if elements in both arrays are equal.</returns>
@@ -872,7 +872,7 @@ namespace Common
 		}
 
 		/// <summary><c>operator !=</c> compares elements of the two single-dimensional aligned arrays.</summary>
-		/// <param name="VALUE_TYPE">type of elements stored in the arrays.</param>
+		/// <typeparam name="VALUE_TYPE">type of elements stored in the arrays.</typeparam>
 		/// <param name="lhs">the first array.</param>
 		/// <param name="rhs">the second array.</param>
 		/// <returns>Method returns <c>true</c> if arrays conatin elements that are not equal.</returns>
@@ -929,7 +929,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of elements stored in the array.</param>
+		/// <typeparam name="VALUE_TYPE">type of elements stored in the array.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaMultiDimensionArray : public GaArray<VALUE_TYPE>
 		{
@@ -1175,6 +1175,7 @@ namespace Common
 			/// This method is not thread-safe.</summary>
 			/// <param name="dimension">dimensiont before which the new dimensions should be added.</param>
 			/// <param name="sizes">sizes of new dimensions.</param>
+			/// <param name="defaultValue">default value which will be assigned to newly created elements.</param>
 			inline void GACALL AddDimension(int dimension,
 				const GaSingleDimensionArray<int>& sizes,
 				const GaValueType& defaultValue = GaValueType()) { AddDimension( dimension, sizes.GetArray(), sizes.GetSize(), defaultValue ); }
@@ -1184,6 +1185,7 @@ namespace Common
 			/// This method is not thread-safe.</summary>
 			/// <param name="sizes">sizes of new dimensions.</param>
 			/// <param name="count">number of new dimensions that should be added.</param>
+			/// <param name="defaultValue">default value which will be assigned to newly created elements.</param>
 			inline void AddDimension(const int* sizes,
 				int count,
 				const GaValueType& defaultValue = GaValueType()) { AddDimension( _dimensionCount, sizes, count, defaultValue ); }
@@ -1192,6 +1194,7 @@ namespace Common
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="sizes">sizes of new dimensions.</param>
+			/// <param name="defaultValue">default value which will be assigned to newly created elements.</param>
 			inline void AddDimension(const GaSingleDimensionArray<int>& sizes,
 				const GaValueType& defaultValue = GaValueType()) { AddDimension( _dimensionCount, sizes.GetArray(), sizes.GetSize(), defaultValue ); }
 
@@ -1499,7 +1502,7 @@ namespace Common
 			/// <summary><c>operator []</c> returns element of the array at specified coordinates.
 			///
 			/// This operator is not thread-safe.</summary>
-			/// <param name="coordinates">coordinates of queried element.</param>
+			/// <param name="rhs">coordinates of queried element.</param>
 			/// <returns>Operator returns reference to element at specified coordinates.</returns>
 			GaMultiDimensionArray<GaValueType>& GACALL operator =(const GaMultiDimensionArray<GaValueType>& rhs) { GaMultiDimensionArray<GaValueType>::Copy( &rhs ); return *this; }
 
@@ -1524,7 +1527,7 @@ namespace Common
 		};
 
 		/// <summary><c>operator ==</c> compares elements of the two multi-dimensional arrays.</summary>
-		/// <param name="VALUE_TYPE">type of elements stored in the arrays.</param>
+		/// <typeparam name="VALUE_TYPE">type of elements stored in the arrays.</typeparam>
 		/// <param name="lhs">the first array.</param>
 		/// <param name="rhs">the second array.</param>
 		/// <returns>Method returns <c>true</c> if elements in both arrays are equal.</returns>
@@ -1554,7 +1557,7 @@ namespace Common
 		}
 
 		/// <summary><c>operator !=</c> compares elements of the two multi-dimensional arrays.</summary>
-		/// <param name="VALUE_TYPE">type of elements stored in the arrays.</param>
+		/// <typeparam name="VALUE_TYPE">type of elements stored in the arrays.</typeparam>
 		/// <param name="lhs">the first array.</param>
 		/// <param name="rhs">the second array.</param>
 		/// <returns>Method returns <c>true</c> if arrays conatin elements that are not equal.</returns>

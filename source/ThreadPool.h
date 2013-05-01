@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -322,7 +322,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but all public methods that can be called by the user are thread-safe.</summary>
-		/// <param name="RT">type of results.</param>
+		/// <typeparam name="RT">type of results.</typeparam>
 		template<typename RT>
 		class GaTypedWorkResults : public GaWorkResults
 		{
@@ -428,9 +428,9 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but all public methods that can be called by the user are thread-safe.</summary>
-		/// <param name="RT">return type of the method.</param>
-		/// <param name="OT">type of the object whose method is executed.</param>
-		/// <param name="PT">type of method's parameter.</param>
+		/// <typeparam name="RT">return type of the method.</typeparam>
+		/// <typeparam name="OT">type of the object whose method is executed.</typeparam>
+		/// <typeparam name="PT">type of method's parameter.</typeparam>
 		template<typename RT, typename OT, typename PT>
 		class GaMethodWorkItem : public GaWorkItem
 		{
@@ -479,9 +479,9 @@ namespace Common
 		/// <summary>This template class is specialization of <c>GaMethodWorkItem</c> template class for methods which doesn't return value (<c>void</c> return type).
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
-		/// but all public methods that can be called by the user are thread-safe.</summary>
-		/// <param name="OT">type of the object whose method is executed.</param>
-		/// <param name="PT">type of method's parameter.</param>
+		/// but all public methods that can be called by the user are thread-safe.</typeparam>
+		/// <typeparam name="OT">type of the object whose method is executed.</typeparam>
+		/// <typeparam name="PT">type of method's parameter.</param>
 		template<typename OT, typename PT>
 		class GaMethodWorkItem<void, OT, PT> : public GaWorkItem
 		{
@@ -531,8 +531,8 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but all public methods that can be called by the user are thread-safe.</summary>
-		/// <param name="RT">return type of the method.</param>
-		/// <param name="OT">type of the object whose method is executed.</param>
+		/// <typeparam name="RT">return type of the method.</typeparam>
+		/// <typeparam name="OT">type of the object whose method is executed.</typeparam>
 		template<typename RT, typename OT>
 		class GaMethodWorkItem<RT, OT, void> : public GaWorkItem
 		{
@@ -578,7 +578,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but all public methods that can be called by the user are thread-safe.</summary>
-		/// <param name="OT">type of the object whose method is executed.</param>
+		/// <typeparam name="OT">type of the object whose method is executed.</typeparam>
 		template<typename OT>
 		class GaMethodWorkItem<void, OT, void> : public GaWorkItem
 		{
@@ -623,8 +623,8 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but all public methods that can be called by the user are thread-safe.</summary>
-		/// <param name="RT">return type of the function.</param>
-		/// <param name="PT">type of functions's parameter.</param>
+		/// <typeparam name="RT">return type of the function.</typeparam>
+		/// <typeparam name="PT">type of functions's parameter.</typeparam>
 		template<typename RT, typename PT>
 		class GaFunctionWorkItem : public GaWorkItem
 		{
@@ -669,7 +669,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but all public methods that can be called by the user are thread-safe.</summary>
-		/// <param name="PT">type of functions's parameter.</param>
+		/// <typeparam name="PT">type of functions's parameter.</typeparam>
 		template<typename PT>
 		class GaFunctionWorkItem<void, PT> : public GaWorkItem
 		{
@@ -713,7 +713,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but all public methods that can be called by the user are thread-safe.</summary>
-		/// <param name="RT">return type of the function.</param>
+		/// <typeparam name="RT">return type of the function.</typeparam>
 		template<typename RT>
 		class GaFunctionWorkItem<RT, void> : public GaWorkItem
 		{

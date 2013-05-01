@@ -241,8 +241,6 @@
     <ClCompile Include="source\Migrations.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
     <None Include="gcc_bsd_debug" />
     <None Include="gcc_bsd_release" />
     <None Include="gcc_linux_debug" />

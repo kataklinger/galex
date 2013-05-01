@@ -1,4 +1,15 @@
 
+/*! \file NSGAStub.cpp
+    \brief This file conatins implementation of classes that implement algorithm stubs for Nondominated Sorting Genetic Algorithm I and II (NSGA-I and NSGA-II).
+*/
+
+/*
+ * 
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
+ *
+ */
+
 #include "NSGAStub.h"
 
 namespace Algorithm

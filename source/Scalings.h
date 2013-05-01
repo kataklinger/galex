@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -150,14 +150,14 @@ namespace Population
 			/// This method is not thread-safe.</summary>
 			virtual Common::GaParameters* GACALL Clone() const { return new GaScalingFactorParams( *this ); }
 
-			/// <summary>This method is not thread-safe.</summary>
-			/// <returns>Method returns scaling factor.</returns>
-			inline void GACALL SetFactor(float factor) { _factor = factor; }
-
 			/// <summary><c>SetFactor</c> method sets scaling factor. 
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="factor">scaling factor.</param>
+			inline void GACALL SetFactor(float factor) { _factor = factor; }
+
+			/// <summary>This method is not thread-safe.</summary>
+			/// <returns>Method returns scaling factor.</returns>
 			inline float GACALL GetFactor() const { return _factor; }
 
 		};

@@ -1,4 +1,15 @@
 
+/*! \file SimpleStub.cpp
+    \brief This file conatins implementation of classes that implement algorithm stubs for simple GA with overlapping population.
+*/
+
+/*
+ * 
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
+ *
+ */
+
 #include "SimpleStub.h"
 
 namespace Algorithm

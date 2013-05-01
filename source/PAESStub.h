@@ -1,4 +1,15 @@
 
+/*! \file PAESStub.h
+    \brief This file conatins declaration of classes that implement algorithm stub for Pareto Archived Evolution Strategy (PAES).
+*/
+
+/*
+ * 
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
+ *
+ */
+
 #ifndef __GA_PAES_STUB_H__
 #define __GA_PAES_STUB_H__
 
@@ -110,13 +121,13 @@ namespace Algorithm
 			/// <summary><c>SetFitnessComparator</c> method sets new fitness comparator used by the population.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="fitnessOperation">new fitness comparator.</param>
+			/// <param name="comparator">new fitness comparator.</param>
 			inline void GACALL SetFitnessComparator(const Fitness::GaFitnessComparatorSetup& comparator) { UpdateFitnessComparator( comparator ); }
 
 			/// <summary><c>SetMutation</c> method sets mutation operation that will be used for producing new chromosome.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="params">new mutation parameters.</param>
+			/// <param name="mutation">new mutation setup.</param>
 			GAL_API
 			void GACALL SetMutation(const Chromosome::GaMutationSetup& mutation);
 

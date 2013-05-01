@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -178,7 +178,7 @@ namespace Population
 	///
 	/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 	/// No public or private methods are thread-safe.</summary>
-	/// <param name="DATA_TYPE">type of data stored in tag.</param>
+	/// <typeparam name="DATA_TYPE">type of data stored in tag.</typeparam>
 	template<typename DATA_TYPE>
 	class GaChromosomeTagGetter : public Common::Data::GaTagGetter<DATA_TYPE, GaChromosomeStorage>
 	{

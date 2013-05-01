@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -234,11 +234,11 @@ namespace Multiobjective
 		public:
 
 			/// <summary>This constructor initializes configuration with fitness parameters and adaptive hypergird.</summary>
-			/// <param name="grid">adaptive hypergrid that RDGA will use to split raw fitness hyperspace..</param>
+			/// <param name="adaptiveGrid">adaptive hypergrid that RDGA will use to split raw fitness hyperspace..</param>
 			GaRDGAConfig(const GaFitnessAdaptiveGrid& adaptiveGrid) { SetAdaptiveGrid( adaptiveGrid ); }
 
 			/// <summary>This constructor creates new configuration and makes copy fitness parameters and adaptive hypergrid.</summary>
-			/// <params name="rhs">configuration that should be copied.</params>
+			/// <param name="rhs">configuration that should be copied.</param>
 			GaRDGAConfig(const GaRDGAConfig& rhs)
 			{
 				if( !rhs._adaptiveGrid.IsNull() )

@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -50,8 +50,8 @@ namespace Common
 
 
 		/// <summary><c>GaAtomicOps</c> structure isolates platform specific atomic operations over 32-bits or 64-bits datatypes.</summary>
-		/// <param name="TYPE">type of data.</param>
-		/// <param name="SIZE">size of datatype in bytes.</param>
+		/// <typeparam name="TYPE">type of data.</typeparam>
+		/// <typeparam name="SIZE">size of datatype in bytes.</typeparam>
 		template<typename TYPE,
 			int SIZE = sizeof( TYPE )>
 		struct GaAtomicOps
@@ -130,8 +130,8 @@ namespace Common
 		};
 
 		/// <summary><c>GaCmpXchg2</c> struct isolate platform dependant compare and swap operation for datatypes that has length of two CPU words.</summary>
-		/// <param name="TYPE">type of data.</param>
-		/// <param name="SIZE">size of datatype in bytes.</param>
+		/// <typeparam name="TYPE">type of data.</typeparam>
+		/// <typeparam name="SIZE">size of datatype in bytes.</typeparam>
 		template<typename TYPE,
 			int SIZE = sizeof( TYPE )>
 		struct GaCmpXchg2
@@ -151,7 +151,7 @@ namespace Common
 		};
 
 		/// <summary><c>GaQWordExtract</c> sturct provides methods for extracting CPU words from datatypes that has twice the length.</summary>
-		/// <param name="TYPE">type of data.</param>
+		/// <typeparam name="TYPE">type of data.</typeparam>
 		template<typename TYPE>
 		struct GaQWordExtract
 		{
@@ -378,7 +378,7 @@ namespace Common
 		///
 		/// This class has built-in synchronizator so it is allowed to use <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros with instances of this class,
 		/// but publicmethods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of stored value.</param>
+		/// <typeparam name="VALUE_TYPE">type of stored value.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaAtomic
 		{
@@ -399,7 +399,7 @@ namespace Common
 		public:
 
 			/// <summary>Initializes stored value.</summary>
-			/// <param name="value">initial value.</value>
+			/// <param name="value">initial value.</param>
 			GaAtomic(GaValue value) : _value(value) { }
 
 			/// <summary>Initializes with default value.</summary>
@@ -520,7 +520,7 @@ namespace Common
 		///
 		/// This class has built-in synchronizator so it is allowed to use <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros with instances of this class,
 		/// but publicmethods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of pointer value.</param>
+		/// <typeparam name="VALUE_TYPE">type of pointer value.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaAtomic<VALUE_TYPE*>
 		{

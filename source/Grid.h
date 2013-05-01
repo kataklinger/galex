@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -97,7 +97,7 @@ namespace Common
 			/// <summary><c>SetStart</c> method sets the first index in the collection that can contain item that belong to hyperbox.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="end">index in the collection.</param>
+			/// <param name="start">index in the collection.</param>
 			inline void GACALL SetStart(int start)
 			{
 				_start = start;
@@ -355,7 +355,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="POINT">type of data that represents single point in hyperspace.</param>
+		/// <typeparam name="POINT">type of data that represents single point in hyperspace.</typeparam>
 		template<typename POINT>
 		class GaHyperGridBounds
 		{
@@ -422,7 +422,7 @@ namespace Common
 		};
 
 		/// <summary><c>GaHyperGridBase</c> template is interface for hypergrids that can divide hyperspace of specified type into hyperboxes of fixed size.</summary>
-		/// <param name="POINT">type of data that represents single point in hyperspace.</param>
+		/// <typeparam name="POINT">type of data that represents single point in hyperspace.</typeparam>
 		template<typename POINT>
 		class GaHyperGridBase
 		{
@@ -467,9 +467,9 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// Because this genetic operation is stateless all public method are thread-safe.</summary>
-		/// <param name="POINT">type of data that represents single point in hyperspace.</param>
-		/// <param name="COORDINATE">type of single coordinate of a point in hyperspace.</param>
-		/// <param name="COORDINATES_GETTER">functor that extracts coordinates of point object.</param>
+		/// <typeparam name="POINT">type of data that represents single point in hyperspace.</typeparam>
+		/// <typeparam name="COORDINATE">type of single coordinate of a point in hyperspace.</typeparam>
+		/// <typeparam name="COORDINATES_GETTER">functor that extracts coordinates of point object.</typeparam>
 		template<typename POINT,
 			typename COORDINATE,
 			typename COORDINATES_GETTER>
@@ -592,7 +592,7 @@ namespace Common
 			/// <summary><c>SetGridSize</c> method sets size of a single hyperbox that will be used by hypergrid.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="gridSize">sizes of each dimension of a single hyperbox.</param>
+			/// <param name="size">sizes of each dimension of a single hyperbox.</param>
 			inline void GACALL SetGridSize(const GaGridSize& size) { _gridSize = size; }
 
 			/// <summary><c>SetGridSize</c> method sets size of single dimension of hyperbox.
@@ -662,7 +662,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// Because this genetic operation is stateless all public method are thread-safe.</summary>
-		/// <param name="POINT">type of data that represents single point in hyperspace.</param>
+		/// <typeparam name="POINT">type of data that represents single point in hyperspace.</typeparam>
 		template<typename POINT>
 		class GaAdaptiveGridBase
 		{
@@ -727,7 +727,7 @@ namespace Common
 			/// <summary><c>SetGridSize</c> sets number of hyberboxes that each dimension should be divided to.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="gridSize">number of hyberboxes.</param>
+			/// <param name="size">number of hyberboxes.</param>
 			inline void GACALL SetGridSize(const GaGridSize& size) { _gridSize = size; }
 
 			/// <summary><c>SetGridSize</c> sets number of hyberboxes that specified dimension is going to be divided to.</summary>
@@ -767,9 +767,9 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// Because this genetic operation is stateless all public method are thread-safe.</summary>
-		/// <param name="POINT">type of data that represents single point in hyperspace.</param>
-		/// <param name="COORDINATE">type of single coordinate of a point in hyperspace.</param>
-		/// <param name="COORDINATES_GETTER">functor that extracts coordinates of point object.</param>
+		/// <typeparam name="POINT">type of data that represents single point in hyperspace.</typeparam>
+		/// <typeparam name="COORDINATE">type of single coordinate of a point in hyperspace.</typeparam>
+		/// <typeparam name="COORDINATES_GETTER">functor that extracts coordinates of point object.</typeparam>
 		template<typename POINT,
 			typename COORDINATE,
 			typename COORDINATES_GETTER>
@@ -887,7 +887,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// Because this genetic operation is stateless all public method are thread-safe.</summary>
-		/// <param name="DATA_TYPE">type of stored data.</param>
+		/// <typeparam name="DATA_TYPE">type of stored data.</typeparam>
 		template<typename DATA_TYPE>
 		class GaGridStorageMatrix
 		{
@@ -957,7 +957,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but all public method are thread-safe.</summary>
-		/// <param name="ITEM">type of items stored in the cells.</param>
+		/// <typeparam name="ITEM">type of items stored in the cells.</typeparam>
 		template<typename ITEM>
 		class GaBestItemsMatrix
 		{
@@ -1050,7 +1050,7 @@ namespace Common
 			/// <summary><c>CollectBest</c> method determins the best ranked items for all occpied cells.
 			///
 			/// This method is thread-safe.</summary>
-			/// <param name="ITEM_RANK_GETTER">type of functor that extracts item's rank</param>
+			/// <typeparam name="ITEM_RANK_GETTER">type of functor that extracts item's rank</typeparam>
 			/// <param name="perBranch">matrices that stores best ranked items identified by separate branchs.</param>
 			/// <param name="rank">functor that extracts item's rank.</param>
 			template<typename ITEM_RANK_GETTER>

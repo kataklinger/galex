@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -41,7 +41,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// Because this genetic operation is stateless all public method are thread-safe.</summary>
-		/// <param name="TYPE">datatype of values that are comapred for sorting.</param>
+		/// <typeparam name="TYPE">datatype of values that are comapred for sorting.</typeparam>
 		template<typename TYPE>
 		class GaAscendingSortingCriteria : public GaSortingCriteria<TYPE>
 		{
@@ -66,7 +66,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// Because this genetic operation is stateless all public method are thread-safe.</summary>
-		/// <param name="TYPE">datatype of values that are comapred for sorting.</param>
+		/// <typeparam name="TYPE">datatype of values that are comapred for sorting.</typeparam>
 		template<typename TYPE>
 		class GaDescendingSortingCriteria : public GaSortingCriteria<TYPE>
 		{
@@ -91,7 +91,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public method or private methods are thread-safe.</summary>
-		/// <param name="TYPE">datatype of values that are comapred for sorting.</param>
+		/// <typeparam name="TYPE">datatype of values that are comapred for sorting.</typeparam>
 		template<typename TYPE>
 		class GaMutableSortCriteria : public GaSortingCriteria<TYPE>
 		{
@@ -136,7 +136,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public method or private methods are thread-safe.</summary>
-		/// <param name="CRITERIA">type of sort criteria that is adopted.</param>
+		/// <typeparam name="CRITERIA">type of sort criteria that is adopted.</typeparam>
 		template<typename CRITERIA>
 		class GaMutableSortCriteriaAdapter : public  GaMutableSortCriteria<typename CRITERIA::GaType>
 		{
@@ -194,9 +194,9 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// Because this genetic operation is stateless all public method are thread-safe.</summary>
-		/// <param name="INPUT_TYPE">tye of input items.</param>
-		/// <param name="COMPARE_CRITERIA">actual sorting criteria that uses extracted data from input itmes.</param>
-		/// <param name="CONVERTER">converter that extracts required data from input items passes them to actual sorting criteria.</param>
+		/// <typeparam name="INPUT_TYPE">tye of input items.</typeparam>
+		/// <typeparam name="COMPARE_CRITERIA">actual sorting criteria that uses extracted data from input itmes.</typeparam>
+		/// <typeparam name="CONVERTER">converter that extracts required data from input items passes them to actual sorting criteria.</typeparam>
 		template<typename INPUT_TYPE,
 			typename COMPARE_CRITERIA,
 			typename CONVERTER>
@@ -255,7 +255,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="T">type of data in array that should be sorted.</param>
+		/// <typeparam name="T">type of data in array that should be sorted.</typeparam>
 		template<typename T>
 		class GaMergeSortAlgorithm
 		{
@@ -301,8 +301,8 @@ namespace Common
 			/// and return heler array as sorted one if it improves performances and user allowed taking of the ownership.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="CRITERIA">type of sorting criteria used for sorting.</param>
-			/// <param name="criteria">reference to criteria used to sort array.</param>
+			/// <typeparam name="CRITERIA">type of sorting criteria used for sorting.</typeparam>
+			/// <typeparam name="criteria">reference to criteria used to sort array.</typeparam>
 			/// <returns>Method returns pointer to sorted array (sorted array is not nesseserily the same memory location as original one).</returns>
 			template<typename CRITERIA>
 			T* Sort(const CRITERIA& criteria)
@@ -336,7 +336,7 @@ namespace Common
 			/// Method can be executed concurently from different threads only when sorting non-overlapping portions of the array.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="CRITERIA">type of sorting criteria used for sorting.</param>
+			/// <typeparam name="CRITERIA">type of sorting criteria used for sorting.</typeparam>
 			/// <param name="begin">index of the first element in the array that should be sorted.</param>
 			/// <param name="end">index of the last element in the array that hsould be sorted.</param>
 			/// <param name="criteria">reference to criteria used to sort array.</param>
@@ -436,7 +436,7 @@ namespace Common
 			/// Method can be used concurently only when sorting non-overlapping portions of the array.
 			///
 			/// This method is not thread-safe.</summary>
-			/// <param name="CRITERIA">type of sorting criteria used for sorting.</param>
+			/// <typeparam name="CRITERIA">type of sorting criteria used for sorting.</typeparam>
 			/// <param name="array">pointer to the first element of the array that should be sorted.</param>
 			/// <param name="arraySize">number of elements of the array that should be sorted.</param>
 			/// <param name="helperArray">pointer to the first element of helper array used for sorting.</param>

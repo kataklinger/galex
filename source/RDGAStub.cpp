@@ -1,4 +1,15 @@
 
+/*! \file RDGAStub.cpp
+    \brief This file conatins implementation of classes that implement algorithm stubs for Rank-Desity based Genetic Algorithm (RDGA).
+*/
+
+/*
+ * 
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
+ *
+ */
+
 #include "RDGAStub.h"
 
 namespace Algorithm

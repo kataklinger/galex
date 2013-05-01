@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -58,7 +58,7 @@ namespace Multiobjective
 				_strengthTagID(-1),
 				_dominatedTagID(-1) { }
 
-			/// <summary><c>SetDominanceListTagID<c/> method sets chromosome tag that stores partial list of chromosomes that are dominated by the chromosome.
+			/// <summary><c>SetDominanceListTagID</c> method sets chromosome tag that stores partial list of chromosomes that are dominated by the chromosome.
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="tagID">ID of the tag.</param>
@@ -68,7 +68,7 @@ namespace Multiobjective
 			/// <returns>Method returns ID of chromosome tag that stores partial list of chromosomes that are dominated by the chromosome.</returns>
 			inline int GACALL GetDominanceListTagID() const { return _dominanceListTagID; }
 
-			/// <summary><c>SetStrengthTagID<c/> method sets chromosome tag that stores strength value of the chromosome used to calculate scaled fitness.
+			/// <summary><c>SetStrengthTagID</c> method sets chromosome tag that stores strength value of the chromosome used to calculate scaled fitness.
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="tagID">ID of the tag.</param>
@@ -78,7 +78,7 @@ namespace Multiobjective
 			/// <returns>Method returns ID of chromosome tag that stores strength value of the chromosome used to calculate scaled fitness.</returns>
 			inline int GACALL GetStrengthTagID() const { return _strengthTagID; }
 
-			/// <summary><c>SetDominatedTagID<c/> method sets chromosome tag that indicates whether the chromosome is dominated by any other.
+			/// <summary><c>SetDominatedTagID</c> method sets chromosome tag that indicates whether the chromosome is dominated by any other.
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="tagID">ID of the tag.</param>
@@ -123,7 +123,7 @@ namespace Multiobjective
 			/// This method is not thread-safe.</summary>
 			virtual Common::GaParameters* GACALL Clone() const { return new GaSPEAParams( *this ); }
 
-			/// <summary><c>SetClusterStorageTagID<c/> method sets population tag that stores information about chromosome's clusters.
+			/// <summary><c>SetClusterStorageTagID</c> method sets population tag that stores information about chromosome's clusters.
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="tagID">ID of the tag.</param>
@@ -261,7 +261,7 @@ namespace Multiobjective
 			/// This method is not thread-safe.</summary>
 			virtual Common::GaParameters* GACALL Clone() const { return new GaSPEA2Params( *this ); }
 
-			/// <summary><c>SetDistanceStorageTagID<c/> method sets population tag that stores distances between closest chromosomes.
+			/// <summary><c>SetDistanceStorageTagID</c> method sets population tag that stores distances between closest chromosomes.
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="tagID">ID of the tag.</param>
@@ -271,7 +271,7 @@ namespace Multiobjective
 			/// <returns>Method returns ID of population tag that stores distances between closest chromosomes.</returns>
 			inline int GACALL GetDistanceStorageTagID() const { return _distanceStorageTagID; }
 
-			/// <summary><c>SetNondominatedCountTagID<c/> method sets population tag that stores number of nondominated chromosomes in the population.
+			/// <summary><c>SetNondominatedCountTagID</c> method sets population tag that stores number of nondominated chromosomes in the population.
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="tagID">ID of the tag.</param>
@@ -281,7 +281,7 @@ namespace Multiobjective
 			/// <returns>Method returns ID of population tag that stores number of nondominated chromosomes in the population.</returns>
 			inline int GACALL GetNondominatedCountTagID() const { return _nondominatedCountTagID; }
 
-			/// <summary><c>SetKthNeighbourTagID<c/> method sets chromosomes tag that stores distances of chromosome to other chromosomes.
+			/// <summary><c>SetKthNeighbourTagID</c> method sets chromosomes tag that stores distances of chromosome to other chromosomes.
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="tagID">ID of the tag.</param>

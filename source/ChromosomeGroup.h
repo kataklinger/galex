@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -105,11 +105,10 @@ namespace Population
 		/// one chromosome cannot be inserted multiple time. When sorting criteria is not specified method use calls <see cref="Add" /> to perform insertion.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="CRITERIA">type of sorting criteria used for sorting.</param>
+		/// <typeparam name="CRITERIA">type of sorting criteria used for sorting.</typeparam>
 		/// <param name="criteria">criteria used for sorting chromosomes in the group.</param>
 		/// <param name="chromosome">pointer to chromosome that should be added to the group.</param>
-		/// <param name="sortCriteria">reference to sort criteria used for determining position at which the chromosomes should be inserted.</param>
-		/// <parm name="topLimit">number of chromosomes at the top of chromosome group that are protected from being removed.</param>
+		/// <param name="topLimit">number of chromosomes at the top of chromosome group that are protected from being removed.</param>
 		/// <returns>Method returns <c>true</c> if the chromosome was inserted into group successfully.</returns>
 		/// <exception cref="GaInvalidOperationException" />Thrown if the group is full when user tries to insert new chromosome and the group is not sizable.</exception>
 		/// <exception cref="GaArgumentOutOfRangeException" />Thrown if <c>topLimit</c> is greater that current size of group or equal to maximal size.</exception>
@@ -200,8 +199,11 @@ namespace Population
 		void GACALL Remove(int index,
 			bool dontRecycle = false);
 
-		/// <summary></summary>
-		/// <param name="dontRecycle"></name>
+		/// <summary><c>Remove</c> method removes all chromosomes that are marked for the removal.
+		///
+		/// This method is not thread-safe.</summary>
+		/// <param name="dontRecycle">this parameter is used for overwriting recycle policy of the group.
+		/// If it is set to <c>true</c> removed storage object will not be recycled even if the recycling is turned on by the group policy.</param>
 		GAL_API
 		void GACALL Remove(bool dontRecycle = false);
 
@@ -241,7 +243,7 @@ namespace Population
 		/// <summary><c>Sort</c> method sorts chromosome group using provided sorting algorithm and criteria.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <param name="CRITERIA">type of sorting criteria used for sorting.</param>
+		/// <typeparam name="CRITERIA">type of sorting criteria used for sorting.</typeparam>
 		/// <param name="sortCriteria">criteria used for sorting chromosomes in the group.</param>
 		template<typename CRITERIA>
 		inline void GACALL Sort(const CRITERIA& sortCriteria)

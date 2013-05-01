@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -41,7 +41,7 @@ namespace Multiobjective
 
 			/// <summary><c>operator ()</c> operators determins dominated chromosome and marks it.</summary>
 			/// <param name="chromosome1">the first chromosomes that is checked.</param>
-			/// <param name="chromosome1">the second chromosomes that is checked.</param>
+			/// <param name="chromosome2">the second chromosomes that is checked.</param>
 			/// <param name="index1">index of the first chromosome.</param>
 			/// <param name="index2">index of the second chromosome.</param>
 			inline void GACALL operator ()(Population::GaChromosomeStorage& chromosome1,

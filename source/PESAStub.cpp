@@ -1,4 +1,15 @@
 
+/*! \file PESAStub.cpp
+    \brief This file conatins implementation of classes that implement algorithm stubs for Pareto Envelope-based Selection Algorithm and Region-based Selection (PESA-I and PESA-II).
+*/
+
+/*
+ * 
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
+ *
+ */
+
 #include "PESAStub.h"
 
 namespace Algorithm

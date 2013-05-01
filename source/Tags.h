@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -48,15 +48,15 @@ namespace Common
 			/// <returns>Method returns pointer to a newly created copy of lifecycle policy.</returns>
 			virtual GaTagLifecycle* Clone() const = 0; 
 
-			/// <summary>CreateTag</c> method should implement tag creation policy.</summary>
+			/// <summary><c>CreateTag</c> method should implement tag creation policy.</summary>
 			/// <returns>Method returns pointer to a newly created tag.</returns>
 			virtual GaTag* GACALL CreateTag() const = 0;
 
-			/// <summary>PrepareTag</c> method should implement tag preparation policy.</summary>
+			/// <summary><c>PrepareTag</c> method should implement tag preparation policy.</summary>
 			/// <param name="tag">tag that should be prepared befor use.</param>
 			virtual void GACALL PrepareTag(GaTag& tag) const = 0;
 
-			/// <summary>CleanTag</c> method should implement tag clean-up policy.</summary>
+			/// <summary><c>CleanTag</c> method should implement tag clean-up policy.</summary>
 			/// <param name="tag">tag that should be cleaned after use.</param>
 			virtual void GACALL CleanTag(GaTag& tag) const = 0;
 
@@ -90,7 +90,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// bit all public are thread-safe.</summary>
-		/// <param name="TYPE">type of data stored in the tag.</param>
+		/// <typeparam name="TYPE">type of data stored in the tag.</typeparam>
 		template<typename TYPE>
 		class GaTypedTag : public GaTag
 		{
@@ -139,7 +139,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="DATA_TYPE">type of data stored in the tag.</param>
+		/// <typeparam name="DATA_TYPE">type of data stored in the tag.</typeparam>
 		template<typename DATA_TYPE>
 		class GaTypedTagLifecycle : public GaTagLifecycle
 		{
@@ -496,7 +496,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="TYPE">type of data stored in the tag.</param>
+		/// <typeparam name="TYPE">type of data stored in the tag.</typeparam>
 		template<typename DATA_TYPE>
 		class GaSizableTagLifecycle : public GaTagLifecycle
 		{
@@ -554,8 +554,8 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="TYPE">type of data stored in the tag.</param>
-		/// <param name="MERGE_METHOD">method that is used for merging data that was trimmed with ones that stays.</param>
+		/// <typeparam name="TYPE">type of data stored in the tag.</typeparam>
+		/// <typeparam name="MERGE_METHOD">method that is used for merging data that was trimmed with ones that stays.</typeparam>
 		template<typename DATA_TYPE,
 			void GACALL MERGE_METHOD(DATA_TYPE&, int, int)>
 		class GaSizableTagUpdate : public GaTagUpdate
@@ -608,7 +608,7 @@ namespace Common
 		};
 
 		/// <summary><c>GaTagIgnoreMerge</c> function rejects trimmed data.</summary>
-		/// <param name="STORAGE_TYPE">type that of storage used for storing tag's data.</param>
+		/// <typeparam name="STORAGE_TYPE">type that of storage used for storing tag's data.</typeparam>
 		/// <param name="storage">reference to storage that contains tag's data.</param>
 		/// <param name="oldSize">old count of data paritions.</param>
 		/// <param name="newSize">new count of data paritions.</param>
@@ -618,7 +618,7 @@ namespace Common
 			int newSize) { }
 
 		/// <summary><c>GaTagSumMerge</c> function merges trimmed data with the ones that stays by summing them.</summary>
-		/// <param name="STORAGE_TYPE">type that of storage used for storing tag's data.</param>
+		/// <typeparam name="STORAGE_TYPE">type that of storage used for storing tag's data.</typeparam>
 		/// <param name="storage">reference to storage that contains tag's data.</param>
 		/// <param name="oldSize">old count of data paritions.</param>
 		/// <param name="newSize">new count of data paritions.</param>
@@ -632,7 +632,7 @@ namespace Common
 		}
 
 		/// <summary><c>GaTagListMerge</c> function merges trimmed linked lists with the ones that stays.</summary>
-		/// <param name="STORAGE_TYPE">type that of storage used for storing tag's data.</param>
+		/// <typeparam name="STORAGE_TYPE">type that of storage used for storing tag's data.</typeparam>
 		/// <param name="storage">reference to storage that contains tag's data.</param>
 		/// <param name="oldSize">old count of data paritions.</param>
 		/// <param name="newSize">new count of data paritions.</param>
@@ -658,7 +658,7 @@ namespace Common
 		typedef GaSizableTagUpdate<GaPartialCount, GaTagSumMerge<GaPartialCount> > GaPartialCountSizeUpdate;
 
 		/// <summary>This structure defines datatype used for storing partial list in tags.</summary>
-		/// <param name="DATA_TYPE">type of data stored in the list.</param>
+		/// <typeparam name="DATA_TYPE">type of data stored in the list.</typeparam>
 		template<typename DATA_TYPE>
 		struct GaPartialList
 		{
@@ -669,7 +669,7 @@ namespace Common
 		};
 
 		/// <summary>This structure defines datatype used for updating number of partitions for tags that stores partial list.</summary>
-		/// <param name="DATA_TYPE">type of data stored in the list.</param>
+		/// <typeparam name="DATA_TYPE">type of data stored in the list.</typeparam>
 		template<typename DATA_TYPE>
 		struct GaPartialListSizeUpdate
 		{
@@ -683,7 +683,7 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class,
 		/// but because objects of this class are stateless all public an private method are thread-safe.</summary>
-		/// <param name="OBJECT_TYPE">type of object whose tags are queried.</param>
+		/// <typeparam name="OBJECT_TYPE">type of object whose tags are queried.</typeparam>
 		template<typename OBJECT_TYPE>
 		class GaDefaultTagAccessor
 		{
@@ -714,9 +714,9 @@ namespace Common
 		///
 		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="DATA_TYPE">type of data stored in tag.</param>
-		/// <param name="OBJECT_TYPE">type of object whose tags are queried.</param>
-		/// <param name="TAG_ACCESSOR">access policy for object's tags.</param>
+		/// <typeparam name="DATA_TYPE">type of data stored in tag.</typeparam>
+		/// <typeparam name="OBJECT_TYPE">type of object whose tags are queried.</typeparam>
+		/// <typeparam name="TAG_ACCESSOR">access policy for object's tags.</typeparam>
 		template<typename DATA_TYPE,
 			typename OBJECT_TYPE,
 			typename TAG_ACCESSOR = GaDefaultTagAccessor<OBJECT_TYPE> >

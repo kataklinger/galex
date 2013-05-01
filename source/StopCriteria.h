@@ -5,8 +5,8 @@
 
 /*
  * 
- * website: N/A
- * contact: kataklinger@gmail.com
+ * website: http://kataklinger.com/
+ * contact: me[at]kataklinger.com
  *
  */
 
@@ -78,7 +78,7 @@ namespace Algorithm
 		public:
 
 			/// <summary>Initializes step with stop criterion and statistical data on which it operates.</summary>
-			/// <param name="setup">stop criterion.</param>
+			/// <param name="criterion">stop criterion.</param>
 			/// <param name="dataStorage">data storage that contains data.</param>
 			/// <param name="dataID">ID of the statistical data.</param>
 			GaStopCriterionStep(const GaStopCriterionSetup& criterion,
@@ -87,7 +87,7 @@ namespace Algorithm
 				_data(dataStorage, dataID) { }
 
 			/// <summary>Initializes step with stop criterion.</summary>
-			/// <param name="setup">stop criterion.</param>
+			/// <param name="criterion">stop criterion.</param>
 			GaStopCriterionStep(const GaStopCriterionSetup& criterion) : _criterionSetup(criterion) { }
 
 			/// <summary>Initializes empty step.</summary>
@@ -183,7 +183,7 @@ namespace Algorithm
 		///
 		/// This class has no built-in synchronizator, so <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// Because this objects of this class are stateless all public method are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of values that are compared.</param>
+		/// <typeparam name="VALUE_TYPE">type of values that are compared.</typeparam>
 		template<typename VALUE_TYPE>
 		class GaStatsCriterionComparator
 		{
@@ -270,8 +270,8 @@ namespace Algorithm
 		///
 		/// This class has no built-in synchronizator, so <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of compared values.</param>
-		/// <param name="COMPARATOR_TYPE">type of comparator.</param>
+		/// <typeparam name="VALUE_TYPE">type of compared values.</typeparam>
+		/// <typeparam name="COMPARATOR_TYPE">type of comparator.</typeparam>
 		template<typename VALUE_TYPE,
 			typename COMPARATOR_TYPE = GaStatsCriterionComparator<VALUE_TYPE> >
 		class GaStatsCriterionParams : public GaStopCriterionParams
@@ -367,8 +367,8 @@ namespace Algorithm
 		};
 
 		/// <summary><c>IsCriterionReached</c> method compares current and desired values in specified way.</summary>
-		/// <param name="TYPE">value type.</param>
-		/// <param name="COMPARATOR">type of value comparator.</param>
+		/// <typeparam name="TYPE">value type.</typeparam>
+		/// <typeparam name="COMPARATOR">type of value comparator.</typeparam>
 		/// <param name="current">current value.</param>
 		/// <param name="desired">desired value.</param>
 		/// <param name="comparator">value comparator.</param>
@@ -392,8 +392,8 @@ namespace Algorithm
 		///
 		/// This class has no built-in synchronizator, so <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// Because this genetic operation is stateless all public method are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of compared values.</param>
-		/// <param name="COMPARATOR_TYPE">type of comparator.</param>
+		/// <typeparam name="VALUE_TYPE">type of compared values.</typeparam>
+		/// <typeparam name="COMPARATOR_TYPE">type of comparator.</typeparam>
 		template<typename VALUE_TYPE,
 			typename COMPARATOR_TYPE = GaStatsCriterionComparator<VALUE_TYPE> >
 		class GaStatsCriterion : public GaStopCriterion
@@ -431,8 +431,8 @@ namespace Algorithm
 		///
 		/// This class has no built-in synchronizator, so <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// No public or private methods are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of compared values.</param>
-		/// <param name="COMPARATOR_TYPE">type of comparator.</param>
+		/// <typeparam name="VALUE_TYPE">type of compared values.</typeparam>
+		/// <typeparam name="COMPARATOR_TYPE">type of comparator.</typeparam>
 		template<typename VALUE_TYPE,
 			typename COMPARATOR_TYPE = GaStatsCriterionComparator<VALUE_TYPE> >
 		class GaStatsProgressCriterionParams : public GaStatsCriterionParams<VALUE_TYPE, COMPARATOR_TYPE>
@@ -488,8 +488,8 @@ namespace Algorithm
 		///
 		/// This class has no built-in synchronizator, so <c>LOCK_OBJECT</c> and <c>LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 		/// Because this genetic operation is stateless all public method are thread-safe.</summary>
-		/// <param name="VALUE_TYPE">type of compared values.</param>
-		/// <param name="COMPARATOR_TYPE">type of comparator.</param>
+		/// <typeparam name="VALUE_TYPE">type of compared values.</typeparam>
+		/// <typeparam name="COMPARATOR_TYPE">type of comparator.</typeparam>
 		template<typename VALUE_TYPE,
 			typename COMPARATOR_TYPE = GaStatsCriterionComparator<VALUE_TYPE> >
 		class GaStatsProgressCriterion : public GaStopCriterion
