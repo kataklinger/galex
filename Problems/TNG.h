@@ -147,7 +147,8 @@ namespace Problems
 
 		public:
 
-			virtual Chromosome::GaChromosomePtr GACALL operator ()(const Chromosome::GaInitializatorParams& parameters,
+			virtual Chromosome::GaChromosomePtr GACALL operator ()(bool empty,
+				const Chromosome::GaInitializatorParams& parameters,
 				Common::Memory::GaSmartPtr<Chromosome::GaChromosomeConfigBlock> configBlock) const;
 
 			virtual Common::GaParameters* GACALL CreateParameters() const { return NULL; }

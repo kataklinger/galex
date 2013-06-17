@@ -65,7 +65,8 @@ namespace Problems
 			values[ 1 ] = x * x;
 		}
 
-		Chromosome::GaChromosomePtr F1Initializator::operator ()(const Chromosome::GaInitializatorParams& parameters,
+		Chromosome::GaChromosomePtr F1Initializator::operator ()(bool empty,
+			const Chromosome::GaInitializatorParams& parameters,
 			Common::Memory::GaSmartPtr<Chromosome::GaChromosomeConfigBlock> configBlock) const
 		{
 			F1Chromosome* newChromosome = new F1Chromosome( configBlock );

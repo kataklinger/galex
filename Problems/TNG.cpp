@@ -453,7 +453,8 @@ namespace Problems
 			( (TngFitness&)fitness ).SetValue( 1.0f / ( 1 + (float)( value ) ) );
 		}
 
-		Chromosome::GaChromosomePtr TngInitializator::operator ()(const Chromosome::GaInitializatorParams& parameters,
+		Chromosome::GaChromosomePtr TngInitializator::operator ()(bool empty,
+			const Chromosome::GaInitializatorParams& parameters,
 			Common::Memory::GaSmartPtr<Chromosome::GaChromosomeConfigBlock> configBlock) const
 		{
 			int count = GaGlobalRandomIntegerGenerator->Generate( 1, TNG_NUMBER_COUNT );
@@ -461,14 +462,14 @@ namespace Problems
 			int selected[ TNG_NUMBER_COUNT ];
 			Common::Data::GaTreeNode<TngNode>* freeNodes[ TNG_NUMBER_COUNT ];
 
-			Common::Random::GaGenerateRandomSequence( 0, TNG_NUMBER_COUNT - 1, count, selected );
+			Common::Random::GaGenerateRandomSequence( 0, TNG_NUMBER_COUNT - 1, count, true, selected );
 			for( int i = count - 1; i >= 0; i-- )
 				freeNodes[ i ] = new Common::Data::GaTreeNode<TngNode>( TngNode( TNT_NUMBER, i ) );
 
 			while( count > 1 )
 			{
 				int merge[ 2 ];
-				Common::Random::GaGenerateRandomSequenceAsc( 0, count - 1, 2, merge );
+				Common::Random::GaGenerateRandomSequenceAsc( 0, count - 1, 2, true, merge );
 
 				Common::Data::GaTreeNode<TngNode>* merged = new Common::Data::GaTreeNode<TngNode>( TngNode( (TngNodeType)GaGlobalRandomIntegerGenerator->Generate( TNT_PLUS, TNT_OVER ) ) );
 				merged->InsertChild( freeNodes[ merge[ 0 ] ] );

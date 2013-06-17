@@ -14,6 +14,10 @@
     <ProjectGuid>{BE217A8A-88CC-4169-B826-F6E311C2DE0B}</ProjectGuid>
     <RootNamespace>App2</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <SccProjectName>SAK</SccProjectName>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccProvider>SAK</SccProvider>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -86,7 +90,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\GALex.vcxproj">
+    <ProjectReference Include="..\..\GeneticLibrary2.vcxproj">
       <Project>{55d67b0e-145c-4cdd-bc27-0de87a86d821}</Project>
       <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>

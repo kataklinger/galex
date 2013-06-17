@@ -12,6 +12,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F2A2ABB7-71C4-44E5-87B9-855E6DD907C7}</ProjectGuid>
+    <SccProjectName>SAK</SccProjectName>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccProvider>SAK</SccProvider>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>App8</RootNamespace>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
@@ -84,7 +88,7 @@
     <ClCompile Include="App8.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\GALex.vcxproj">
+    <ProjectReference Include="..\..\GeneticLibrary2.vcxproj">
       <Project>{55d67b0e-145c-4cdd-bc27-0de87a86d821}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\Problems\Problems.vcxproj">

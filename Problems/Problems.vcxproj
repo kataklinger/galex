@@ -11,20 +11,28 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CSP.h" />
     <ClInclude Include="F1.h" />
     <ClInclude Include="TNG.h" />
+    <ClInclude Include="XKCD.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CSP.cpp" />
     <ClCompile Include="F1.cpp" />
     <ClCompile Include="TNG.cpp" />
+    <ClCompile Include="XKCD.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GALex.vcxproj">
+    <ProjectReference Include="..\GeneticLibrary2.vcxproj">
       <Project>{55d67b0e-145c-4cdd-bc27-0de87a86d821}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{93560795-9ABC-4748-A161-F9166987B4D4}</ProjectGuid>
+    <SccProjectName>SAK</SccProjectName>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccProvider>SAK</SccProvider>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Problems</RootNamespace>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
