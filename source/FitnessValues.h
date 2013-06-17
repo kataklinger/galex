@@ -153,7 +153,11 @@ namespace Fitness
 			/// <summary>More details are given in specification of <see cref="GaFitness::operator =" /> method.
 			///
 			/// This method is not thread-safe.</summary>
-			virtual GaFitness& GACALL operator =(const GaFitness& rhs) { _value = ( (const GaSVFitness<GaValueType>&)rhs )._value; return *this; }
+			virtual GaFitness& GACALL operator =(const GaFitness& rhs)
+			{
+				_value = ( (const GaSVFitness<GaValueType>&)rhs )._value;
+				return GaFitness::operator=( rhs );
+			}
 
 			/// <summary>More details are given in specification of <see cref="GaFitness::operator ==" /> method.
 			///
@@ -477,7 +481,11 @@ namespace Fitness
 			/// <summary>More details are given in specification of <see cref="GaFitness::operator =" /> method.
 			///
 			/// This method is not thread-safe.</summary>
-			virtual GaFitness& GACALL operator =(const GaFitness& rhs) { _values = ( (const GaMVFitness<GaValueType>&)rhs )._values; return *this; }
+			virtual GaFitness& GACALL operator =(const GaFitness& rhs)
+			{
+				_values = ( (const GaMVFitness<GaValueType>&)rhs )._values;
+				return GaFitness::operator=( rhs );
+			}
 
 			/// <summary>More details are given in specification of <see cref="GaFitness::operator ==" /> method.
 			///
@@ -487,7 +495,7 @@ namespace Fitness
 			/// <summary>More details are given in specification of <see cref="GaFitness::operator !=" /> method.
 			///
 			/// This method is not thread-safe.</summary>
-			virtual bool GACALL operator !=(const GaFitness& rhs) const { return _values == ( (const GaMVFitness<GaValueType>&)rhs )._values; }
+			virtual bool GACALL operator !=(const GaFitness& rhs) const { return _values != ( (const GaMVFitness<GaValueType>&)rhs )._values; }
 
 			/// <summary>This method is not thread-safe.</summary>
 			/// <returns>Method returns typed array of stored values in fitness object.</returns>
@@ -563,7 +571,7 @@ namespace Fitness
 			/// <summary>More details are given in specification of <see cref="GaFitness::Clone" /> method.
 			///
 			/// This method is not thread-safe.</summary>
-			virtual Common::GaParameters* GACALL Clone() const { return new GaWeightedFitnessParams( _valueCount ); }
+			virtual Common::GaParameters* GACALL Clone() const { return new GaWeightedFitnessParams( _weights.GetArray(), _valueCount ); }
 
 			/// <summary><c>SetWeight</c> method sets weight of fitness value at specified index.
 			///
@@ -591,7 +599,7 @@ namespace Fitness
 		/// <typeparam name="WEIGHT_TYPE">type of value weights.</typeparam>
 		template<typename VALUE_TYPE,
 			typename WEIGHT_TYPE>
-		class GaWeightedFitness : public GaSVFitnessBase, private GaMVFitness<VALUE_TYPE>
+		class GaWeightedFitness : public GaSVFitnessBase
 		{
 
 		public:
@@ -604,6 +612,9 @@ namespace Fitness
 
 		protected:
 
+			/// <summary>Stores fitness values.</summary>
+			GaMVFitness<GaValueType> _values;
+
 			/// <summary>Sum of stored values multiplied by their weights.</summary>
 			GaWeightType _weightedSum;
 
@@ -611,30 +622,36 @@ namespace Fitness
 
 			/// <summary>This constructor initializes fitness object with fitness parameters that will be used.</summary>
 			/// <param name="params">fitness parameters.</param>
-			GaWeightedFitness(Common::Memory::GaSmartPtr<const GaFitnessParams> params) : GaMVFitness(params),
+			GaWeightedFitness(Common::Memory::GaSmartPtr<const GaFitnessParams> params) : GaSVFitnessBase(params),
+				_values(params),
 				_weightedSum() { }
 
 			/// <summary>More details are given in specification of <see cref="GaFitness::Clone" /> method.
 			///
 			/// This method is not thread-safe.</summary>
-			virtual GaFitness* GACALL Clone() const { return new GaWeightedFitness<GaValueType>( *this ); }
+			virtual GaFitness* GACALL Clone() const { return new GaWeightedFitness<GaValueType, GaWeightType>( *this ); }
 
 			/// <summary>More details are given in specification of <see cref="GaFitness::Clear" /> method.
 			///
 			/// This method is not thread-safe.</summary>
 			virtual void GACALL Clear()
 			{
-				GaMVFitness<GaValueType>::Clear();
+				_values.Clear();
 				_weightedSum = GaWeightType();
 			}
+
+			/// <summary>More details are given in specification of <see cref="GaFitness::GetProbabilityBase" /> method.
+			///
+			/// This method is not thread-safe.</summary>
+			virtual float GACALL GetProbabilityBase() const { return (float)_weightedSum; }
 
 			/// <summary>More details are given in specification of <see cref="GaFitness::GetProgress" /> method.
 			///
 			/// This method is not thread-safe.</summary>
 			virtual GaFitness* GACALL GetProgress(const GaFitness& previous) const
 			{
-				GaWeightedFitness<GaValueType>* progress = new GaWeightedFitness<GaValueType>( *this );
-				progress -= previous;
+				GaWeightedFitness<GaValueType, GaWeightType>* progress = new GaWeightedFitness<GaValueType, GaWeightType>( *this );
+				*progress -= previous;
 
 				return progress;
 			}
@@ -643,14 +660,20 @@ namespace Fitness
 			///
 			/// This method is not thread-safe.</summary>
 			virtual float GACALL GetRelativeProgress(const GaFitness& previous) const
-				{ return abs( ( (float)_weightedSum - ( (const GaWeightedFitness<GaValueType>&)previous )._weightedSum ) / _weightedSum ); }
+				{ return abs( ( (float)_weightedSum - ( (const GaWeightedFitness<GaValueType, GaWeightType>&)previous )._weightedSum ) / _weightedSum ); }
+
+			/// <summary>More details are given in specification of <see cref="GaSVFitnessBase::Distance" /> method.
+			///
+			/// This method is not thread-safe.</summary>
+			virtual float GACALL Distance(const GaFitness& second) const
+				{ return (float)abs( _weightedSum - ( (const GaWeightedFitness<GaValueType, GaWeightType>&)second )._weightedSum ); }
 
 			/// <summary>More details are given in specification of <see cref="GaSVFitnessBase::CompareValues" /> method.
 			///
 			/// This method is not thread-safe.</summary>
 			virtual int GACALL CompareValues(const GaSVFitnessBase& fitness) const
 			{
-				const GaWeightType& weightedSum = ( (const GaWeightedFitness<GaValueType>&)fitness )._sum;
+				const GaWeightType& weightedSum = ( (const GaWeightedFitness<GaValueType, GaWeightType>&)fitness )._weightedSum;
 				return _weightedSum > weightedSum ? -1 : ( weightedSum > _weightedSum ? 1 : 0 );
 			}
 
@@ -659,7 +682,7 @@ namespace Fitness
 			/// This method is not thread-safe.</summary>
 			virtual Statistics::GaValue<GaFitness> GACALL operator +(const GaFitness& rhs) const
 			{
-				GaWeightedFitness<GaValueType> temp( *this );
+				GaWeightedFitness<GaValueType, GaWeightType> temp( *this );
 				temp += rhs;
 
 				return temp;
@@ -670,7 +693,7 @@ namespace Fitness
 			/// This method is not thread-safe.</summary>
 			virtual Statistics::GaValue<GaFitness> GACALL operator -(const GaFitness& rhs) const
 			{
-				GaWeightedFitness<GaValueType> temp( *this );
+				GaWeightedFitness<GaValueType, GaWeightType> temp( *this );
 				temp -= rhs;
 
 				return temp;
@@ -681,7 +704,7 @@ namespace Fitness
 			/// This method is not thread-safe.</summary>
 			virtual Statistics::GaValue<GaFitness> GACALL operator /(int rhs) const
 			{
-				GaWeightedFitness<GaValueType> temp( *this );
+				GaWeightedFitness<GaValueType, GaWeightType> temp( *this );
 				temp /= rhs;
 
 				return temp;
@@ -692,7 +715,7 @@ namespace Fitness
 			/// This method is not thread-safe.</summary>
 			virtual GaFitness& GACALL operator +=(const GaFitness& rhs)
 			{
-				GaMVFitness<GaValueType>::operator +=( rhs );
+				_values += ( (const GaWeightedFitness<GaValueType, GaWeightType>&)rhs )._values;
 				CalculateWeightedSum();
 
 				return *this;
@@ -703,7 +726,7 @@ namespace Fitness
 			/// This method is not thread-safe.</summary>
 			virtual GaFitness& GACALL operator -=(const GaFitness& rhs)
 			{
-				GaMVFitness<GaValueType>::operator -=( rhs );
+				_values -= ( (const GaWeightedFitness<GaValueType, GaWeightType>&)rhs )._values;
 				CalculateWeightedSum();
 
 				return *this;
@@ -714,7 +737,7 @@ namespace Fitness
 			/// This method is not thread-safe.</summary>
 			virtual GaFitness& GACALL operator /=(int rhs)
 			{
-				GaMVFitness<GaValueType>::operator /=( rhs );
+				_values /= rhs;
 				CalculateWeightedSum();
 
 				return *this;
@@ -725,22 +748,21 @@ namespace Fitness
 			/// This method is not thread-safe.</summary>
 			virtual GaFitness& GACALL operator =(const GaFitness& rhs)
 			{
-				GaMVFitness<GaValueType>::operator =( rhs );
-				_weightedSum = ( (const GaWeightedFitness<GaValueType>&)rhs )._weightedSum;
+				_values = ( (const GaWeightedFitness<GaValueType, GaWeightType>&)rhs )._values;
+				_weightedSum = ( (const GaWeightedFitness<GaValueType, GaWeightType>&)rhs )._weightedSum;
 
-				return *this;
+				return GaFitness::operator=( rhs );
 			}
 
 			/// <summary>More details are given in specification of <see cref="GaFitness::operator ==" /> method.
 			///
 			/// This method is not thread-safe.</summary>
-			virtual bool GACALL operator ==(const GaFitness& rhs) const { return _weightedSum == ( (const GaWeightedFitness<GaValueType>&)rhs )._weightedSum; }
+			virtual bool GACALL operator ==(const GaFitness& rhs) const { return _weightedSum == ( (const GaWeightedFitness<GaValueType, GaWeightType>&)rhs )._weightedSum; }
 
 			/// <summary>More details are given in specification of <see cref="GaFitness::operator !=" /> method.
 			///
 			/// This method is not thread-safe.</summary>
-			virtual bool GACALL operator !=(const GaFitness& rhs) const { return _weightedSum != ( (const GaWeightedFitness<GaValueType>&)rhs )._weightedSum; }
-
+			virtual bool GACALL operator !=(const GaFitness& rhs) const { return _weightedSum != ( (const GaWeightedFitness<GaValueType, GaWeightType>&)rhs )._weightedSum; }
 
 			/// <summary><c>SetValue</c> method stores new value at specifed position in fitness object.
 			///
@@ -776,7 +798,7 @@ namespace Fitness
 			/// This method is not thread-safe.</summary>
 			/// <param name="index">index of queried value.</param>
 			/// <returns>Method returns weighted value.</returns>
-			inline GaValueType GACALL GetWeightedValue(int index) const { return _values[ index ] * ( (GaWeightedFitnessParams<GaWeightType>&)*_parameters ).GetWeight( index ); }
+			inline GaWeightType GACALL GetWeightedValue(int index) const { return _values[ index ] * ( (GaWeightedFitnessParams<GaWeightType>&)*_parameters ).GetWeight( index ); }
 
 			/// <summary>This method is not thread-safe.</summary>
 			/// <returns>Method returns weighted sum of stored fitness values.</returns>

@@ -770,11 +770,11 @@ namespace Population
 		/// <summary><c>MakeFromPrototype</c> method produces new chromosome using provided chromosome initializator.
 		///
 		/// This method is not thread-safe.</summary>
-		/// <returns></returns>
+		/// <returns>Returns pointer to storage object that stores newly created chromosome.</returns>
 		inline GaChromosomeStorage* GACALL MakeFromPrototype()
 		{
 			GaChromosomeStorage* storage = AcquireStorageObject();
-			storage->SetChromosome( _initializator.GetOperation()( _initializator.GetParameters(), _initializator.GetConfiguration().GetConfigBlock() ) );
+			storage->SetChromosome( _initializator.GetOperation()( false, _initializator.GetParameters(), _initializator.GetConfiguration().GetConfigBlock() ) );
 			CalculateFitness( *storage );
 
 			return storage;
@@ -1307,7 +1307,7 @@ namespace Population
 		virtual Chromosome::GaChromosomePtr GACALL CreateOffspringFromPrototype() const
 		{
 			Chromosome::GaInitializatorSetup& initializator = _population->GetInitializator();
-			return initializator.GetOperation()( initializator.GetParameters(), initializator.GetConfiguration().GetConfigBlock() );
+			return initializator.GetOperation()( true, initializator.GetParameters(), initializator.GetConfiguration().GetConfigBlock() );
 		}
 
 		/// <summary>More details are given in specification of <see cref="GaCrossoverBuffer::StoreOffspringChromosome" /> method.

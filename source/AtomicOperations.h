@@ -150,7 +150,7 @@ namespace Common
 
 		};
 
-		/// <summary><c>GaQWordExtract</c> sturct provides methods for extracting CPU words from datatypes that has twice the length.</summary>
+		/// <summary><c>GaQWordExtract</c> sturct provides methods for extracting CPU words from datatypes that has twice the length of CPU word.</summary>
 		/// <typeparam name="TYPE">type of data.</typeparam>
 		template<typename TYPE>
 		struct GaQWordExtract
@@ -374,7 +374,7 @@ namespace Common
 
 		#endif
 
-		/// <summary><c>GaAtomic</c> template class provides atomic operations for 32-bits or 64-bits datatypes. Data should be be aligned to word size.
+		/// <summary><c>GaAtomic</c> template class provides atomic operations for 32-bits or 64-bits datatypes. Data should be be aligned to CPU word size.
 		///
 		/// This class has built-in synchronizator so it is allowed to use <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros with instances of this class,
 		/// but publicmethods are thread-safe.</summary>
@@ -516,7 +516,7 @@ namespace Common
 
 		};
 
-		/// <summary>This specialization fo <c>GaAtomic</c> template  and provides atomic operations for pointers. Data should be be aligned to word size.
+		/// <summary>This specialization fo <c>GaAtomic</c> template  and provides atomic operations for pointers. Data should be be aligned to CPU word size.
 		///
 		/// This class has built-in synchronizator so it is allowed to use <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros with instances of this class,
 		/// but publicmethods are thread-safe.</summary>

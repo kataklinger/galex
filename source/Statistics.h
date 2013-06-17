@@ -878,7 +878,7 @@ namespace Statistics
 			if( depth == 0 )
 				// return current value
 				return GetCurrentValue();
-			else if( depth < 0 || depth > _currentHistoryDepth )
+			else if( depth < 0 || depth >= _currentHistoryDepth )
 				// return oldest value from the buffer
 				return _history.front()->_value.GetValue();
 
@@ -908,7 +908,7 @@ namespace Statistics
 			if( depth == 0 )
 				// return current value
 				return GetCurrentValue();
-			else if( depth < 0 || depth > _currentHistoryDepth )
+			else if( depth < 0 || depth >= _currentHistoryDepth )
 				// return oldest value from the buffer
 				return _history.front()->_value.GetValue();
 
@@ -936,9 +936,9 @@ namespace Statistics
 		bool GACALL IsChanged(int depth = 1) const
 		{
 			if( depth == 0 )
-				/// compare to current - nothing changed
+				// compare to current - nothing changed
 				return false;
-			else if( depth < 0 || depth > _currentHistoryDepth )
+			else if( depth < 0 || depth >= _currentHistoryDepth )
 				// compare to oldest value
 				return _history.front()->_value != _history.back()->_value;
 
@@ -949,7 +949,7 @@ namespace Statistics
 				// move current position in the buffer
 				current += ( *it )->_blockSize;
 
-				// desired value is found
+				// desired value is found?
 				if( depth <= current )
 					break;
 			}

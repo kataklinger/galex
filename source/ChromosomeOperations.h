@@ -81,10 +81,12 @@ namespace Chromosome
 	public:
 
 		/// <summary>This operator makes new chromosome and performs initialization of the chromosome.</summary>
+		/// <param name="empty">instruct the initializator to create an empty chromosome without genes.</param>
 		/// <param name="parameters">pointer to parameters of initialization operation.</param>
 		/// <param name="configBlock">smart pointer to chromosome configuration that will be used by chromosome.</param>
 		/// <returns>Method returns smart pointer to chromosome that should be initialized.</returns>
-		virtual GaChromosomePtr GACALL operator ()(const GaInitializatorParams& parameters,
+		virtual GaChromosomePtr GACALL operator ()(bool empty,
+			const GaInitializatorParams& parameters,
 			Common::Memory::GaSmartPtr<GaChromosomeConfigBlock> configBlock) const = 0;
 
 		/// <summary>More details are given in specification of <see cref="GaOperation::CreateConfiguration" /> method.

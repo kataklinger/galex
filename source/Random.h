@@ -193,20 +193,20 @@ namespace Common
 			/// <param name="generator">pointer to random generator that is used as source for generating numbers.</param>
 			GaRandom(GaRandomGenerator* generator) : _generator(generator) { }
 
-			/// <summary>This method generates random values in interval(0, 2^31).
+			/// <summary>This method generates random values in interval [0, 2^31].
 			///
 			/// This method is thread-safe.</summary>
 			/// <returns>Returns generate random value.</returns>
 			inline int GACALL Generate() { return (int)( _generator->Generate() & _mask ); }
 
-			/// <summary>This method generates random values in interval(0, <c>max</c>).
+			/// <summary>This method generates random values in interval [0, <c>max</c>].
 			///
 			/// This method is thread-safe.</summary>
 			/// <param name="max">maximal value which can be generated.</param>
 			/// <returns>Returns generate random value.</returns>
 			inline int GACALL Generate(const int& max) { return (int)( ( max + 1 ) * _generator->GenerateDouble() ) % ( max + 1 ); }
 
-			/// <summary>This method generates random values in interval(<c>min</c>, <c>max</c>).
+			/// <summary>This method generates random values in interval [<c>min</c>, <c>max</c>].
 			///
 			/// This method is thread-safe.</summary>
 			/// <param name="min">minimal value which can be generated.</param>
@@ -253,20 +253,20 @@ namespace Common
 			/// <param name="generator">pointer to random generator that is used as source for generating numbers.</param>
 			GaRandom(GaRandomGenerator* generator) : _generator(generator) { }
 
-			/// <summary>This method generates random values in interval(0, 2^63).
+			/// <summary>This method generates random values in interval [0, 2^63].
 			///
 			/// This method is thread-safe.</summary>
 			/// <returns>Returns generate random value.</returns>
 			inline long long GACALL Generate() { return ( ( ( (long long)_generator->Generate() ) << 32 ) + _generator->Generate() ) & _mask; }
 
-			/// <summary>This method generates random values in interval(0, <c>max</c>).
+			/// <summary>This method generates random values in interval [0, <c>max</c>].
 			///
 			/// This method is thread-safe.</summary>
 			/// <param name="max">maximal value which can be generated.</param>
 			/// <returns>Returns generate random value.</returns>
 			inline long long GACALL Generate(const long long& max) { return (long long)( ( max + 1 ) * _generator->GenerateDouble() ) % ( max + 1 ); }
 
-			/// <summary>This method generates random values in interval(<c>min</c>, <c>max</c>).
+			/// <summary>This method generates random values in interval [<c>min</c>, <c>max</c>].
 			///
 			/// This method is thread-safe.</summary>
 			/// <param name="min">minimal value which can be generated.</param>
@@ -311,20 +311,20 @@ namespace Common
 			/// <param name="generator">pointer to random generator that is used as source for generating numbers.</param>
 			GaRandom(GaRandomGenerator* generator) : _generator(generator) { }
 
-			/// <summary>This method generates random values in interval(0, 1).
+			/// <summary>This method generates random values in interval [0, 1].
 			///
 			/// This method is thread-safe.</summary>
 			/// <returns>Returns generate random value.</returns>
 			inline float GACALL Generate() { return _generator->GenerateFloat(); }
 
-			/// <summary>This method generates random values in interval(0, <c>max</c>).
+			/// <summary>This method generates random values in interval [0, <c>max</c>].
 			///
 			/// This method is thread-safe.</summary>
 			/// <param name="max">maximal value which can be generated.</param>
 			/// <returns>Returns generate random value.</returns>
 			inline float GACALL Generate(const float& max) { return max * _generator->GenerateFloat(); }
 
-			/// <summary>This method generates random values in interval(<c>min</c>, <c>max</c>).
+			/// <summary>This method generates random values in interval [<c>min</c>, <c>max</c>].
 			///
 			/// This method is thread-safe.</summary>
 			/// <param name="min">minimal value which can be generated.</param>
@@ -369,20 +369,20 @@ namespace Common
 			/// <param name="generator">pointer to random generator that is used as source for generating numbers.</param>
 			GaRandom(GaRandomGenerator* generator) : _generator(generator) { }
 
-			/// <summary>This method generates random values in interval(0, 1).
+			/// <summary>This method generates random values in interval [0, 1].
 			///
 			/// This method is thread-safe.</summary>
 			/// <returns>Returns generate random value.</returns>
 			inline double GACALL Generate() { return _generator->GenerateDouble(); }
 
-			/// <summary>This method generates random values in interval(0, <c>max</c>).
+			/// <summary>This method generates random values in interval [0, <c>max</c>].
 			///
 			/// This method is thread-safe.</summary>
 			/// <param name="max">maximal value which can be generated.</param>
 			/// <returns>Returns generate random value.</returns>
 			inline double GACALL Generate(const double& max) { return max * _generator->GenerateDouble(); }
 
-			/// <summary>This method generates random values in interval(<c>min</c>, <c>max</c>).
+			/// <summary>This method generates random values in interval [<c>min</c>, <c>max</c>].
 			///
 			/// This method is thread-safe.</summary>
 			/// <param name="min">minimal value which can be generated.</param>

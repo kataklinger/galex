@@ -112,7 +112,7 @@ namespace Common
 
 		public:
 
-			/// <summary>Blocks all threads that construct barrier lock except the last one </summary>
+			/// <summary>Blocks all threads that construct barrier lock except the last one that execute it.</summary>
 			/// <param name="barrier">pointer to barrier on which this lock operates.</param>
 			/// <param name="count">number of threads that should reach the barrier so it can be released.</param>
 			GaBarrierLock(GaBarrier* barrier,

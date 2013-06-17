@@ -20,11 +20,12 @@ namespace Common
 	namespace Random
 	{
 
-		/// <summary><c>GaGenerateRandomSequenceAsc</c> method generates sequence of unique random integer numbers
+		/// <summary><c>GaGenerateRandomSequenceAsc</c> method generates sequence of random integer numbers
 		/// in ascendent order withing given interval (<c>min</c>, <c>max</c>).</summary>
 		/// <param name="min">minimal value that can be generated.</param>
 		/// <param name="max">maximal value that can be generated.</param>
 		/// <param name="count">size of sequence (number of generated numbers).</param>
+		/// <param name="unique">when set to <c>true</c> function will generate sequence of unique numbers.</param>
 		/// <param name="generated">output array to which the generated sequence will be stored.</param>
 		/// <exception cref="GaArgumentOutOfRangeException" />Thrown if maximal value is lower then minimal or if count is lower then or equal to 0
 		/// or greater then size of the interval.</exception>
@@ -33,13 +34,15 @@ namespace Common
 		void GACALL GaGenerateRandomSequenceAsc(int min,
 			int max,
 			int count,
+			bool unique,
 			int* generated);
 
-		/// <summary><c>GaGenerateRandomSequenceDsc</c> method generates sequence of unique random integer numbers
+		/// <summary><c>GaGenerateRandomSequenceDsc</c> method generates sequence of random integer numbers
 		/// in descendant order withing given interval (<c>min</c>, <c>max</c>).</summary>
 		/// <param name="min">minimal value that can be generated.</param>
 		/// <param name="max">maximal value that can be generated.</param>
 		/// <param name="count">size of sequence (number of generated numbers).</param>
+		/// <param name="unique">when set to <c>true</c> function will generate sequence of unique numbers.</param>
 		/// <param name="generated">output array to which the generated sequence will be stored.</param>
 		/// <exception cref="GaArgumentOutOfRangeException" />Thrown if maximal value is lower then minimal or if count is lower then or equal to 0
 		/// or greater then size of the interval.</exception>
@@ -48,13 +51,15 @@ namespace Common
 		void GACALL GaGenerateRandomSequenceDsc(int min,
 			int max,
 			int count,
+			bool unique,
 			int* generated);
 
-		/// <summary><c>GaGenerateRandomSequence</c> method generates unsorted sequence of unique random integer numbers
+		/// <summary><c>GaGenerateRandomSequence</c> method generates unsorted sequence of random integer numbers
 		/// withing given interval (<c>min</c>, <c>max</c>).</summary>
 		/// <param name="min">minimal value that can be generated.</param>
 		/// <param name="max">maximal value that can be generated.</param>
 		/// <param name="count">size of sequence (number of generated numbers).</param>
+		/// <param name="unique">when set to <c>true</c> function will generate sequence of unique numbers.</param>
 		/// <param name="generated">output array to which the generated sequence will be stored.</param>
 		/// <exception cref="GaArgumentOutOfRangeException" />Thrown if maximal value is lower then minimal or if count is lower then or equal to 0
 		/// or greater then size of the interval.</exception>
@@ -63,6 +68,7 @@ namespace Common
 		void GACALL GaGenerateRandomSequence(int min,
 			int max,
 			int count,
+			bool unique,
 			int* generated);
 
 		/// <summary><c>GaShuffle</c> method shuffles array of elements of specified type.</summary>

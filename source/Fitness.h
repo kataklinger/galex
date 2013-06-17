@@ -116,7 +116,7 @@ namespace Fitness
 		/// <summary>This operator copies fitness values from another fitness object.</summary>
 		/// <param name="rhs">reference to fitness object which should be copied to <c>this</c> object.</param>
 		/// <returns>Operator returns reference to <c>this</c> object.</returns>
-		virtual GaFitness& GACALL operator =(const GaFitness& rhs) = 0;
+		virtual GaFitness& GACALL operator =(const GaFitness& rhs) { _parameters = rhs._parameters; return *this; }
 
 		/// <summary>This operator tests two fitness object for equality.</summary>
 		/// <param name="rhs">reference to fitness object which is compared to this object.</param>

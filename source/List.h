@@ -464,6 +464,9 @@ namespace Common
 			/// <summary>Type of stored value.</summary>
 			typedef VALUE_TYPE GaValueType;
 
+			/// <summary>Type of list node value.</summary>
+			typedef GaListNode<GaValueType> GaNodeType;
+
 			/// <summary>This constructor initializes empty list.</summary>
 			GaList() { }
 
@@ -480,7 +483,7 @@ namespace Common
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="value">value that should be inserted.</param>
-			inline void GACALL InsertHead(GaValueType value) { InsertHead( new GaListNode<GaValueType>( value ) ); }
+			inline void GACALL InsertHead(GaValueType value) { InsertHead( new GaNodeType( value ) ); }
 
 			using GaListBase::InsertTail;
 
@@ -488,7 +491,7 @@ namespace Common
 			///
 			/// This method is not thread-safe.</summary>
 			/// <param name="value">value that should be inserted.</param>
-			inline void GACALL InsertTail(GaValueType value) { InsertTail( new GaListNode<GaValueType>( value ) ); }
+			inline void GACALL InsertTail(GaValueType value) { InsertTail( new GaNodeType( value ) ); }
 
 			using GaListBase::InsertAt;
 
@@ -498,7 +501,7 @@ namespace Common
 			/// <param name="position">position (index) at which the value should be inserted. If position is out of range, node will be inserted at the first or value node.</param>
 			/// <param name="value">value that should be inserted.</param>
 			inline void GACALL InsertAt(int position,
-				GaValueType value) { InsertAt( position, new GaListNode<GaValueType>( value ) ); }
+				GaValueType value) { InsertAt( position, new GaNodeType( value ) ); }
 
 			using GaListBase::InsertBefore;
 
@@ -508,8 +511,8 @@ namespace Common
 			/// <param name="node">node before which the new value should be inserted. If this parameter is set to <c>NULL</c>
 			/// new value will be added at the end of the list.</param>
 			/// <param name="value">value that should be inserted.</param>
-			inline void GACALL InsertBefore(GaListNode<GaValueType>* node,
-				GaValueType value) { InsertBefore( node, new GaListNode<GaValueType>( value ) ); }
+			inline void GACALL InsertBefore(GaNodeType* node,
+				GaValueType value) { InsertBefore( node, new GaNodeType( value ) ); }
 
 			using GaListBase::InsertAfter;
 
@@ -519,8 +522,8 @@ namespace Common
 			/// <param name="node">node after which the new value should be inserted. If this parameter is set to <c>NULL</c>
 			/// new value will be added at the beggining of the list.</param>
 			/// <param name="value">value that should be inserted.</param>
-			inline void GACALL InsertAfter(GaListNode<GaValueType>* node,
-				GaValueType value) { InsertAfter( node, new GaListNode<GaValueType>( value ) ); }
+			inline void GACALL InsertAfter(GaNodeType* node,
+				GaValueType value) { InsertAfter( node, new GaNodeType( value ) ); }
 
 			using GaListBase::Remove;
 
@@ -532,15 +535,15 @@ namespace Common
 			/// otherwise only the first node that is found is removed.</param>
 			/// <param name="start">node from which the searching for value starts. If this paramenter is set to <c>NULL</c> search starts form list's head.</param>
 			/// <returns>Method returns pointer to the first node after the last removed node.</returns>
-			GaListNode<GaValueType>* GACALL Remove(GaValueType value,
+			GaNodeType* GACALL Remove(GaValueType value,
 				bool all = false,
-				GaListNode<GaValueType>* start = NULL)
+				GaNodeType* start = NULL)
 			{
 				// search for value from specified position
-				GaListNode<GaValueType>* next = NULL;
-				for( GaListNode<GaValueType>* node = start ? start : (GaListNode<GaValueType>*)_head; node; )
+				GaNodeType* next = NULL;
+				for( GaNodeType* node = start ? start : (GaNodeType*)_head; node; )
 				{
-					next = (GaListNode<GaValueType>*)node->_next;
+					next = (GaNodeType*)node->_next;
 
 					// node contains specified value
 					if( node->_value == value )
@@ -566,11 +569,11 @@ namespace Common
 			/// <param name="value">value which should be found.</param>
 			/// <param name="start">node from which the search starts. If this paramenter is set to <c>NULL</c> search starts form list's head.</param>
 			/// <returns>Method returns pointer to the first node that contains specified value or <c>NULL</c> if list does not contain value.</returns>
-			GaListNode<GaValueType>* GACALL Find(GaValueType value,
-				GaListNode<GaValueType>* start = NULL)
+			GaNodeType* GACALL Find(GaValueType value,
+				GaNodeType* start = NULL)
 			{
 				// search for value from specified start position
-				for( GaListNode<GaValueType>* node = start ? start : (GaListNode<GaValueType>*)_head; node; node = (GaListNode<GaValueType>*)node->_next )
+				for( GaNodeType* node = start ? start : (GaNodeType*)_head; node; node = (GaNodeType*)node->_next )
 				{
 					// current node contains specified value?
 					if( node->_value == value )
@@ -586,11 +589,11 @@ namespace Common
 			/// <param name="value">value which should be found.</param>
 			/// <param name="start">node from which the search starts. If this paramenter is set to <c>NULL</c> search starts form list's head.</param>
 			/// <returns>Method returns pointer to the first node that contains specified value or <c>NULL</c> if list does not contain value.</returns>
-			const GaListNode<GaValueType>* GACALL Find(GaValueType value,
-				const GaListNode<GaValueType>* start = NULL) const
+			const GaNodeType* GACALL Find(GaValueType value,
+				const GaNodeType* start = NULL) const
 			{
 				// search for value from specified start position
-				for( const GaListNode<GaValueType>* node = start ? start : (GaListNode<GaValueType>*)_head; node; node = (GaListNode<GaValueType>*)node->_next )
+				for( const GaNodeType* node = start ? start : (GaNodeType*)_head; node; node = (GaNodeType*)node->_next )
 				{
 					// current node contains specified value?
 					if( node->_value == value )
@@ -609,7 +612,7 @@ namespace Common
 			{
 				// search for the value
 				int position = 0;
-				for( const GaListNode<GaValueType>* node = (GaListNode<GaValueType>*)_head; node; node = (GaListNode<GaValueType>*)node->_next, position++ )
+				for( const GaNodeType* node = (GaNodeType*)_head; node; node = (GaNodeType*)node->_next, position++ )
 				{
 					// current node contains specified value?
 					if( node->_value == value )
@@ -631,19 +634,19 @@ namespace Common
 
 			/// <summary>This method is not thread-safe.</summary>
 			/// <returns>Method returns pointer to the first node of the list.</returns>
-			inline GaListNode<GaValueType>* GACALL GetHead() { return (GaListNode<GaValueType>*)_head; }
+			inline GaNodeType* GACALL GetHead() { return (GaNodeType*)_head; }
 
 			/// <summary>This method is not thread-safe.</summary>
 			/// <returns>Method returns pointer to the first node of the list.</returns>
-			inline const GaListNode<GaValueType>* GACALL GetHead() const { return (GaListNode<GaValueType>*)_head; }
+			inline const GaNodeType* GACALL GetHead() const { return (GaNodeType*)_head; }
 
 			/// <summary>This method is not thread-safe.</summary>
 			/// <returns>Method returns pointer to the last node of the list.</returns>
-			inline GaListNode<GaValueType>* GACALL GetTail() { return (GaListNode<GaValueType>*)_tail; }
+			inline GaNodeType* GACALL GetTail() { return (GaNodeType*)_tail; }
 
 			/// <summary>This method is not thread-safe.</summary>
 			/// <returns>Method returns pointer to the last node of the list.</returns>
-			inline const GaListNode<GaValueType>* GACALL GetTail() const { return (GaListNode<GaValueType>*)_tail; }
+			inline const GaNodeType* GACALL GetTail() const { return (GaNodeType*)_tail; }
 
 			/// <summary><c>GetValue</c> method returns value stored in node at specified position in the list.
 			///

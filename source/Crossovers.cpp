@@ -46,8 +46,13 @@ namespace Chromosome
 					destination2 = &( (Representation::GaArrayStructureChromosome&)*offspring2 ).GetStructure();
 				}
 
+				// number of crossover points cannot be larger then smallest chromosome
+				if( count > destination1->GetSize() )
+					count  = destination1->GetSize();
+
 				// generate crossover points
-				Common::Random::GaGenerateRandomSequenceAsc( 1, destination1->GetSize() - 1, count - 1, points.GetRawPtr() );
+				if( count > 1 )
+					Common::Random::GaGenerateRandomSequenceAsc( 1, destination1->GetSize() - 1, count - 1, true, points.GetRawPtr() );
 
 				// alternately copy genes from parents to offspring chromosomes
 				points[ count - 1 ] = source1->GetSize();
@@ -84,8 +89,9 @@ namespace Chromosome
 			Common::Data::GaListBase* source2 = &( (Representation::GaListStructureChromosome&)*crossoverBuffer.GetParentChromosome( 1 ) ).GetStructure();
 
 			// reserve memory for storing crossover points
-			int count = ( (const GaCrossoverPointParams&)parameters ).GetNumberOfCrossoverPoints() + 1;
-			Common::Memory::GaAutoPtr<int> points( new int[ count ], Common::Memory::GaArrayDeletionPolicy<int>::GetInstance() );
+			int maxCount = ( (const GaCrossoverPointParams&)parameters ).GetNumberOfCrossoverPoints() + 1;
+			Common::Memory::GaAutoPtr<int> points1( new int[ maxCount ], Common::Memory::GaArrayDeletionPolicy<int>::GetInstance() );
+			Common::Memory::GaAutoPtr<int> points2( new int[ maxCount ], Common::Memory::GaArrayDeletionPolicy<int>::GetInstance() );
 
 			// create required number of offspring chromosomes
 			for( int i = ( (const GaCrossoverPointParams&)parameters ).GetNumberOfOffspring() - 1; i >= 0; i -= 2 )
@@ -102,33 +108,58 @@ namespace Chromosome
 					destination2 = &( (Representation::GaListStructureChromosome&)*offspring2 ).GetStructure();
 				}
 
+				// number of crossover points cannot be larger then smallest chromosome
+				int count = maxCount;
+				if( count > source1->GetCount() )
+					count = source1->GetCount();
+				if( count > source2->GetCount() )
+					count = source2->GetCount();
+
 				// generate crossover points
-				Common::Random::GaGenerateRandomSequenceAsc( 1, destination1->GetCount() - 1, count - 1, points.GetRawPtr() );
+				if( count > 1 )
+				{
+					Common::Random::GaGenerateRandomSequenceAsc( 1, source1->GetCount() - 1, count - 1, true, points1.GetRawPtr() );
+					Common::Random::GaGenerateRandomSequenceAsc( 1, source2->GetCount() - 1, count - 1, true, points2.GetRawPtr() );
+				}
 
 				Common::Data::GaListNodeBase* sourceNode1 = source1->GetHead();
 				Common::Data::GaListNodeBase* sourceNode2 = source2->GetHead();
 
+				points1[ count - 1 ] = source1->GetCount();
+				points2[ count - 1 ] = source2->GetCount();
+
 				// alternately copy genes from parents to offspring chromosomes
-				points[ count - 1 ] = source1->GetCount();
-				for( int j = 0, s = 0; j < count ; s = points[ j++ ] )
+				for( int j = 0, s1 = 0, s2 = 0; j < count ; j++ )
 				{
-					int e = points[ j ];
+					int e1 = points1[ j ];
+					int e2 = points2[ j ];
 
-					// copy genes to the first offspring
-					for( int k = s; k < e; k++, sourceNode1 = sourceNode1->GetNext() )
-						destination1->InsertTail( (Common::Data::GaListNodeBase*)sourceNode1->Clone() );
-
-					// copy genes to the second offspring if it was created
-					if( destination2 )
+					// copy portion of the first parent to destination offspring if it exists
+					if( destination1 )
 					{
-						for( int k = s; k < e; k++, sourceNode2 = sourceNode2->GetNext() )
-							destination1->InsertTail( (Common::Data::GaListNodeBase*)sourceNode2->Clone() );
+						for( int k = s1; k < e1; k++, sourceNode1 = sourceNode1->GetNext() )
+							destination1->InsertTail( (Common::Data::GaListNodeBase*)sourceNode1->Clone() );
 					}
 
-					// swap sources
-					Common::Data::GaListNodeBase* t = sourceNode1;
-					sourceNode1 = sourceNode2;
-					sourceNode2 = t;
+					// copy portion of the second parent to destination offspring if it exists
+					if( destination2 )
+					{
+						for( int k = s2; k < e2; k++, sourceNode2 = sourceNode2->GetNext() )
+							destination2->InsertTail( (Common::Data::GaListNodeBase*)sourceNode2->Clone() );
+					}
+
+					// swap destination chromosomes
+					Common::Data::GaListBase* t = destination1;
+					destination1 = destination2;
+					destination2 = t;
+
+					s1 = e1;
+					s2 = e2;
+				}
+
+				if( destination1->GetCount() == 0 || destination2->GetCount() == 0 )
+				{
+					destination1 = destination1;
 				}
 
 				// store the first offspring

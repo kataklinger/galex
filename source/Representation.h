@@ -163,7 +163,7 @@ namespace Chromosome
 			/// <summary>More details are given in specification of <see cref="GaGeneVisitorBase::GetInterface" /> method.
 			///
 			/// This method is not thread-safe.</summary>
-			virtual GENE_INTERFACE& GACALL GetInterface() const { return _currentPosition->GetData(); }
+			virtual GENE_INTERFACE& GACALL GetInterface() const { return _currentPosition->GetValue(); }
 
 			/// <summary>More details are given in specification of <see cref="GaGeneVisitorInterface::Next" /> method.
 			///
@@ -212,6 +212,7 @@ namespace Chromosome
 			/// This method is thread-safe.</summary>
 			/// <param name="genes">pointer to collection that stores chromosome's gene which should be iterated.</param>
 			static inline GaGeneVisitorBase<GENE_INTERFACE>* Create(GENE_SET_TYPE<GENE_TYPE<VALUE_TYPE> >* genes) { return NULL; }
+
 		};
 
 		/// <summary><c>GENE_VISITOR_CREATOR</c> macro generates gene visitor factory class from template.</summary>
@@ -1039,7 +1040,7 @@ namespace Chromosome
 			/// <summary>More details are given in specification of <see cref="GaMultiGeneChromosome::QueryGeneVisitorInterface" /> method.
 			///
 			/// This method is not thread-safe.</summary>
-			virtual GaGeneVisitorInterface* GACALL QueryeneVisitorInterface(GaGeneInterfaceID iid)
+			virtual GaGeneVisitorInterface* GACALL QueryGeneVisitorInterface(GaGeneInterfaceID iid)
 			{
 				// create appropriate gene visitor
 				switch( iid )

@@ -67,7 +67,7 @@
 
 /// <summary>Macro acquires access to critical section.
 /// It instantiate <see cref="GaSectionLock" /> object with name lock and acquire access to critical section, when
-/// execution leave the scope in which <c>GA_LOCK_OBJECT</c> is specified, <see cref="GaSectionLock" /> object
+/// execution leaves the scope in which <c>GA_LOCK_OBJECT</c> is specified, <see cref="GaSectionLock" /> object
 /// is destroyed and access to the locked section is released. Unlocking access to the object before leaving
 /// scope can be done by calling <c>GA_UNLOCK(lock_name)</c> macro.</summary>
 /// <param name="LOCK_NAME">name of <c>GaSectionLock</c> object.</param>

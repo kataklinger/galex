@@ -221,7 +221,7 @@ namespace Population
 				// choose random chromosomes from the population and replace them with offspring chromosomes
 				if( input.GetCount() )
 				{
-					Common::Random::GaGenerateRandomSequenceAsc( parameters.GetElitism(), population.GetCount() - 1, input.GetCount(), indices.GetArray() );
+					Common::Random::GaGenerateRandomSequenceAsc( parameters.GetElitism(), population.GetCount() - 1, input.GetCount(), true, indices.GetArray() );
 					population.Replace( indices.GetArray(), input.GetChromosomes(), input.GetCount() );
 				}
 
