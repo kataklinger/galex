@@ -88,7 +88,7 @@
     <ClCompile Include="App7.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\GeneticLibrary2.vcxproj">
+    <ProjectReference Include="..\..\GALex.vcxproj">
       <Project>{55d67b0e-145c-4cdd-bc27-0de87a86d821}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\Problems\Problems.vcxproj">

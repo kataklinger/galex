@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="source\Adoptions.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AlgorithmStub.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Array.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Barrier.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CellularCoupling.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ChromosomeGroup.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ChromosomeStorage.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Couplings.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Crossovers.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Exceptions.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FitnessComparators.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FitnessSharing.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GlobalRandomGenerator.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Grid.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Initialization.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\List.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Matings.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Migrations.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Mutations.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NSGA.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NSGAStub.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Observing.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PAES.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PAESStub.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PESA.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PESAStub.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Population.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PopulationOperations.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PopulationStatistics.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Random.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\RandomSequence.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\RDGA.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\RDGAStub.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Replacements.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scalings.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Selections.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SimpleStub.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SPEA.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SPEAStub.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Statistics.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\StopCriteria.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SysInfo.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tags.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Threading.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ThreadPool.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Timing.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tree.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\VEGA.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Workflows.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Adoptions.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AlgorithmStub.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Alleles.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Array.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AtomicList.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AtomicOperations.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Barrier.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Catalogue.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\CellularCoupling.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Chromosome.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ChromosomeGroup.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ChromosomeOperations.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ChromosomeStorage.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Coevolution.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Couplings.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Crossovers.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EventPool.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Exceptions.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Fitness.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FitnessComparators.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FitnessSharing.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FitnessValues.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Flags.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FPEqual.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GlobalRandomGenerator.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Grid.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Hashmap.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Initialization.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\List.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Matings.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Migrations.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Multiobjective.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Mutations.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Node.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NSGA.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NSGAStub.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ObjectPool.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Observing.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Operation.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PAES.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PAESStub.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PESA.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PESAStub.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Platform.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Population.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PopulationOperations.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PopulationStatistics.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Random.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\RandomSequence.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\RDGA.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\RDGAStub.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Replacements.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Representation.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scalings.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Selections.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SimpleStub.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SmartPtr.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Sorting.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SPEA.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SPEAStub.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Statistics.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\StopCriteria.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Synchronization.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SysInfo.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tags.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Threading.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ThreadPool.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Timing.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tree.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\VEGA.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Workflows.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gcc_bsd_debug" />
+    <None Include="gcc_bsd_release" />
+    <None Include="gcc_linux_debug" />
+    <None Include="gcc_linux_release" />
+    <None Include="gcc_macos_debug" />
+    <None Include="gcc_macos_release" />
+    <None Include="gcc_solaris_debug" />
+    <None Include="gcc_solaris_release" />
+    <None Include="icc_linux_debug" />
+    <None Include="icc_linux_release" />
+    <None Include="icc_macos_debug" />
+    <None Include="icc_macos_release" />
+    <None Include="scc_solaris_debug" />
+    <None Include="scc_solaris_release" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{ab7a4619-bb1d-4ade-ad61-45a1a8756740}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

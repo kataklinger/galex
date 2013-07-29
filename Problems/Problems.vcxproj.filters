@@ -7,9 +7,6 @@
     <Filter Include="TNG">
       <UniqueIdentifier>{0daa288b-c954-4ddc-8064-fe5606fbef67}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CSP">
-      <UniqueIdentifier>{51864325-dc93-4dc6-ab84-4546fb9f6916}</UniqueIdentifier>
-    </Filter>
     <Filter Include="XKCD">
       <UniqueIdentifier>{769fb823-2771-4167-aecf-757d4a51280e}</UniqueIdentifier>
     </Filter>
@@ -21,9 +18,6 @@
     <ClInclude Include="TNG.h">
       <Filter>TNG</Filter>
     </ClInclude>
-    <ClInclude Include="CSP.h">
-      <Filter>CSP</Filter>
-    </ClInclude>
     <ClInclude Include="XKCD.h">
       <Filter>XKCD</Filter>
     </ClInclude>
@@ -34,9 +28,6 @@
     </ClCompile>
     <ClCompile Include="TNG.cpp">
       <Filter>TNG</Filter>
-    </ClCompile>
-    <ClCompile Include="CSP.cpp">
-      <Filter>CSP</Filter>
     </ClCompile>
     <ClCompile Include="XKCD.cpp">
       <Filter>XKCD</Filter>

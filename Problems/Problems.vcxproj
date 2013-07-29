@@ -11,19 +11,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CSP.h" />
     <ClInclude Include="F1.h" />
     <ClInclude Include="TNG.h" />
     <ClInclude Include="XKCD.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CSP.cpp" />
     <ClCompile Include="F1.cpp" />
     <ClCompile Include="TNG.cpp" />
     <ClCompile Include="XKCD.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GeneticLibrary2.vcxproj">
+    <ProjectReference Include="..\GALex.vcxproj">
       <Project>{55d67b0e-145c-4cdd-bc27-0de87a86d821}</Project>
     </ProjectReference>
   </ItemGroup>
