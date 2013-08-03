@@ -109,9 +109,9 @@ namespace Common
 
 				baseNode->_previous->_next = node;
 				baseNode->_previous = node;
-			}
 
-			_count++;
+				_count++;
+			}
 		}
 
 		// Adds new node after specified node
@@ -132,9 +132,9 @@ namespace Common
 
 				baseNode->_next->_previous = node;
 				baseNode->_next = node;
-			}
 
-			_count++;
+				_count++;
+			}
 		}
 
 		// Merges two lists
@@ -219,6 +219,55 @@ namespace Common
 					delete DetachNode( node );
 				}
 			}
+		}
+
+		// Detaches node from the list and upsates node count
+		GaListNodeBase* GaListBase::DetachNode(GaListNodeBase* node)
+		{
+			GA_ARG_ASSERT( Exceptions::GaNullArgumentException, node != NULL, "node", "Node that should be detached from the list must be specified.", "Data" );
+
+			// if head is detached
+			if( node == _head )
+			{
+				// find a new head
+				_head = _head->_next;
+
+				// this was the last node in the list
+				if( !_head )
+					// list is empty so there's no tail either
+					_tail = NULL;
+				else
+					// disconnect node from new head
+					_head->_previous = NULL;
+			}
+			// if tail is detached
+			else if( node == _tail )
+			{
+				// find a new tile
+				_tail = _tail->_previous;
+
+				// this was the last node in the list
+				if( !_tail )
+					// list is empty so there's no head either
+					_head = NULL;
+				else
+					// disconnect node from new tail
+					_tail->_next = NULL;
+			}
+			else
+			{
+				// detach node and recconect its neighbours
+				node->_previous->_next = node->_next;
+				node->_next->_previous = node->_previous;
+			}
+
+			// mark node as unconnected
+			node->_next = node->_previous = NULL;
+
+			// decrement nod count of the list
+			_count--;
+
+			return node;
 		}
 
 		// Moves node to another position in the list
@@ -353,55 +402,6 @@ namespace Common
 			}
 
 			return true;
-		}
-
-		// Detaches node from the list and upsates node count
-		GaListNodeBase* GaListBase::DetachNode(GaListNodeBase* node)
-		{
-			GA_ARG_ASSERT( Exceptions::GaNullArgumentException, node != NULL, "node", "Node that should be detached from the list must be specified.", "Data" );
-
-			// if head is detached
-			if( node == _head )
-			{
-				// find a new head
-				_head = _head->_next;
-
-				// this was the last node in the list
-				if( !_head )
-					// list is empty so there's no tail either
-					_tail = NULL;
-				else
-					// disconnect node from new head
-					_head->_previous = NULL;
-			}
-			// if tail is detached
-			else if( node == _tail )
-			{
-				// find a new tile
-				_tail = _tail->_previous;
-
-				// this was the last node in the list
-				if( !_tail )
-					// list is empty so there's no head either
-					_head = NULL;
-				else
-					// disconnect node from new tail
-					_tail->_next = NULL;
-			}
-			else
-			{
-				// detach node and recconect its neighbours
-				node->_previous->_next = node->_next;
-				node->_next->_previous = node->_previous;
-			}
-
-			// mark node as unconnected
-			node->_next = node->_previous = NULL;
-
-			// decrement nod count of the list
-			_count--;
-
-			return node;
 		}
 
 	} // Data

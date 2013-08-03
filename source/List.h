@@ -224,6 +224,14 @@ namespace Common
 			void GACALL Remove(GaListNodeBase* node,
 				int count = 1);
 
+			/// <summary><c>DetachNode</c> method detaches specified node from the list and update node count but does not destory node.
+			///
+			/// This operator is not thread-safe.</summary>
+			/// <param name="node">pointer to node that should be detached.</param>
+			/// <returns>Method returns pointer to detached node.</returns>
+			GAL_API
+			GaListNodeBase* GACALL DetachNode(GaListNodeBase* node);
+
 			/// <summary><c>Move</c> method moves node to new position in the list.
 			///
 			/// This method is not thread-safe.</summary>
@@ -338,14 +346,6 @@ namespace Common
 			/// <param name="position">position of queried node.</param>
 			/// <returns>Operator returns pointer to the node at the specified position.</returns>
 			inline const GaListNodeBase* GACALL operator [](int position) const { return GetAt( position ); }
-
-		protected:
-
-			/// <summary><c>DetachNode</c> method detaches specified node from the list and update node count but does not destory node.</summary>
-			/// <param name="node">pointer to node that should be detached.</param>
-			/// <returns>Method returns pointer to detached node.</returns>
-			GAL_API
-			GaListNodeBase* GACALL DetachNode(GaListNodeBase* node);
 
 		};
 
