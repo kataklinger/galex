@@ -10,6 +10,9 @@
     <Filter Include="XKCD">
       <UniqueIdentifier>{769fb823-2771-4167-aecf-757d4a51280e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BPP">
+      <UniqueIdentifier>{bcbf8492-200b-4515-9416-e21f34cba725}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="F1.h">
@@ -21,6 +24,9 @@
     <ClInclude Include="XKCD.h">
       <Filter>XKCD</Filter>
     </ClInclude>
+    <ClInclude Include="BPP.h">
+      <Filter>BPP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="F1.cpp">
@@ -31,6 +37,9 @@
     </ClCompile>
     <ClCompile Include="XKCD.cpp">
       <Filter>XKCD</Filter>
+    </ClCompile>
+    <ClCompile Include="BPP.cpp">
+      <Filter>BPP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
