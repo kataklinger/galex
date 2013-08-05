@@ -54,13 +54,13 @@ namespace Population
 			branch->SplitWork( parameters.GetNumberOfOffsprings() / offspringCount, work, start );
 			int end = start + work;
 
-			int round = 0, parentCount = output.GetCount();
+			int round = 0, parentCount = input.GetSize();
 			for( int i = start; i < end; i++ )
 			{
 				// get enough parents to perofrm to produce offspring usign mating operation
 				int s = i * parentPerCrossover;
 				for( int j = 0; j < parentPerCrossover; j++ )
-					parents.Add( &parents[ toIndex( s + j, parentCount ) ] );
+					parents.Add( &input[ toIndex( s + j, parentCount ) ] );
 
 				// produce offspring
 				configuration.Mate( crossoverBuffer );
