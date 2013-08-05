@@ -8,6 +8,7 @@
 #include "..\..\source\StopCriteria.h"
 
 #include "..\..\source\Selections.h"
+#include "..\..\source\Couplings.h"
 #include "..\..\source\Replacements.h"
 #include "..\..\source\FitnessSharing.h"
 #include "..\..\source\Scalings.h"
@@ -37,7 +38,8 @@ Population::GaPopulationSizeTracker sizeTracker;
 Population::GaRawFitnessTracker rawTracker;
 Population::GaScaledFitnessTracker scaledTracker;
 
-Population::SelectionOperations::GaRouletteWheelSelection selection;
+Population::SelectionOperations::GaTournamentSelection selection;
+Population::CouplingOperations::GaSimpleCoupling coupling;
 Population::ReplacementOperations::GaWorstReplacement replacement;
 Population::ScalingOperations::GaNoScaling scaling;
 
@@ -122,8 +124,8 @@ int main()
 			items[ i ] = Problems::BPP::BinConfigBlock::Item( std::string( "L" ), GaGlobalRandomFloatGenerator->Generate( minItemSize, maxItemSize ) );
 
 		Chromosome::GaMatingConfig matingConfiguration(
-			Chromosome::GaCrossoverSetup( &crossover, &Chromosome::GaCrossoverPointParams( 0.8f, 2, 1 ), NULL ),
-			Chromosome::GaMutationSetup( &mutation, &Chromosome::GaMutationSizeParams( 0.3f, true, 1L ), NULL ) );
+			Chromosome::GaCrossoverSetup( &crossover, &Chromosome::GaCrossoverPointParams( 1.0f, 2, 1 ), NULL ),
+			Chromosome::GaMutationSetup( &mutation, &Chromosome::GaMutationSizeParams( 0.66f, true, 2L ), NULL ) );
 
 		Chromosome::GaInitializatorSetup initializatorSetup( &initializator, NULL, &Chromosome::GaInitializatorConfig(
 			&Problems::BPP::BinConfigBlock( items, binSize ) ) );
@@ -135,9 +137,14 @@ int main()
 		trackers[ Population::GaRawFitnessTracker::TRACKER_ID ] =  &rawTracker;
 		trackers[ Population::GaScaledFitnessTracker::TRACKER_ID ] =  &scaledTracker;
 
-		Population::GaSelectionSetup selectionSetup( &selection, &Population::SelectionOperations::GaDuplicatesSelectionParams( 8, 1, 2 ),
+		Population::GaSelectionSetup selectionSetup( &selection,
+			&Population::SelectionOperations::GaTournamentSelectionParams( 2, -1, 2, 2, Population::SelectionOperations::GaTournamentSelectionParams::GATST_ROULETTE_WHEEL_SELECTION ),
+			&Population::SelectionOperations::GaTournamentSelectionConfig( fitnessComparatorSetup, Chromosome::GaMatingSetup() ) );
+
+		Population::GaCouplingSetup couplingSetup( &coupling, &Population::GaCouplingParams( 50, 1 ),
 			&Population::GaCouplingConfig( Chromosome::GaMatingSetup( &mating, NULL, &matingConfiguration ) ) );
-		Population::GaReplacementSetup replacementSetup( &replacement, &Population::GaReplacementParams( 8 ), &Population::GaReplacementConfig() );
+
+		Population::GaReplacementSetup replacementSetup( &replacement, &Population::GaReplacementParams( 50 ), &Population::GaReplacementConfig() );
 		Population::GaScalingSetup scalingSetup( &scaling, NULL, &Population::GaScalingConfig() );
 
 		Algorithm::Stubs::GaSimpleGAStub simpleGA( WDID_POPULATION, WDID_POPULATION_STATS,
@@ -145,11 +152,11 @@ int main()
 			Population::GaPopulationFitnessOperationSetup( &populationFitnessOperation, &Problems::BPP::BinFitnessOperationParams( 2 ),
 			&Fitness::GaFitnessOperationConfig( NULL ) ),
 			fitnessComparatorSetup,
-			Population::GaPopulationParams( 32, 0, Population::GaPopulationParams::GAPFO_FILL_ON_INIT ),
+			Population::GaPopulationParams( 100, 0, Population::GaPopulationParams::GAPFO_FILL_ON_INIT ),
 			trackers,
 			Chromosome::GaMatingSetup(),
 			selectionSetup,
-			Population::GaCouplingSetup(),
+			couplingSetup,
 			replacementSetup,
 			scalingSetup,
 			Population::GaFitnessComparatorSortingCriteria( fitnessComparatorSetup, Population::GaChromosomeStorage::GAFT_RAW ) );
