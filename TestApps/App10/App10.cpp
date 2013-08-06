@@ -54,12 +54,12 @@ void GACALL MyHandler(int id, Common::Observing::GaEventData& data)
 
 	const Statistics::GaStatistics& stats = population.GetStatistics();
 
-	if( population.GetStatistics().GetCurrentGeneration() != 1 && !population.GetStatistics().GetValue<Fitness::GaFitness>( Population::GADV_BEST_FITNESS ).IsChanged( 2 ) )
+	if( stats.GetCurrentGeneration() != 1 && !stats.GetValue<Fitness::GaFitness>( Population::GADV_BEST_FITNESS ).IsChanged( 2 ) )
 		return;
 
 	const Common::Data::GaSingleDimensionArray<Problems::BPP::BinConfigBlock::Item>& items = ccb.GetItems();
 
-	std::cout << "generation: " << population.GetStatistics().GetCurrentGeneration() << std::endl;
+	std::cout << "generation: " << stats.GetCurrentGeneration() << std::endl;
 	std::cout << "-------------------------------------------------------------------------------\n";
 
 	for( int i = 0; i < population.GetCount(); i++ )
@@ -124,7 +124,7 @@ int main()
 			items[ i ] = Problems::BPP::BinConfigBlock::Item( std::string( "L" ), GaGlobalRandomFloatGenerator->Generate( minItemSize, maxItemSize ) );
 
 		Chromosome::GaMatingConfig matingConfiguration(
-			Chromosome::GaCrossoverSetup( &crossover, &Chromosome::GaCrossoverPointParams( 1.0f, 2, 1 ), NULL ),
+			Chromosome::GaCrossoverSetup( &crossover, &Chromosome::GaCrossoverParams( 1.0f, 2 ), NULL ),
 			Chromosome::GaMutationSetup( &mutation, &Chromosome::GaMutationSizeParams( 0.66f, true, 2L ), NULL ) );
 
 		Chromosome::GaInitializatorSetup initializatorSetup( &initializator, NULL, &Chromosome::GaInitializatorConfig(
@@ -160,6 +160,7 @@ int main()
 			replacementSetup,
 			scalingSetup,
 			Population::GaFitnessComparatorSortingCriteria( fitnessComparatorSetup, Population::GaChromosomeStorage::GAFT_RAW ) );
+		simpleGA.SetBranchCount( 2 );
 
 		Common::Workflows::GaWorkflow workflow( NULL );
 
