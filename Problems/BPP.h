@@ -192,7 +192,7 @@ namespace Problems
 
 			virtual int GACALL GetOffspringCount(const Chromosome::GaCrossoverParams& parameters) const { return 2; }
 
-			virtual Common::GaParameters* GACALL CreateParameters() const { return new Chromosome::GaCrossoverPointParams(); }
+			virtual Common::GaParameters* GACALL CreateParameters() const { return new Chromosome::GaCrossoverParams(); }
 
 		};
 

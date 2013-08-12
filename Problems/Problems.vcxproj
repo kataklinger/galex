@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BPP.h" />
-    <ClInclude Include="CSP.h" />
     <ClInclude Include="F1.h" />
     <ClInclude Include="TNG.h" />
     <ClInclude Include="XKCD.h" />

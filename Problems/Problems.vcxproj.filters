@@ -27,7 +27,6 @@
     <ClInclude Include="BPP.h">
       <Filter>BPP</Filter>
     </ClInclude>
-    <ClInclude Include="CSP.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="F1.cpp">

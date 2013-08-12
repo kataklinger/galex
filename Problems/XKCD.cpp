@@ -2,7 +2,6 @@
 #include "XKCD.h"
 #include "..\source\RandomSequence.h"
 
-
 namespace Problems
 {
 	namespace XKCD
@@ -20,11 +19,12 @@ namespace Problems
 			const Chromosome::GaInitializatorParams& parameters,
 			Common::Memory::GaSmartPtr<Chromosome::GaChromosomeConfigBlock> configBlock) const
 		{
-			XkcdConfigBlock& b = ( (XkcdConfigBlock&)( *configBlock ) );
 			XkcdChromosome* chromosome = new XkcdChromosome( configBlock );
 
 			if( !empty )
 			{
+				XkcdConfigBlock& b = ( (XkcdConfigBlock&)( *configBlock ) );
+
 				int limit = b.GetAppetizers().GetSize() - 1;
 				for( int i = GaGlobalRandomIntegerGenerator->Generate( limit ); i >= 0; i-- )
 					chromosome->GetGenes().InsertTail( XkcdGene( &b.GetInterval() ) );

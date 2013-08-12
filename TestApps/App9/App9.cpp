@@ -50,6 +50,8 @@ void GACALL MyHandler(int id, Common::Observing::GaEventData& data)
 	const Problems::XKCD::XkcdChromosome& chromosome = (const Problems::XKCD::XkcdChromosome&)*population[ 0 ].GetChromosome();
 	const Problems::XKCD::XkcdConfigBlock& ccb = (const Problems::XKCD::XkcdConfigBlock&)*chromosome.GetConfigBlock();
 
+	const Statistics::GaStatistics& stats = population.GetStatistics();
+
 	if( population.GetStatistics().GetCurrentGeneration() != 1 && !population.GetStatistics().GetValue<Fitness::GaFitness>( Population::GADV_BEST_FITNESS ).IsChanged( 2 ) )
 		return;
 
@@ -145,7 +147,7 @@ int main()
 		Algorithm::StopCriteria::GaStopCriterionStep* stopStep = new Algorithm::StopCriteria::GaStopCriterionStep(
 			Algorithm::StopCriteria::GaStopCriterionSetup( &stopCriterion,
 			&Algorithm::StopCriteria::GaStatsChangesCriterionParams(
-			Population::GADV_BEST_FITNESS, 1000), NULL ), workflow.GetWorkflowData(), WDID_POPULATION_STATS );
+			Population::GADV_BEST_FITNESS, 100), NULL ), workflow.GetWorkflowData(), WDID_POPULATION_STATS );
 
 		Common::Workflows::GaBranchGroupTransition* bt1 = new Common::Workflows::GaBranchGroupTransition();
 
@@ -165,4 +167,3 @@ int main()
 
 	return 0;
 }
-
