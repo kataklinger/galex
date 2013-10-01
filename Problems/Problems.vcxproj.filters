@@ -13,6 +13,9 @@
     <Filter Include="BPP">
       <UniqueIdentifier>{bcbf8492-200b-4515-9416-e21f34cba725}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CSP">
+      <UniqueIdentifier>{9463f823-fb42-446c-8d67-794a5ad8b940}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="F1.h">
@@ -27,6 +30,9 @@
     <ClInclude Include="BPP.h">
       <Filter>BPP</Filter>
     </ClInclude>
+    <ClInclude Include="CSP.h">
+      <Filter>CSP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="F1.cpp">
@@ -40,6 +46,9 @@
     </ClCompile>
     <ClCompile Include="BPP.cpp">
       <Filter>BPP</Filter>
+    </ClCompile>
+    <ClCompile Include="CSP.cpp">
+      <Filter>CSP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -12,12 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BPP.h" />
+    <ClInclude Include="CSP.h" />
     <ClInclude Include="F1.h" />
     <ClInclude Include="TNG.h" />
     <ClInclude Include="XKCD.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BPP.cpp" />
+    <ClCompile Include="CSP.cpp" />
     <ClCompile Include="F1.cpp" />
     <ClCompile Include="TNG.cpp" />
     <ClCompile Include="XKCD.cpp" />
