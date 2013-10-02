@@ -17,6 +17,7 @@
 
 #if defined(GAL_PLATFORM_WIN)
 
+	#define NOMINMAX
 	#include <windows.h>
 
 	#if defined(GAL_SYNTAX_MSVC) && !defined(GAL_SYNTAX_INTL)

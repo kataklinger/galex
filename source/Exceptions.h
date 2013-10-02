@@ -18,6 +18,7 @@
 
 #if defined(GAL_PLATFORM_WIN)
 
+#define NOMINMAX
 #include <windows.h>
 
 #endif
