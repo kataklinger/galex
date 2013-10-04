@@ -92,8 +92,14 @@ namespace Problems
 			inline int GetArea() const { return _width * _height; }
 
 			inline Size GetRotated() const { return Size( _height, _width ); }
-
+			
 			inline bool Fits(const Size& size) const { return _width >= size._width && _height >= size._height; }
+
+			inline int FitOriginal(const Size& size) const { return _width >= size._width && _height >= size._height ? ( *this - size ).GetArea() : -1; }
+
+			int FitFirst(Size& size) const;
+
+			int FitBest(Size& size) const;
 
 			Size& operator +=(const Size& rhs);
 
@@ -251,7 +257,16 @@ namespace Problems
 
 			Sheet(const Size& size) : _size(size) { _slots.push_back( Slot( Point(), _size ) ); }
 
-			bool Place(const Item& item);
+			template<typename HEURISTIC>
+			inline bool Place(const HEURISTIC& heuristic, const Item& item, bool rotation) { return Place( heuristic, item, item.GetSize(), rotation ); }
+
+			template<typename HEURISTIC>
+			bool Place(const HEURISTIC& heuristic, const Item& item, const Size& orientation, bool rotation)
+			{
+				Placement placement( item );
+				heuristic( placement, orientation, rotation, _slots ) ? AdjustSlots( placement ) : return false;
+				return true;
+			}
 
 			inline const Size& GetSize() const { return _size; }
 
@@ -259,7 +274,15 @@ namespace Problems
 
 			inline const std::vector<Slot> GetSlot() const { return _slots; }
 
+		private:
+
+			void AdjustSlots(const Placement& placement);
+
 		};
+
+		bool ClosesDistanceHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots);
+		bool LowestPositionHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots);
+		bool BestFitHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots);
 
 		class CspConfigBlock : public Chromosome::GaChromosomeConfigBlock
 		{

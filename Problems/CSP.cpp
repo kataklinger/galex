@@ -32,6 +32,37 @@ namespace Problems
 			return *this;
 		}
 
+		int Size::FitFirst(Size& size) const
+		{
+			int fit = FitOriginal( size );
+			if( fit < 0 )
+			{
+				Size rotated = size.GetRotated();
+				fit = FitOriginal( rotated );
+
+				if( fit >= 0 )
+					size = rotated;
+			}
+
+			return fit;
+		}
+
+		int Size::FitBest(Size& size) const
+		{
+			int fit = FitOriginal( size );
+
+			Size rotated = size.GetRotated();
+
+			int rotatedFit = FitOriginal( rotated );
+			if( rotatedFit >= 0 && ( fit < 0 || rotatedFit < fit ) )
+			{
+				size = rotated;
+				fit = rotatedFit;
+			}
+
+			return fit;
+		}
+
 		Size& Size::operator +=(const Size& rhs)
 		{
 			_width += rhs._width;
@@ -72,23 +103,23 @@ namespace Problems
 			if( _area.IsOverlapping( placement.GetArea() ) )
 			{
 				int distance;
-				const Rectangle& space = placement.GetArea();
+				const Rectangle& area = placement.GetArea();
 
-				distance = space.GetPosition().GetX() - _area.GetPosition().GetX();
+				distance = area.GetPosition().GetX() - _area.GetPosition().GetX();
 				if( distance > 0 )
 					AddSlot( slots, Slot( _area.GetPosition(), Size( distance, _area.GetSize().GetHeight() ) ) );
 
-				distance = _area.GetLimit().GetX() - space.GetLimit().GetX();
+				distance = _area.GetLimit().GetX() - area.GetLimit().GetX();
 				if( distance > 0 )
-					AddSlot( slots, Slot( Point( space.GetLimit().GetX(), _area.GetPosition().GetY() ), Size( distance, _area.GetSize().GetHeight() ) ) );
+					AddSlot( slots, Slot( Point( area.GetLimit().GetX(), _area.GetPosition().GetY() ), Size( distance, _area.GetSize().GetHeight() ) ) );
 
-				distance = space.GetPosition().GetY() - _area.GetPosition().GetY();
+				distance = area.GetPosition().GetY() - _area.GetPosition().GetY();
 				if( distance > 0 )
 					AddSlot( slots, Slot( _area.GetPosition(), Size( _area.GetSize().GetWidth(), distance ) ) );
 
-				distance = _area.GetLimit().GetY() - space.GetLimit().GetY();
+				distance = _area.GetLimit().GetY() - area.GetLimit().GetY();
 				if( distance > 0 )
-					AddSlot( slots, Slot( Point( _area.GetPosition().GetX(), space.GetLimit().GetY() ), Size( _area.GetSize().GetWidth(), distance ) ) );
+					AddSlot( slots, Slot( Point( _area.GetPosition().GetX(), area.GetLimit().GetY() ), Size( _area.GetSize().GetWidth(), distance ) ) );
 			}
 			else
 				AddSlot( slots, *this );
@@ -124,23 +155,18 @@ namespace Problems
 			return false;
 		}
 
-
-		bool Sheet::Place(const Item& item)
+		bool ClosesDistanceHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots)
 		{
-			Placement placement( item );
-
 			double distance = 0;
 			bool placed = false;
-			for( std::vector<Slot>::iterator it = _slots.begin(); it != _slots.end(); ++it )
+			for( std::vector<Slot>::const_iterator it = slots.begin(); it != slots.end(); ++it )
 			{
-				if( it->GetArea().GetSize().Fits( item.GetSize() ) )
+				if( it->GetArea().GetSize().FitBest( orientation ) >= 0 )
 				{
 					double d = std::sqrt( std::pow( it->GetArea().GetPosition().GetX(), 2 ) + std::pow( it->GetArea().GetPosition().GetY(), 2 ) );
-					if( !placed || d < distance
-						/* it->GetArea().GetPosition().GetX() <= placement.GetArea().GetPosition().GetX() &&
-						   it->GetArea().GetPosition().GetY() <= placement.GetArea().GetPosition().GetY() */ )
+					if( !placed || d < distance )
 					{
-						placement.SetArea( it->GetArea().GetPosition(), item.GetSize() );
+						placement.SetArea( it->GetArea().GetPosition(), orientation );
 
 						distance = d;
 						placed = true;
@@ -148,18 +174,61 @@ namespace Problems
 				}
 			}
 
-			if( placed )
+			return placed;
+		}
+
+		bool LowestPositionHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots)
+		{
+			bool placed = false;
+			for( std::vector<Slot>::const_iterator it = slots.begin(); it != slots.end(); ++it )
 			{
-				_placements.push_back( placement );
+				if( it->GetArea().GetSize().FitBest( orientation ) >= 0 )
+				{
+					if( !placed || ( it->GetArea().GetPosition().GetX() <= placement.GetArea().GetPosition().GetX() &&
+						it->GetArea().GetPosition().GetY() <= placement.GetArea().GetPosition().GetY() ) )
+					{
+						placement.SetArea( it->GetArea().GetPosition(), orientation );
 
-				std::vector<Slot> slots;
-				for( std::vector<Slot>::iterator it = _slots.begin(); it != _slots.end(); ++it )
-					it->Place( placement, slots );
-
-				_slots = slots;
+						placed = true;
+					}
+				}
 			}
 
 			return placed;
+		}
+
+		bool BestFitHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots)
+		{
+			int fit = 0;
+			bool placed = false;
+			for( std::vector<Slot>::const_iterator it = slots.begin(); it != slots.end(); ++it )
+			{
+				int f = it->GetArea().GetSize().FitBest( orientation );
+				if( f >= 0 )
+				{
+					if( !placed || f < fit )
+					{
+						placement.SetArea( it->GetArea().GetPosition(), orientation );
+
+						fit = f;
+						placed = true;
+					}
+				}
+			}
+
+			return placed;
+		}
+
+
+		void Sheet::AdjustSlots(const Placement& placement)
+		{
+			_placements.push_back( placement );
+
+			std::vector<Slot> slots;
+			for( std::vector<Slot>::iterator it = _slots.begin(); it != _slots.end(); ++it )
+				it->Place( placement, slots );
+
+			_slots = slots;
 		}
 
 		Chromosome::GaChromosomePtr CspInitializator::operator ()(bool empty,
