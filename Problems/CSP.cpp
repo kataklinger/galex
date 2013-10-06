@@ -1,5 +1,6 @@
 
 #include "CSP.h"
+#include "..\source\RandomSequence.h"
 
 #include <algorithm>
 
@@ -155,6 +156,32 @@ namespace Problems
 			return false;
 		}
 
+		void Sheet::Clear()
+		{
+			_placements.clear();
+			_slots.clear();
+		}
+
+		Sheet& Sheet::operator =(const Sheet& rhs)
+		{
+			_size = rhs._size;
+			_placements = rhs._placements;
+			_slots = rhs._slots;
+
+			return *this;
+		}
+
+		void Sheet::AdjustSlots(const Placement& placement)
+		{
+			_placements.push_back( placement );
+
+			std::vector<Slot> slots;
+			for( std::vector<Slot>::iterator it = _slots.begin(); it != _slots.end(); ++it )
+				it->Place( placement, slots );
+
+			_slots = slots;
+		}
+
 		bool ClosesDistanceHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots)
 		{
 			double distance = 0;
@@ -219,23 +246,46 @@ namespace Problems
 			return placed;
 		}
 
-
-		void Sheet::AdjustSlots(const Placement& placement)
+		void CspConfigBlock::SetItems(const Common::Data::GaSingleDimensionArray<Item>& items)
 		{
-			_placements.push_back( placement );
+			_items = items;
+			_indices.SetSize( items.GetSize() );
+			for( int i = _indices.GetSize() - 1; i >= 0; i-- )
+				_indices[ i ] = i;
+		}
 
-			std::vector<Slot> slots;
-			for( std::vector<Slot>::iterator it = _slots.begin(); it != _slots.end(); ++it )
-				it->Place( placement, slots );
-
-			_slots = slots;
+		void CspChromosome::MutationEvent(GaChromosome::GaMuataionEvent e)
+		{
+			switch( e )
+			{
+			case Chromosome::GaChromosome::GAME_PREPARE: _backup = _sheet; break;
+			case Chromosome::GaChromosome::GAME_ACCEPT: _backup.Clear(); break;
+			case Chromosome::GaChromosome::GAME_REJECT: _sheet = _backup; break;
+			}
 		}
 
 		Chromosome::GaChromosomePtr CspInitializator::operator ()(bool empty,
 			const Chromosome::GaInitializatorParams& parameters,
 			Common::Memory::GaSmartPtr<Chromosome::GaChromosomeConfigBlock> configBlock) const
 		{
-			return Chromosome::GaChromosomePtr();
+			CspChromosome* chromosome = new CspChromosome( configBlock );
+
+			if( !empty )
+			{
+				CspConfigBlock& b = ( (CspConfigBlock&)( *configBlock ) );
+
+				const Common::Data::GaSingleDimensionArray<Item>& items = b.GetItems();
+				Common::Data::GaSingleDimensionArray<int> shuffled( b.GetIndices().GetArray(), items.GetSize() );
+				Common::Random::GaShuffle( shuffled.GetArray(), items.GetSize() );
+
+				Sheet& sheet = chromosome->GetSheet();
+				for( int i = items.GetSize() - 1; i >= 0;  )
+				{
+					sheet.Place(LowestPositionHeuristic, items[ shuffled[ i ] ], items[ shuffled[ i ] ].GetSize(), true );
+				}
+			}
+
+			return chromosome;
 		}
 
 		void CspFitnessOperation::operator ()(const CspFitnessOperation::GaObjectType& object,

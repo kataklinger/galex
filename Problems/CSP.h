@@ -204,18 +204,18 @@ namespace Problems
 
 		private:
 
-			const Item& _item;
+			const Item* _item;
 
 			Rectangle _area;
 
 		public:
 
-			Placement(const Item& item) : _item(item) { }
+			Placement(const Item& item) : _item(&item) { }
 
-			Placement(const Item& item, const Point& position, const Size& rotation) : _item(item),
+			Placement(const Item& item, const Point& position, const Size& rotation) : _item(&item),
 				_area(position, rotation) { }
 
-			inline const Item& GetItem() const { return _item; }
+			inline const Item& GetItem() const { return *_item; }
 
 			void SetArea(const Point& position, const Size& rotation) { _area = Rectangle( position, rotation ); }
 
@@ -257,6 +257,10 @@ namespace Problems
 
 			Sheet(const Size& size) : _size(size) { _slots.push_back( Slot( Point(), _size ) ); }
 
+			Sheet(const Sheet& src) : _size(src._size),
+				_placements(src._placements),
+				_slots(src._slots) { }
+
 			template<typename HEURISTIC>
 			inline bool Place(const HEURISTIC& heuristic, const Item& item, bool rotation) { return Place( heuristic, item, item.GetSize(), rotation ); }
 
@@ -264,15 +268,18 @@ namespace Problems
 			bool Place(const HEURISTIC& heuristic, const Item& item, const Size& orientation, bool rotation)
 			{
 				Placement placement( item );
-				heuristic( placement, orientation, rotation, _slots ) ? AdjustSlots( placement ) : return false;
-				return true;
+				return heuristic( placement, orientation, rotation, _slots ) ? AdjustSlots( placement ), true : false;
 			}
+
+			void Clear();
 
 			inline const Size& GetSize() const { return _size; }
 
 			inline const std::vector<Placement> GetPlacements() const { return _placements; }
 
 			inline const std::vector<Slot> GetSlot() const { return _slots; }
+
+			Sheet& operator =(const Sheet& rhs);
 
 		private:
 
@@ -287,9 +294,61 @@ namespace Problems
 		class CspConfigBlock : public Chromosome::GaChromosomeConfigBlock
 		{
 
+		private:
+			
+			Common::Data::GaSingleDimensionArray<Item> _items;
+
+			Common::Data::GaSingleDimensionArray<int> _indices;
+
+			Size _sheetSize;
+
 		public:
 
+			CspConfigBlock(const Common::Data::GaSingleDimensionArray<Item>& items, const Size& sheetSize) : _sheetSize(sheetSize) { SetItems( items ); }
+
+			CspConfigBlock(const CspConfigBlock& rhs) : GaChromosomeConfigBlock(rhs),
+				_sheetSize(rhs._sheetSize) { SetItems( rhs._items ); }
+
 			virtual GaChromosomeConfigBlock* GACALL Clone() const { return new CspConfigBlock( *this ); }
+
+			inline const Common::Data::GaSingleDimensionArray<Item>& GACALL GetItems() const { return _items; }
+
+			void GACALL SetItems(const Common::Data::GaSingleDimensionArray<Item>& items);
+
+			inline const Common::Data::GaSingleDimensionArray<int>& GACALL GetIndices() const { return _indices; }
+
+			inline void GACALL SetSheetSize(const Size& size) { _sheetSize = size; }
+
+			inline const Size& GACALL GetSheetSize() const { return _sheetSize; }
+
+		};
+
+		class CspChromosome : public Chromosome::GaChromosome
+		{
+
+		private:
+
+			Sheet _sheet;
+
+			Sheet _backup;
+
+		public:
+
+			CspChromosome(Common::Memory::GaSmartPtr<Chromosome::GaChromosomeConfigBlock> configBlock) : GaChromosome(configBlock),
+				_sheet(( (const CspConfigBlock&)*configBlock ).GetSheetSize()),
+				_backup(_sheet.GetSize()){ }
+
+			CspChromosome(const CspChromosome& rhs) : GaChromosome(rhs),
+				_sheet(rhs._sheet),
+				_backup(rhs._backup) { }
+
+			virtual Common::Memory::GaSmartPtr<GaChromosome> GACALL Clone() const { return new CspChromosome( *this ); }
+
+			virtual void GACALL MutationEvent(GaChromosome::GaMuataionEvent e);
+
+			inline Sheet& GACALL GetSheet() { return _sheet; }
+
+			inline const Sheet& GACALL GetSheet() const { return _sheet; }
 
 		};
 
