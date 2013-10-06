@@ -145,7 +145,7 @@ namespace Common
 			GaGenerateRandomSequenceSort<DcsSort>( min, max, count, unique, generated );
 		}
 
-		// Generates unsorted sequence of unique random numbers
+		// Generates unsorted sequence of random numbers
 		void GaGenerateRandomSequence(int min,
 			int max,
 			int count,
@@ -185,6 +185,22 @@ namespace Common
 				// save generated number to output sequence
 				generated[ i ] = p;
 			}
+		}
+
+		// Generates unsorted sequence of random numbers
+		void GaGenerateRandomSequence(int min,
+			int max,
+			int* generated)
+		{
+			// get the size of array
+			int count = min - max;
+
+			// initialize array with values
+			for( int i = 0; i < count; i++ )
+				generated[ i ] = min + i;
+
+			// shuffle values in the array
+			GaShuffle( generated, count );
 		}
 
 	} // Random

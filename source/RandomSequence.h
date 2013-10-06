@@ -71,6 +71,19 @@ namespace Common
 			bool unique,
 			int* generated);
 
+		/// <summary><c>GaGenerateRandomSequence</c> method generates randomly ordered sequence of integer numbers
+		/// withing given interval (<c>min</c>, <c>max</c>) where each value shows exactly one time.</summary>
+		/// <param name="min">minimal value that can be generated.</param>
+		/// <param name="max">maximal value that can be generated.</param>
+		/// <param name="generated">output array to which the generated sequence will be stored.</param>
+		/// <exception cref="GaArgumentOutOfRangeException" />Thrown if maximal value is lower then minimal or if count is lower then or equal to 0
+		/// or greater then size of the interval.</exception>
+		/// <exception cref="GaNullArgumentException" />Thrown when <c>generated</c> is set to <c>NULL</c>.</exception>
+		GAL_API
+		void GACALL GaGenerateRandomSequence(int min,
+			int max,
+			int* generated);
+
 		/// <summary><c>GaShuffle</c> method shuffles array of elements of specified type.</summary>
 		/// <typeparam name="TYPE">type of elements in the array.</typeparam>
 		/// <param name="arr">pointer to array of elements that should be shuffled.</param>

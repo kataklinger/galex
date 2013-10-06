@@ -298,8 +298,6 @@ namespace Problems
 			
 			Common::Data::GaSingleDimensionArray<Item> _items;
 
-			Common::Data::GaSingleDimensionArray<int> _indices;
-
 			Size _sheetSize;
 
 		public:
@@ -313,9 +311,7 @@ namespace Problems
 
 			inline const Common::Data::GaSingleDimensionArray<Item>& GACALL GetItems() const { return _items; }
 
-			void GACALL SetItems(const Common::Data::GaSingleDimensionArray<Item>& items);
-
-			inline const Common::Data::GaSingleDimensionArray<int>& GACALL GetIndices() const { return _indices; }
+			inline void GACALL SetItems(const Common::Data::GaSingleDimensionArray<Item>& items) { _items = items; }
 
 			inline void GACALL SetSheetSize(const Size& size) { _sheetSize = size; }
 

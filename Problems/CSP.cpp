@@ -246,14 +246,6 @@ namespace Problems
 			return placed;
 		}
 
-		void CspConfigBlock::SetItems(const Common::Data::GaSingleDimensionArray<Item>& items)
-		{
-			_items = items;
-			_indices.SetSize( items.GetSize() );
-			for( int i = _indices.GetSize() - 1; i >= 0; i-- )
-				_indices[ i ] = i;
-		}
-
 		void CspChromosome::MutationEvent(GaChromosome::GaMuataionEvent e)
 		{
 			switch( e )
@@ -275,14 +267,12 @@ namespace Problems
 				CspConfigBlock& b = ( (CspConfigBlock&)( *configBlock ) );
 
 				const Common::Data::GaSingleDimensionArray<Item>& items = b.GetItems();
-				Common::Data::GaSingleDimensionArray<int> shuffled( b.GetIndices().GetArray(), items.GetSize() );
-				Common::Random::GaShuffle( shuffled.GetArray(), items.GetSize() );
+				Common::Data::GaSingleDimensionArray<int> shuffled( items.GetSize() );
+				Common::Random::GaGenerateRandomSequence( 0, items.GetSize() - 1, shuffled.GetArray() );
 
 				Sheet& sheet = chromosome->GetSheet();
-				for( int i = items.GetSize() - 1; i >= 0;  )
-				{
+				for( int i = items.GetSize() - 1; i >= 0; )
 					sheet.Place(LowestPositionHeuristic, items[ shuffled[ i ] ], items[ shuffled[ i ] ].GetSize(), true );
-				}
 			}
 
 			return chromosome;
