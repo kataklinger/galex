@@ -62,7 +62,7 @@ namespace Problems
 
 			void GACALL SetItems(const Common::Data::GaSingleDimensionArray<Item>& items);
 
-			const Common::Data::GaSingleDimensionArray<int>& GACALL GetIndices() const { return _indices; }
+			inline const Common::Data::GaSingleDimensionArray<int>& GACALL GetIndices() const { return _indices; }
 
 			inline float GACALL GetBinCapacity() const { return _binCapacity; }
 
