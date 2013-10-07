@@ -282,6 +282,27 @@ namespace Problems
 			Fitness::GaFitness& fitness,
 			const Fitness::GaFitnessOperationParams& operationParams) const
 		{
+			const CspChromosome& c = ( (const CspChromosome&)object );
+			CspFitness& f = (CspFitness&)fitness;
+
+			const Size& sheetSize = ( (CspConfigBlock&)( *c.GetConfigBlock() ) ).GetSheetSize();
+			const Common::Data::GaSingleDimensionArray<Item>& items = ( (CspConfigBlock&)( *c.GetConfigBlock() ) ).GetItems();
+			
+			int area = 0;
+			Size placementSize;
+
+			const std::vector<Placement>& placements = c.GetSheet().GetPlacements();
+			for( std::vector<Placement>::const_iterator it = placements.begin(); it != placements.end(); ++it )
+			{
+				area += it->GetArea().GetSize().GetArea();
+				if( it->GetArea().GetLimit().GetX() > placementSize.GetWidth() )
+					placementSize.SetWidth( it->GetArea().GetLimit().GetX() );
+
+				if( it->GetArea().GetLimit().GetY() > placementSize.GetHeight() )
+					placementSize.SetHeight( it->GetArea().GetLimit().GetY() );
+			}
+
+			f.SetValue( (float)placements.size() / items.GetSize() * (float)area / placementSize.GetArea() );
 		}
 
 		void CspCrossoverOperation::operator ()(Chromosome::GaCrossoverBuffer& crossoverBuffer,
