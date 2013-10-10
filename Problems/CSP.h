@@ -92,6 +92,8 @@ namespace Problems
 			inline int GetArea() const { return _width * _height; }
 
 			inline Size GetRotated() const { return Size( _height, _width ); }
+
+			inline Point ToPoint() const { return Point( _width, _height ); }
 			
 			inline bool Fits(const Size& size) const { return _width >= size._width && _height >= size._height; }
 
@@ -100,6 +102,8 @@ namespace Problems
 			int FitFirst(Size& size) const;
 
 			int FitBest(Size& size) const;
+
+			inline operator Point() const { return Point( _width, _height ); }
 
 			Size& operator +=(const Size& rhs);
 
@@ -182,10 +186,13 @@ namespace Problems
 
 			std::string _label;
 
+			int _index;
+
 		public:
 
-			Item(const Size& size, const std::string& label) : _size(size),
-				_label(label) { }
+			Item(const Size& size, const std::string& label, int index) : _size(size),
+				_label(label),
+				_index(index) { }
 
 			Item() { }
 
@@ -196,6 +203,10 @@ namespace Problems
 			inline const std::string& GetLabel() const { return _label; }
 
 			inline void SetLabel(const std::string& label) { _label = label; }
+
+			inline int GetIndex() const { return _index; }
+
+			inline void SetIndex(int index) { _index = index; }
 
 		};
 
@@ -268,8 +279,10 @@ namespace Problems
 			bool Place(const HEURISTIC& heuristic, const Item& item, const Size& orientation, bool rotation)
 			{
 				Placement placement( item );
-				return heuristic( placement, orientation, rotation, _slots ) ? AdjustSlots( placement ), true : false;
+				return heuristic( placement, orientation, rotation, _slots ) ? Place( placement ), true : false;
 			}
+
+			void Place(const Placement& placement);
 
 			void Clear();
 
@@ -280,10 +293,6 @@ namespace Problems
 			inline const std::vector<Slot> GetSlot() const { return _slots; }
 
 			Sheet& operator =(const Sheet& rhs);
-
-		private:
-
-			void AdjustSlots(const Placement& placement);
 
 		};
 

@@ -156,6 +156,17 @@ namespace Problems
 			return false;
 		}
 
+		void Sheet::Place(const Placement& placement)
+		{
+			_placements.push_back( placement );
+
+			std::vector<Slot> slots;
+			for( std::vector<Slot>::iterator it = _slots.begin(); it != _slots.end(); ++it )
+				it->Place( placement, slots );
+
+			_slots = slots;
+		}
+
 		void Sheet::Clear()
 		{
 			_placements.clear();
@@ -169,17 +180,6 @@ namespace Problems
 			_slots = rhs._slots;
 
 			return *this;
-		}
-
-		void Sheet::AdjustSlots(const Placement& placement)
-		{
-			_placements.push_back( placement );
-
-			std::vector<Slot> slots;
-			for( std::vector<Slot>::iterator it = _slots.begin(); it != _slots.end(); ++it )
-				it->Place( placement, slots );
-
-			_slots = slots;
 		}
 
 		bool ClosesDistanceHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots)
@@ -308,6 +308,57 @@ namespace Problems
 		void CspCrossoverOperation::operator ()(Chromosome::GaCrossoverBuffer& crossoverBuffer,
 			const Chromosome::GaCrossoverParams& parameters) const
 		{
+			typedef int (Point::*GetLengthPtr)() const;
+
+			const CspConfigBlock& ccb = ( (const CspConfigBlock&)*crossoverBuffer.GetParentChromosome( 0 )->GetConfigBlock() );
+
+			const Common::Data::GaSingleDimensionArray<Item>& items = ccb.GetItems();
+
+			Point limit = ccb.GetSheetSize();
+			int count = items.GetSize();
+
+			GetLengthPtr getLength = GaGlobalRandomBoolGenerator->Generate() ? &Point::GetX : &Point::GetY;
+			int point = GaGlobalRandomIntegerGenerator->Generate( 0, ( limit.*getLength )() );
+
+			Common::Data::GaSingleDimensionArray<bool> processed( count );
+
+			for( int i = 0; i < 2; i++ )
+			{
+				const Sheet& src1 = ( (const CspChromosome&)*crossoverBuffer.GetParentChromosome( i ) ).GetSheet();
+				const Sheet& src2 = ( (const CspChromosome&)*crossoverBuffer.GetParentChromosome( 1 - i ) ).GetSheet();
+
+				Chromosome::GaChromosomePtr offspring = new CspChromosome( crossoverBuffer.GetParentChromosome( 0 )->GetConfigBlock() );
+				crossoverBuffer.StoreOffspringChromosome( offspring, i );
+				Sheet& dst = ( (CspChromosome&)*offspring ).GetSheet();
+
+				for( std::vector<Placement>::const_iterator it = src1.GetPlacements().begin(); it != src1.GetPlacements().begin(); ++it )
+				{
+					if( ( it->GetArea().GetPosition().*getLength )() <= point )
+					{
+						dst.Place( *it );
+						processed[ it->GetItem().GetIndex() ] = true;
+					}
+				}
+
+				for( std::vector<Placement>::const_iterator it = src2.GetPlacements().begin(); it != src2.GetPlacements().begin(); ++it )
+				{
+					int j = it->GetItem().GetIndex();
+					if( ( it->GetArea().GetPosition().*getLength )() > point && !processed[ j ] )
+					{
+						dst.Place( LowestPositionHeuristic, it->GetItem(), it->GetArea().GetSize(), false );
+
+						processed[ j ] = true;
+					}
+				}
+
+				for( int j = count - 1; j >= 0; j-- )
+				{
+					if( !processed[ j ] )
+						dst.Place( LowestPositionHeuristic, items[ j ], items[ j ].GetSize(), true );
+
+					processed[ j ] = false;
+				}
+			}
 		}
 
 		void CspMutationOperation::operator ()(Chromosome::GaChromosome& chromosome,
