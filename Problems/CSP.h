@@ -284,6 +284,8 @@ namespace Problems
 
 			void Place(const Placement& placement);
 
+			int Remove(int index);
+
 			void Clear();
 
 			inline const Size& GetSize() const { return _size; }

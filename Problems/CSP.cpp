@@ -167,6 +167,16 @@ namespace Problems
 			_slots = slots;
 		}
 
+		int Sheet::Remove(int index)
+		{
+			Placement placement = _placements[ index ];
+			_placements.erase( _placements.begin() + index );
+
+			/* TODO: merge with others */
+
+			return placement.GetItem().GetIndex();
+		}
+
 		void Sheet::Clear()
 		{
 			_placements.clear();
@@ -364,6 +374,25 @@ namespace Problems
 		void CspMutationOperation::operator ()(Chromosome::GaChromosome& chromosome,
 			const Chromosome::GaMutationParams& parameters) const
 		{
+			const Common::Data::GaSingleDimensionArray<Item>& items = ( (const CspConfigBlock&)*chromosome.GetConfigBlock() ).GetItems();
+
+			Sheet& sheet = ( (CspChromosome&)chromosome ).GetSheet();
+
+			const std::vector<Placement>& placements = sheet.GetPlacements();
+			int cSize = placements.size();
+			int mSize = ( (const Chromosome::GaMutationSizeParams&)parameters ).CalculateMutationSize( cSize );
+
+			Common::Data::GaSingleDimensionArray<int> removed( mSize );
+			Common::Random::GaGenerateRandomSequenceAsc( 0, cSize - 1, mSize, true, removed.GetArray() );
+
+			for( int i = mSize - 1; i >= 0; i-- )
+				removed[ i ] = sheet.Remove( removed[ i ] );
+
+			for( int i = mSize - 1; i >= 0; i-- )
+			{
+				const Item& item = items[ removed[ i ] ];
+				sheet.Place( LowestPositionHeuristic, item, item.GetSize(), true );
+			}
 		}
 
 	}
