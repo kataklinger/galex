@@ -284,7 +284,7 @@ namespace Problems
 
 			void Place(const Placement& placement);
 
-			int Remove(int index);
+			void Remove(Common::Data::GaSingleDimensionArray<int>& removed);
 
 			void Clear();
 

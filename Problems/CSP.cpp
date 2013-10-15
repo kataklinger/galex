@@ -167,14 +167,25 @@ namespace Problems
 			_slots = slots;
 		}
 
-		int Sheet::Remove(int index)
+		void Sheet::Remove(Common::Data::GaSingleDimensionArray<int>& removed)
 		{
-			Placement placement = _placements[ index ];
-			_placements.erase( _placements.begin() + index );
+			std::vector<Placement> oldPlacements( _placements );
 
-			/* TODO: merge with others */
+			_placements.clear();
+			_slots.clear();
 
-			return placement.GetItem().GetIndex();
+			_slots.push_back( Slot( Point(), _size ) );
+
+			int i = 0, j = 0;
+			for( std::vector<Placement>::iterator it = oldPlacements.begin(); it != oldPlacements.end(); ++it )
+			{
+				if( i != removed[ j ] )
+					Place( *it );
+				else
+					removed[ j++ ] = it->GetItem().GetIndex();
+
+				i++;
+			}
 		}
 
 		void Sheet::Clear()
@@ -297,7 +308,7 @@ namespace Problems
 
 			const Size& sheetSize = ( (CspConfigBlock&)( *c.GetConfigBlock() ) ).GetSheetSize();
 			const Common::Data::GaSingleDimensionArray<Item>& items = ( (CspConfigBlock&)( *c.GetConfigBlock() ) ).GetItems();
-			
+
 			int area = 0;
 			Size placementSize;
 
@@ -385,8 +396,7 @@ namespace Problems
 			Common::Data::GaSingleDimensionArray<int> removed( mSize );
 			Common::Random::GaGenerateRandomSequenceAsc( 0, cSize - 1, mSize, true, removed.GetArray() );
 
-			for( int i = mSize - 1; i >= 0; i-- )
-				removed[ i ] = sheet.Remove( removed[ i ] );
+			sheet.Remove( removed );
 
 			for( int i = mSize - 1; i >= 0; i-- )
 			{
