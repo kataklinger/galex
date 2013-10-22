@@ -6,7 +6,7 @@
 
 namespace Problems
 {
-	namespace BPP
+	namespace CSP
 	{
 
 		Point& Point::operator =(const Point& rhs)

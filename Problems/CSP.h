@@ -8,7 +8,7 @@
 
 namespace Problems
 {
-	namespace BPP
+	namespace CSP
 	{
 
 		class Size;

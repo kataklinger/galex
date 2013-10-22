@@ -6,6 +6,8 @@
 #include "App11.h"
 #include "ChildView.h"
 
+#include "NewTestDlg.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -24,6 +26,9 @@ CChildView::~CChildView()
 
 BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
+	ON_COMMAND(ID_FILE_NEW_TEST, &CChildView::OnFileNewTest)
+	ON_COMMAND(ID_FILE_START, &CChildView::OnFileStart)
+	ON_COMMAND(ID_FILE_STOP, &CChildView::OnFileStop)
 END_MESSAGE_MAP()
 
 
@@ -52,3 +57,25 @@ void CChildView::OnPaint()
 	// Do not call CWnd::OnPaint() for painting messages
 }
 
+
+
+void CChildView::OnFileNewTest()
+{
+	CNewTestDlg dlg;
+	if( dlg.DoModal() == IDOK )
+	{
+		/* set new algorithm */
+	}
+}
+
+
+void CChildView::OnFileStart()
+{
+	// TODO: Add your command handler code here
+}
+
+
+void CChildView::OnFileStop()
+{
+	// TODO: Add your command handler code here
+}

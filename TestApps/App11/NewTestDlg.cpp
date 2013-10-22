@@ -13,13 +13,13 @@ IMPLEMENT_DYNAMIC(CNewTestDlg, CDialogEx)
 
 CNewTestDlg::CNewTestDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CNewTestDlg::IDD, pParent)
-	, m_sheetWidth(0)
-	, m_sheetHeight(0)
-	, m_itemMinWidth(0)
-	, m_itemMaxWidth(0)
-	, m_itemMinHeight(0)
-	, m_itemMaxHeight(0)
-	, m_itemCount(0)
+	, m_sheetWidth(1)
+	, m_sheetHeight(1)
+	, m_itemMinWidth(1)
+	, m_itemMaxWidth(1)
+	, m_itemMinHeight(1)
+	, m_itemMaxHeight(1)
+	, m_itemCount(1)
 {
 
 }
@@ -39,7 +39,7 @@ void CNewTestDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_ITEM_MAX_HEIGHT, m_itemMaxHeight);
 	DDX_Text(pDX, IDC_ITEM_COUNT, m_itemCount);
 	DDV_MinMaxInt(pDX, m_sheetWidth, 1, INT_MAX);
-	DDV_MinMaxInt(pDX, m_sheetHeight, m_sheetWidth + 1, INT_MAX);
+	DDV_MinMaxInt(pDX, m_sheetHeight, 1, INT_MAX);
 	DDV_MinMaxInt(pDX, m_itemMinWidth, 1, m_sheetWidth);
 	DDV_MinMaxInt(pDX, m_itemMaxWidth, m_itemMinWidth, m_sheetWidth);
 	DDV_MinMaxInt(pDX, m_itemMinHeight, 1, m_sheetHeight);

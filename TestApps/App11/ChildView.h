@@ -32,5 +32,9 @@ public:
 protected:
 	afx_msg void OnPaint();
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnFileNewTest();
+	afx_msg void OnFileStart();
+	afx_msg void OnFileStop();
 };
 
