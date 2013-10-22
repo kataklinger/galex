@@ -21,6 +21,7 @@
 #include "ThreadPool.h"
 #include "Barrier.h"
 #include "SmartPtr.h"
+#include "Observing.h"
 
 namespace Common
 {
@@ -2576,6 +2577,16 @@ namespace Common
 
 			GA_SYNC_CLASS
 
+		public:
+			/// <summary>Defines IDs of population's events.</summary>
+			enum GaWorkflowEvents
+			{
+
+				/// <summary>ID of the event raised after the state of workflow has been changed.</summary>
+				GAWE_STATE_CHANGED
+
+			};
+
 		private:
 			
 			/// <summary>Pointer to data storage for global data.</summary>
@@ -2629,6 +2640,9 @@ namespace Common
 
 			/// <summary>Array of counters for counting currently active and paused elements of the workflow.</summary>
 			Threading::GaAtomic<int> _counters[ GACT_NUMBER_OF_COUNTERS ];
+
+			/// <summary>Event manager of the workflow.</summary>
+			Common::Observing::GaEventManager _events;
 
 		public:
 
@@ -2774,6 +2788,14 @@ namespace Common
 			/// <returns>Method returns current state of the workflow's execution.</returns>
 			inline GaWorkflowState GACALL GetState() const { return _state; }
 
+			/// <summary>This method is thread-safe.</summary>
+			/// <returns>Method returns reference to event manager of the workflow.</returns>
+			inline Common::Observing::GaEventManager& GACALL GetEventManager() { return _events; }
+
+			/// <summary>This method is thread-safe.</summary>
+			/// <returns>Method returns reference to event manager of the workflow.</returns>
+			inline const Common::Observing::GaEventManager& GACALL GetEventManager() const { return _events; }
+
 		protected:
 
 			/// <summary><c>CheckBranchGroupTransitionConnections</c> method check all branch group tranistion connections.
@@ -2783,6 +2805,61 @@ namespace Common
 			/// <returns>Method returns <c>true</c> if all branch group tranistion connections are valid.</returns>
 			GAL_API
 			bool GACALL CheckBranchGroupTransitionConnections(const GaBranchGroup* ignoreConnection = NULL);
+
+		};
+
+		/// <summary><c>GaWorkflowStateEventData</c> class stores data for event raised when state of workflow is changed.
+		///
+		/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
+		/// No public or private methods are thread-safe.</summary>
+		class GaWorkflowStateEventData : public Common::Observing::GaEventData
+		{
+
+		private:
+
+			/// <summary>Workflow whose state has been change.</summary>
+			GaWorkflow* _workflow;
+
+			/// <summary>New state of the workflow.</summary>
+			GaWorkflowState _newState;
+
+		public:
+
+			/// <summary>Initializes event data with pointer to population that raised event.</summary>
+			/// <param name="workflow">workflow whose state has been change.</param>
+			GaWorkflowStateEventData(GaWorkflow* workflow, GaWorkflowState newState) : _workflow(workflow),
+				_newState(newState) { }
+
+			/// <summary>Initializes empty event data object.</summary>
+			GaWorkflowStateEventData() : _workflow(NULL), _newState(GAWS_STOPPED) { }
+
+			/// <summary><c>SetWorkflow</c> method sets workflow whose state has been change.
+			///
+			/// This method is not thread-safe.</summary>
+			/// <param name="workflow">change workflow.</param>
+			inline void GACALL SetWorkflow(GaWorkflow* workflow) { _workflow = _workflow; }
+
+			/// <summary>This method is not thread-safe.</summary>
+			/// <returns>Method returns workflow whose state has been change.</returns>
+			inline GaWorkflow& GACALL GetWorkflow() { return *_workflow; }
+
+			/// <summary>This method is not thread-safe.</summary>
+			/// <returns>Method returns workflow whose state has been change.</returns>
+			inline const GaWorkflow& GACALL GetWorkflow() const { return *_workflow; }
+
+			/// <summary>This method is not thread-safe.</summary>
+			/// <returns>Method returns <c>true</c> if event has valid reference to workflow object.</returns>
+			inline bool GACALL HasWorkflow() const { return _workflow != NULL; }
+
+			/// <summary><c>SetNewState</c> method sets new state of the workflow.
+			///
+			/// This method is not thread-safe.</summary>
+			/// <param name="newState">new state of the workflow.</param>
+			inline void GACALL SetNewState(GaWorkflowState newState) { _newState = newState; }
+
+			/// <summary>This method is not thread-safe.</summary>
+			/// <returns>Method returns new state of the workflow.</returns>
+			inline GaWorkflowState GACALL GetNewState() const { return _newState; }
 
 		};
 
