@@ -1166,6 +1166,10 @@ namespace Common
 
 				// start execution
 				(*_firstStep)( NULL );
+
+				// raise state change event while the workflow is not locked
+				GA_UNLOCK( lock );
+				_events.RaiseEvent( GAWE_STATE_CHANGED, GaWorkflowStateEventData( this, GAWS_RUNNING ) );
 			}
 			else
 				GA_THROW( Exceptions::GaInvalidOperationException, "Workflow is already running or it is paused.", "Workflows" );
@@ -1184,6 +1188,10 @@ namespace Common
 
 				// wait for all barriers and branch groups to resume their execution
 				_stateChangeEvent->Wait();
+
+				// raise state change event while the workflow is not locked
+				GA_UNLOCK( lock );
+				_events.RaiseEvent( GAWE_STATE_CHANGED, GaWorkflowStateEventData( this, GAWS_RUNNING ) );
 			}
 			else
 				GA_THROW( Exceptions::GaInvalidOperationException, "Cannot resume workflow which is not paused.", "Workflows" );
@@ -1196,8 +1204,14 @@ namespace Common
 
 			// pause workflow only if it was running
 			if( Threading::GaAtomicOps<GaWorkflowState>::CmpXchg( &_state, GAWS_RUNNING, GAWS_PAUSED ) )
+			{
 				// wait for all barriers and branch groups to pause their execution
 				_stateChangeEvent->Wait();
+
+				// raise state change event while the workflow is not locked
+				GA_UNLOCK( lock );
+				_events.RaiseEvent( GAWE_STATE_CHANGED, GaWorkflowStateEventData( this, GAWS_PAUSED ) );
+			}
 			else
 				GA_THROW( Exceptions::GaInvalidOperationException, "Workflow is already paused or it is stopped.", "Workflows" );
 		}
@@ -1207,16 +1221,31 @@ namespace Common
 		{
 			GA_LOCK_THIS_OBJECT( lock );
 
+			bool raise = false;
+
 			// stop workflow only if it was running
-			if( Threading::GaAtomicOps<GaWorkflowState>::CmpXchg( &_state, GAWS_RUNNING, GAWS_STOPPED ) ) 
+			if( Threading::GaAtomicOps<GaWorkflowState>::CmpXchg( &_state, GAWS_RUNNING, GAWS_STOPPED ) )
+			{
 				// wait for all barriers and branches to finish their execution 
 				_stateChangeEvent->Wait();
+
+				raise = true;
+			}
 			// or if it was paused
 			else if( Threading::GaAtomicOps<GaWorkflowState>::CmpXchg( &_state, GAWS_PAUSED, GAWS_STOPPED ) )
 			{
 				// release suspended branches and barriers and wait for them to finish their execution
 				_pauseEvent->Signal();
 				_stateChangeEvent->Wait();
+
+				raise = true;
+			}
+
+			if( raise )
+			{
+				// raise state change event while the workflow is not locked
+				GA_UNLOCK( lock );
+				_events.RaiseEvent( GAWE_STATE_CHANGED, GaWorkflowStateEventData( this, GAWS_STOPPED ) );
 			}
 		}
 
@@ -1231,6 +1260,9 @@ namespace Common
 				_state = GAWS_STOPPED;
 				_endEvent->Signal();
 				_stateChangeEvent->Signal();
+
+				// raise state change event
+				_events.RaiseEvent( GAWE_STATE_CHANGED, GaWorkflowStateEventData( this, GAWS_STOPPED ) );
 			}
 		}
 

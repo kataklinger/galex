@@ -1390,7 +1390,7 @@ namespace Population
 	/// <summary>Tag datatype for storing per-branch crossover buffers.</summary>
 	typedef Common::Data::GaSingleDimensionArray<GaCrossoverStorageBuffer> GaPartialCrossoverBuffer;
 
-	/// <summary><c>GaPopulationEventData</c> class base class for storing data of events raised by population of chromosomes.
+	/// <summary><c>GaPopulationEventData</c> is base class for storing data of events raised by population of chromosomes.
 	///
 	/// This class has no built-in synchronizator, so <c>GA_LOCK_OBJECT</c> and <c>GA_LOCK_THIS_OBJECT</c> macros cannot be used with instances of this class.
 	/// No public or private methods are thread-safe.</summary>
