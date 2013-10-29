@@ -15,7 +15,9 @@
 
 // CChildView
 
-CChildView::CChildView()
+CChildView::CChildView() : _nextGenerationHandler(this, &CChildView::HandleNextGeneration),
+	_stateChangeHandler(this, &CChildView::HandleStateChange),
+	_algorithm(&_nextGenerationHandler, &_stateChangeHandler)
 {
 }
 
@@ -57,25 +59,50 @@ void CChildView::OnPaint()
 	// Do not call CWnd::OnPaint() for painting messages
 }
 
+void CChildView::HandleNextGeneration(int id, Common::Observing::GaEventData& data)
+{
+}
 
+void CChildView::HandleStateChange(int id, Common::Observing::GaEventData& data)
+{
+	Common::Workflows::GaWorkflowStateEventData& d = (Common::Workflows::GaWorkflowStateEventData&)data;
+
+	CMenu* menu = AfxGetMainWnd()->GetMenu();
+
+	if(d.GetNewState() == Common::Workflows::GAWS_RUNNING)
+	{
+		menu->EnableMenuItem(ID_FILE_NEW_TEST, FALSE);
+		menu->EnableMenuItem(ID_FILE_START, FALSE);
+		menu->EnableMenuItem(ID_FILE_STOP, TRUE);
+	}
+	else if(d.GetNewState() == Common::Workflows::GAWS_STOPPED)
+	{
+		menu->EnableMenuItem(ID_FILE_NEW_TEST, TRUE);
+		menu->EnableMenuItem(ID_FILE_START, FALSE);
+		menu->EnableMenuItem(ID_FILE_STOP, FALSE);
+	}
+}
 
 void CChildView::OnFileNewTest()
 {
 	CNewTestDlg dlg;
 	if( dlg.DoModal() == IDOK )
 	{
-		/* set new algorithm */
+		_algorithm.SetParameters(dlg.GetSheetWidth(), dlg.GetSheetHeight(), 
+			dlg.GetItemMinWidth(), dlg.GetItemMaxWidth(), dlg.GetItemMinHeight(), dlg.GetItemMaxHeight(), dlg.GetItemCount());
+
+		AfxGetMainWnd()->GetMenu()->EnableMenuItem(ID_FILE_NEW_TEST, TRUE);
 	}
 }
 
 
 void CChildView::OnFileStart()
 {
-	// TODO: Add your command handler code here
+	_algorithm.Start();
 }
 
 
 void CChildView::OnFileStop()
 {
-	// TODO: Add your command handler code here
+	_algorithm.Stop();
 }

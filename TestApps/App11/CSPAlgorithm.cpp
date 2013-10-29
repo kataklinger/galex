@@ -1,10 +1,14 @@
 
 #include "CSPAlgorithm.h"
 
-CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* handler) : _populationFitnessOperation(&_fitnessOperation),
+CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler,
+	Common::Observing::GaEventHandler* stateChangedHandler) : 
+	_populationFitnessOperation(&_fitnessOperation),
 	_workflow(NULL)
 {
 	GaInitialize();
+
+	_workflow.GetEventManager().AddEventHandler( Common::Workflows::GaWorkflow::GAWE_STATE_CHANGED, stateChangedHandler );
 
 	Chromosome::GaMatingConfig matingConfiguration(
 		Chromosome::GaCrossoverSetup( &_crossover, &Chromosome::GaCrossoverParams( 1.0f, 2 ), NULL ),
@@ -63,7 +67,7 @@ CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* handler) : _popula
 
 	Common::Workflows::GaDataCache<Population::GaPopulation> population( _workflow.GetWorkflowData(), WDID_POPULATION );
 
-	population.GetData().GetEventManager().AddEventHandler( Population::GaPopulation::GAPE_NEW_GENERATION, handler );
+	population.GetData().GetEventManager().AddEventHandler( Population::GaPopulation::GAPE_NEW_GENERATION, newGenHandler );
 }
 
 CSPAlgorithm::~CSPAlgorithm()
@@ -86,14 +90,4 @@ void CSPAlgorithm::SetParameters(int sWidth, int sHeight, int iMinWidth, int iMa
 
 	Common::Workflows::GaDataCache<Population::GaPopulation> population( _workflow.GetWorkflowData(), WDID_POPULATION );
 	population.GetData().SetInitializator( initializatorSetup );
-}
-
-void CSPAlgorithm::Start()
-{
-	_workflow.Start();
-}
-
-void CSPAlgorithm::Stop()
-{
-	_workflow.Stop();
 }

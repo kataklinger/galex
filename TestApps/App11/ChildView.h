@@ -5,11 +5,20 @@
 
 #pragma once
 
+#include "CSPAlgorithm.h"
 
 // CChildView window
 
 class CChildView : public CWnd
 {
+private:
+	Common::Observing::GaMemberEventHandler<CChildView> _nextGenerationHandler;
+	Common::Observing::GaMemberEventHandler<CChildView> _stateChangeHandler;
+
+
+
+	CSPAlgorithm _algorithm;
+
 // Construction
 public:
 	CChildView();
@@ -27,6 +36,10 @@ public:
 // Implementation
 public:
 	virtual ~CChildView();
+
+private:
+	void GACALL HandleNextGeneration(int id, Common::Observing::GaEventData& data);
+	void GACALL HandleStateChange(int id, Common::Observing::GaEventData& data);
 
 	// Generated message map functions
 protected:

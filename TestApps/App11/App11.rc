@@ -80,8 +80,8 @@ BEGIN
     POPUP "&File"
     BEGIN
         MENUITEM "&New...\tCtrl+N",             ID_FILE_NEW_TEST
-        MENUITEM "&Start\tCtrl+S",              ID_FILE_START
-        MENUITEM "Sto&p\tCtrl+P",               ID_FILE_STOP
+        MENUITEM "&Start\tCtrl+S",              ID_FILE_START, INACTIVE
+        MENUITEM "Sto&p\tCtrl+P",               ID_FILE_STOP, INACTIVE
         MENUITEM SEPARATOR
         MENUITEM "E&xit\tAlt+F4",               ID_APP_EXIT
     END
