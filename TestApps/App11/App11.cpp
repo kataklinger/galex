@@ -9,6 +9,8 @@
 #include "MainFrm.h"
 #include "afxlinkctrl.h"
 
+#include "..\..\source\Initialization.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -55,6 +57,7 @@ BOOL CApp11App::InitInstance()
 
 	CWinApp::InitInstance();
 
+	GaInitialize();
 
 	EnableTaskbarInteraction(FALSE);
 
@@ -94,7 +97,8 @@ BOOL CApp11App::InitInstance()
 
 int CApp11App::ExitInstance()
 {
-	//TODO: handle additional resources you may have added
+	GaFinalize();
+
 	return CWinApp::ExitInstance();
 }
 

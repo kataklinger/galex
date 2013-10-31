@@ -193,7 +193,7 @@ namespace Common
 			int* generated)
 		{
 			// get the size of array
-			int count = min - max;
+			int count = max - min;
 
 			// initialize array with values
 			for( int i = 0; i < count; i++ )

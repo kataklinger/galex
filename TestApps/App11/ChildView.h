@@ -15,7 +15,11 @@ private:
 	Common::Observing::GaMemberEventHandler<CChildView> _nextGenerationHandler;
 	Common::Observing::GaMemberEventHandler<CChildView> _stateChangeHandler;
 
+	CCriticalSection _sect;
 
+	Problems::CSP::Size _sheetSize;
+	std::vector<Problems::CSP::Placement> _placements;
+	float _fitness;
 
 	CSPAlgorithm _algorithm;
 

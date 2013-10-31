@@ -290,9 +290,9 @@ namespace Problems
 
 			inline const Size& GetSize() const { return _size; }
 
-			inline const std::vector<Placement> GetPlacements() const { return _placements; }
+			inline const std::vector<Placement>& GetPlacements() const { return _placements; }
 
-			inline const std::vector<Slot> GetSlot() const { return _slots; }
+			inline const std::vector<Slot>& GetSlots() const { return _slots; }
 
 			Sheet& operator =(const Sheet& rhs);
 

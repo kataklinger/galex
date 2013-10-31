@@ -13,13 +13,13 @@ IMPLEMENT_DYNAMIC(CNewTestDlg, CDialogEx)
 
 CNewTestDlg::CNewTestDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CNewTestDlg::IDD, pParent)
-	, m_sheetWidth(1)
-	, m_sheetHeight(1)
-	, m_itemMinWidth(1)
-	, m_itemMaxWidth(1)
-	, m_itemMinHeight(1)
-	, m_itemMaxHeight(1)
-	, m_itemCount(1)
+	, m_sheetWidth(500)
+	, m_sheetHeight(500)
+	, m_itemMinWidth(5)
+	, m_itemMaxWidth(5)
+	, m_itemMinHeight(50)
+	, m_itemMaxHeight(50)
+	, m_itemCount(15)
 {
 
 }

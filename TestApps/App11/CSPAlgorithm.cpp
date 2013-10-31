@@ -6,8 +6,6 @@ CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler,
 	_populationFitnessOperation(&_fitnessOperation),
 	_workflow(NULL)
 {
-	GaInitialize();
-
 	_workflow.GetEventManager().AddEventHandler( Common::Workflows::GaWorkflow::GAWE_STATE_CHANGED, stateChangedHandler );
 
 	Chromosome::GaMatingConfig matingConfiguration(
@@ -73,8 +71,6 @@ CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler,
 CSPAlgorithm::~CSPAlgorithm()
 {
 	_workflow.Wait();
-
-	GaFinalize();
 }
 
 void CSPAlgorithm::SetParameters(int sWidth, int sHeight, int iMinWidth, int iMaxWidth, int iMinHeight, int iMaxHeight, int iCount)
@@ -82,7 +78,7 @@ void CSPAlgorithm::SetParameters(int sWidth, int sHeight, int iMinWidth, int iMa
 	Common::Data::GaSingleDimensionArray<Problems::CSP::Item> items( iCount );
 	for( int i = 0; i < iCount; i++ )
 		items[ i ] = Problems::CSP::Item( 
-		Problems::CSP::Size(GaGlobalRandomFloatGenerator->Generate( iMinWidth, iMaxWidth ), GaGlobalRandomFloatGenerator->Generate( iMinHeight, iMaxHeight ) ),
+		Problems::CSP::Size(GaGlobalRandomIntegerGenerator->Generate( iMinWidth, iMaxWidth ), GaGlobalRandomIntegerGenerator->Generate( iMinHeight, iMaxHeight ) ),
 		std::string( "L" ),  i );
 
 	Chromosome::GaInitializatorSetup initializatorSetup( &_initializator, NULL, &Chromosome::GaInitializatorConfig(

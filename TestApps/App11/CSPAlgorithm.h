@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "..\..\source\Initialization.h"
 #include "..\..\Problems\CSP.h"
 #include "..\..\source\Crossovers.h"
 #include "..\..\source\SimpleStub.h"

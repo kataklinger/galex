@@ -292,7 +292,7 @@ namespace Problems
 				Common::Random::GaGenerateRandomSequence( 0, items.GetSize() - 1, shuffled.GetArray() );
 
 				Sheet& sheet = chromosome->GetSheet();
-				for( int i = items.GetSize() - 1; i >= 0; )
+				for( int i = items.GetSize() - 1; i >= 0; i-- )
 					sheet.Place(LowestPositionHeuristic, items[ shuffled[ i ] ], items[ shuffled[ i ] ].GetSize(), true );
 			}
 
