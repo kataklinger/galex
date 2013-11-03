@@ -351,7 +351,7 @@ namespace Problems
 				Chromosome::GaChromosomePtr offspring = new CspChromosome( crossoverBuffer.GetParentChromosome( 0 )->GetConfigBlock() );
 				Sheet& dst = ( (CspChromosome&)*offspring ).GetSheet();
 
-				for( std::vector<Placement>::const_iterator it = src1.GetPlacements().begin(); it != src1.GetPlacements().begin(); ++it )
+				for( std::vector<Placement>::const_iterator it = src1.GetPlacements().begin(); it != src1.GetPlacements().end(); ++it )
 				{
 					if( ( it->GetArea().GetPosition().*getLength )() <= point )
 					{

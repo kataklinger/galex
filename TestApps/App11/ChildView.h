@@ -20,6 +20,7 @@ private:
 	Problems::CSP::Size _sheetSize;
 	std::vector<Problems::CSP::Placement> _placements;
 	float _fitness;
+	int _generation;
 
 	CSPAlgorithm _algorithm;
 

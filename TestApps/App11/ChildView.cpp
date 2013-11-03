@@ -78,10 +78,14 @@ void CChildView::OnPaint()
 
 	lock.Unlock();
 
-	dc.Rectangle( 0, 0, _sheetSize.GetWidth(), _sheetSize.GetHeight() );
+	CString str;
+	str.Format(L"Generation: %i, Fitness: %f", _generation, _fitness );
+	dc.TextOut( 10, 10, str );
+
+	dc.Rectangle( 10, 50, 10 + _sheetSize.GetWidth(), 50 + _sheetSize.GetHeight() );
 	for( std::vector<Problems::CSP::Placement>::iterator it = placements.begin(); it != placements.end(); ++it )
 	{
-		dc.Rectangle(it->GetArea().GetPosition().GetX(), it->GetArea().GetPosition().GetY(), it->GetArea().GetLimit().GetX(), it->GetArea().GetLimit().GetY() );
+		dc.Rectangle(10 + it->GetArea().GetPosition().GetX(), 50 + it->GetArea().GetPosition().GetY(), 10 + it->GetArea().GetLimit().GetX(), 50 + it->GetArea().GetLimit().GetY() );
 	}
 
 	wndDC.BitBlt( 0, 0, clientRect.Width(), clientRect.Height(), &dc, 0, 0, SRCCOPY );
@@ -98,8 +102,9 @@ void CChildView::HandleNextGeneration(int id, Common::Observing::GaEventData& da
 	//if(stats.GetCurrentGeneration() != 1)
 	//	return;
 
-	if( stats.GetCurrentGeneration() != 1 && !stats.GetValue<Fitness::GaFitness>( Population::GADV_BEST_FITNESS ).IsChanged( 2 ) )
-		return;
+	_generation = stats.GetCurrentGeneration();
+	//if( _generation != 1 && !stats.GetValue<Fitness::GaFitness>( Population::GADV_BEST_FITNESS ).IsChanged( 2 ) )
+	//	return;
 
 	_placements = chromosome.GetSheet().GetPlacements();
 
