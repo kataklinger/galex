@@ -95,6 +95,9 @@ void CChildView::HandleNextGeneration(int id, Common::Observing::GaEventData& da
 	const Problems::CSP::CspConfigBlock& ccb = (const Problems::CSP::CspConfigBlock&)*chromosome.GetConfigBlock();
 
 	const Statistics::GaStatistics& stats = population.GetStatistics();
+	//if(stats.GetCurrentGeneration() != 1)
+	//	return;
+
 	if( stats.GetCurrentGeneration() != 1 && !stats.GetValue<Fitness::GaFitness>( Population::GADV_BEST_FITNESS ).IsChanged( 2 ) )
 		return;
 

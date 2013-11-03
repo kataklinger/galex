@@ -323,7 +323,7 @@ namespace Problems
 					placementSize.SetHeight( it->GetArea().GetLimit().GetY() );
 			}
 
-			f.SetValue( (float)placements.size() / items.GetSize() * (float)area / placementSize.GetArea() );
+			f.SetValue( (float)placements.size() / items.GetSize() * placementSize.GetArea() / (float)area );
 		}
 
 		void CspCrossoverOperation::operator ()(Chromosome::GaCrossoverBuffer& crossoverBuffer,
@@ -349,7 +349,6 @@ namespace Problems
 				const Sheet& src2 = ( (const CspChromosome&)*crossoverBuffer.GetParentChromosome( 1 - i ) ).GetSheet();
 
 				Chromosome::GaChromosomePtr offspring = new CspChromosome( crossoverBuffer.GetParentChromosome( 0 )->GetConfigBlock() );
-				crossoverBuffer.StoreOffspringChromosome( offspring, i );
 				Sheet& dst = ( (CspChromosome&)*offspring ).GetSheet();
 
 				for( std::vector<Placement>::const_iterator it = src1.GetPlacements().begin(); it != src1.GetPlacements().begin(); ++it )
@@ -379,6 +378,8 @@ namespace Problems
 
 					processed[ j ] = false;
 				}
+
+				crossoverBuffer.StoreOffspringChromosome( offspring, i );
 			}
 		}
 

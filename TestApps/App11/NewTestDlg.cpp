@@ -16,10 +16,10 @@ CNewTestDlg::CNewTestDlg(CWnd* pParent /*=NULL*/)
 	, m_sheetWidth(500)
 	, m_sheetHeight(500)
 	, m_itemMinWidth(5)
-	, m_itemMaxWidth(5)
-	, m_itemMinHeight(50)
-	, m_itemMaxHeight(50)
-	, m_itemCount(15)
+	, m_itemMaxWidth(100)
+	, m_itemMinHeight(5)
+	, m_itemMaxHeight(100)
+	, m_itemCount(50)
 {
 
 }
