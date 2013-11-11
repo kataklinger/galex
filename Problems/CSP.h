@@ -33,6 +33,8 @@ namespace Problems
 			Point() : _x(0),
 				_y(0) { }
 
+			inline double Distance(const Point& point) const { return std::sqrt( std::pow( _x - point._x, 2 ) + std::pow( _y - point._y, 2 ) ); }
+
 			inline void SetX(int x) { _x = x; }
 
 			inline int GetX() const { return _x; }

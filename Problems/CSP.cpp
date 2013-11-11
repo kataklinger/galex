@@ -8,7 +8,6 @@ namespace Problems
 {
 	namespace CSP
 	{
-
 		Point& Point::operator =(const Point& rhs)
 		{
 			_x = rhs._x;
@@ -203,27 +202,40 @@ namespace Problems
 			return *this;
 		}
 
-		bool ClosesDistanceHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots)
+		struct ClosestDistanceHeuristic
 		{
-			double distance = 0;
-			bool placed = false;
-			for( std::vector<Slot>::const_iterator it = slots.begin(); it != slots.end(); ++it )
-			{
-				if( it->GetArea().GetSize().FitBest( orientation ) >= 0 )
-				{
-					double d = std::sqrt( std::pow( it->GetArea().GetPosition().GetX(), 2 ) + std::pow( it->GetArea().GetPosition().GetY(), 2 ) );
-					if( !placed || d < distance )
-					{
-						placement.SetArea( it->GetArea().GetPosition(), orientation );
 
-						distance = d;
-						placed = true;
+		private:
+			
+			Point _original;
+
+		public:
+			
+			ClosestDistanceHeuristic(const Point& original) : _original(original) { }
+
+			bool operator()(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots) const
+			{
+				double distance = 0;
+				bool placed = false;
+				for( std::vector<Slot>::const_iterator it = slots.begin(); it != slots.end(); ++it )
+				{
+					if( it->GetArea().GetSize().FitBest( orientation ) >= 0 )
+					{
+						double d = it->GetArea().GetPosition().Distance(_original);
+						if( !placed || d < distance )
+						{
+							placement.SetArea( it->GetArea().GetPosition(), orientation );
+
+							distance = d;
+							placed = true;
+						}
 					}
 				}
+
+				return placed;
 			}
 
-			return placed;
-		}
+		};
 
 		bool LowestPositionHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots)
 		{
@@ -353,7 +365,7 @@ namespace Problems
 
 				for( std::vector<Placement>::const_iterator it = src1.GetPlacements().begin(); it != src1.GetPlacements().end(); ++it )
 				{
-					if( ( it->GetArea().GetPosition().*getLength )() <= point )
+					if( ( it->GetArea().GetLimit().*getLength )() > point )
 					{
 						dst.Place( *it );
 						processed[ it->GetItem().GetIndex() ] = true;
@@ -363,9 +375,9 @@ namespace Problems
 				for( std::vector<Placement>::const_iterator it = src2.GetPlacements().begin(); it != src2.GetPlacements().begin(); ++it )
 				{
 					int j = it->GetItem().GetIndex();
-					if( ( it->GetArea().GetPosition().*getLength )() > point && !processed[ j ] )
+					if( ( it->GetArea().GetLimit().*getLength )() <= point && !processed[ j ] )
 					{
-						dst.Place( LowestPositionHeuristic, it->GetItem(), it->GetArea().GetSize(), false );
+						dst.Place( ClosestDistanceHeuristic( it->GetArea().GetPosition() ), it->GetItem(), it->GetArea().GetSize(), false );
 
 						processed[ j ] = true;
 					}
