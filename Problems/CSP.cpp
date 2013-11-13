@@ -305,7 +305,7 @@ namespace Problems
 
 				Sheet& sheet = chromosome->GetSheet();
 				for( int i = items.GetSize() - 1; i >= 0; i-- )
-					sheet.Place(LowestPositionHeuristic, items[ shuffled[ i ] ], items[ shuffled[ i ] ].GetSize(), true );
+					sheet.Place(BestFitHeuristic, items[ shuffled[ i ] ], items[ shuffled[ i ] ].GetSize(), true );
 			}
 
 			return chromosome;
@@ -321,21 +321,31 @@ namespace Problems
 			const Size& sheetSize = ( (CspConfigBlock&)( *c.GetConfigBlock() ) ).GetSheetSize();
 			const Common::Data::GaSingleDimensionArray<Item>& items = ( (CspConfigBlock&)( *c.GetConfigBlock() ) ).GetItems();
 
-			int area = 0;
-			Size placementSize;
+			//int area = 0;
+			//Size placementSize;
 
-			const std::vector<Placement>& placements = c.GetSheet().GetPlacements();
-			for( std::vector<Placement>::const_iterator it = placements.begin(); it != placements.end(); ++it )
+			//
+			//for( std::vector<Placement>::const_iterator it = placements.begin(); it != placements.end(); ++it )
+			//{
+			//	area += it->GetArea().GetSize().GetArea();
+			//	if( it->GetArea().GetLimit().GetX() > placementSize.GetWidth() )
+			//		placementSize.SetWidth( it->GetArea().GetLimit().GetX() );
+
+			//	if( it->GetArea().GetLimit().GetY() > placementSize.GetHeight() )
+			//		placementSize.SetHeight( it->GetArea().GetLimit().GetY() );
+			//}
+
+			int savedArea = 0;
+			const std::vector<Slot>& slots = c.GetSheet().GetSlots();
+			for( std::vector<Slot>::const_iterator it = slots.begin(); it != slots.end(); ++it )
 			{
-				area += it->GetArea().GetSize().GetArea();
-				if( it->GetArea().GetLimit().GetX() > placementSize.GetWidth() )
-					placementSize.SetWidth( it->GetArea().GetLimit().GetX() );
-
-				if( it->GetArea().GetLimit().GetY() > placementSize.GetHeight() )
-					placementSize.SetHeight( it->GetArea().GetLimit().GetY() );
+				int a = it->GetArea().GetSize().GetArea();
+				if( a > savedArea )
+					savedArea = a;
 			}
 
-			f.SetValue( (float)placements.size() / items.GetSize() * placementSize.GetArea() / (float)area );
+			const std::vector<Placement>& placements = c.GetSheet().GetPlacements();
+			f.SetValue( (float)placements.size() / items.GetSize() * savedArea / sheetSize.GetArea() );
 		}
 
 		void CspCrossoverOperation::operator ()(Chromosome::GaCrossoverBuffer& crossoverBuffer,
