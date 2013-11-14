@@ -2,7 +2,7 @@
 #pragma once
 
 #include "..\..\Problems\CSP.h"
-#include "..\..\source\Crossovers.h"
+#include "..\..\source\Mutations.h"
 #include "..\..\source\SimpleStub.h"
 #include "..\..\source\Matings.h"
 #include "..\..\source\PopulationStatistics.h"
@@ -26,7 +26,7 @@ private:
 
 	Problems::CSP::CspInitializator _initializator;
 	Problems::CSP::CspCrossoverOperation _crossover;
-	Problems::CSP::CspMutationOperation _mutation;
+	Chromosome::MutationOperations::GaSwapArrayNodesMutation _mutation;
 	Problems::CSP::CspFitnessOperation _fitnessOperation;
 	Fitness::Comparators::GaSimpleComparator _fitnessComparator;
 

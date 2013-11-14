@@ -332,34 +332,7 @@ namespace Problems
 
 		};
 
-		class CspChromosome : public Chromosome::GaChromosome
-		{
-
-		private:
-
-			Sheet _sheet;
-
-			Sheet _backup;
-
-		public:
-
-			CspChromosome(Common::Memory::GaSmartPtr<Chromosome::GaChromosomeConfigBlock> configBlock) : GaChromosome(configBlock),
-				_sheet(( (const CspConfigBlock&)*configBlock ).GetSheetSize()),
-				_backup(_sheet.GetSize()){ }
-
-			CspChromosome(const CspChromosome& rhs) : GaChromosome(rhs),
-				_sheet(rhs._sheet),
-				_backup(rhs._backup) { }
-
-			virtual Common::Memory::GaSmartPtr<GaChromosome> GACALL Clone() const { return new CspChromosome( *this ); }
-
-			virtual void GACALL MutationEvent(GaChromosome::GaMuataionEvent e);
-
-			inline Sheet& GACALL GetSheet() { return _sheet; }
-
-			inline const Sheet& GACALL GetSheet() const { return _sheet; }
-
-		};
+		typedef Chromosome::Representation::GaSDAChromosome<int>::GaType CspChromosome;
 
 		class CspInitializator : public Chromosome::GaInitializator
 		{
@@ -404,18 +377,6 @@ namespace Problems
 			virtual int GACALL GetOffspringCount(const Chromosome::GaCrossoverParams& parameters) const { return 2; }
 
 			virtual Common::GaParameters* GACALL CreateParameters() const { return new Chromosome::GaCrossoverParams(); }
-
-		};
-
-		class CspMutationOperation : public Chromosome::GaMutationOperation
-		{
-
-		public:
-
-			virtual void GACALL operator ()(Chromosome::GaChromosome& chromosome,
-				const Chromosome::GaMutationParams& parameters) const;
-
-			virtual Common::GaParameters* GACALL CreateParameters() const  { return new Chromosome::GaMutationSizeParams(); }
 
 		};
 

@@ -279,16 +279,6 @@ namespace Problems
 			return placed;
 		}
 
-		void CspChromosome::MutationEvent(GaChromosome::GaMuataionEvent e)
-		{
-			switch( e )
-			{
-			case Chromosome::GaChromosome::GAME_PREPARE: _backup = _sheet; break;
-			case Chromosome::GaChromosome::GAME_ACCEPT: _backup.Clear(); break;
-			case Chromosome::GaChromosome::GAME_REJECT: _sheet = _backup; break;
-			}
-		}
-
 		Chromosome::GaChromosomePtr CspInitializator::operator ()(bool empty,
 			const Chromosome::GaInitializatorParams& parameters,
 			Common::Memory::GaSmartPtr<Chromosome::GaChromosomeConfigBlock> configBlock) const
@@ -300,12 +290,9 @@ namespace Problems
 				CspConfigBlock& b = ( (CspConfigBlock&)( *configBlock ) );
 
 				const Common::Data::GaSingleDimensionArray<Item>& items = b.GetItems();
-				Common::Data::GaSingleDimensionArray<int> shuffled( items.GetSize() );
-				Common::Random::GaGenerateRandomSequence( 0, items.GetSize() - 1, shuffled.GetArray() );
 
-				Sheet& sheet = chromosome->GetSheet();
-				for( int i = items.GetSize() - 1; i >= 0; i-- )
-					sheet.Place(BestFitHeuristic, items[ shuffled[ i ] ], items[ shuffled[ i ] ].GetSize(), true );
+				chromosome->GetGenes().Copy( &b.GetItems() );
+				Common::Random::GaShuffle( chromosome->GetGenes().GetArray(), chromosome->GetGenes().GetSize() );
 			}
 
 			return chromosome;
@@ -320,23 +307,14 @@ namespace Problems
 
 			const Size& sheetSize = ( (CspConfigBlock&)( *c.GetConfigBlock() ) ).GetSheetSize();
 			const Common::Data::GaSingleDimensionArray<Item>& items = ( (CspConfigBlock&)( *c.GetConfigBlock() ) ).GetItems();
+			const Common::Data::GaSingleDimensionArray<int>& order = c.GetGenes();
 
-			//int area = 0;
-			//Size placementSize;
-
-			//
-			//for( std::vector<Placement>::const_iterator it = placements.begin(); it != placements.end(); ++it )
-			//{
-			//	area += it->GetArea().GetSize().GetArea();
-			//	if( it->GetArea().GetLimit().GetX() > placementSize.GetWidth() )
-			//		placementSize.SetWidth( it->GetArea().GetLimit().GetX() );
-
-			//	if( it->GetArea().GetLimit().GetY() > placementSize.GetHeight() )
-			//		placementSize.SetHeight( it->GetArea().GetLimit().GetY() );
-			//}
+			Sheet sheet( sheetSize );
+			for( int i = order.GetSize() - 1; i >= 0; i-- )
+				sheet.Place(BestFitHeuristic, items[ order[ i ] ], true );
 
 			int savedArea = 0;
-			const std::vector<Slot>& slots = c.GetSheet().GetSlots();
+			const std::vector<Slot>& slots = sheet.GetSlots();
 			for( std::vector<Slot>::const_iterator it = slots.begin(); it != slots.end(); ++it )
 			{
 				int a = it->GetArea().GetSize().GetArea();
@@ -344,88 +322,14 @@ namespace Problems
 					savedArea = a;
 			}
 
-			const std::vector<Placement>& placements = c.GetSheet().GetPlacements();
+			const std::vector<Placement>& placements = sheet.GetPlacements();
 			f.SetValue( (float)placements.size() / items.GetSize() * savedArea / sheetSize.GetArea() );
 		}
 
 		void CspCrossoverOperation::operator ()(Chromosome::GaCrossoverBuffer& crossoverBuffer,
 			const Chromosome::GaCrossoverParams& parameters) const
 		{
-			typedef int (Point::*GetLengthPtr)() const;
-
-			const CspConfigBlock& ccb = ( (const CspConfigBlock&)*crossoverBuffer.GetParentChromosome( 0 )->GetConfigBlock() );
-
-			const Common::Data::GaSingleDimensionArray<Item>& items = ccb.GetItems();
-
-			Point limit = ccb.GetSheetSize();
-			int count = items.GetSize();
-
-			GetLengthPtr getLength = GaGlobalRandomBoolGenerator->Generate() ? &Point::GetX : &Point::GetY;
-			int point = GaGlobalRandomIntegerGenerator->Generate( 0, ( limit.*getLength )() );
-
-			Common::Data::GaSingleDimensionArray<bool> processed( count );
-
-			for( int i = 0; i < 2; i++ )
-			{
-				const Sheet& src1 = ( (const CspChromosome&)*crossoverBuffer.GetParentChromosome( i ) ).GetSheet();
-				const Sheet& src2 = ( (const CspChromosome&)*crossoverBuffer.GetParentChromosome( 1 - i ) ).GetSheet();
-
-				Chromosome::GaChromosomePtr offspring = new CspChromosome( crossoverBuffer.GetParentChromosome( 0 )->GetConfigBlock() );
-				Sheet& dst = ( (CspChromosome&)*offspring ).GetSheet();
-
-				for( std::vector<Placement>::const_iterator it = src1.GetPlacements().begin(); it != src1.GetPlacements().end(); ++it )
-				{
-					if( ( it->GetArea().GetLimit().*getLength )() > point )
-					{
-						dst.Place( *it );
-						processed[ it->GetItem().GetIndex() ] = true;
-					}
-				}
-
-				for( std::vector<Placement>::const_iterator it = src2.GetPlacements().begin(); it != src2.GetPlacements().begin(); ++it )
-				{
-					int j = it->GetItem().GetIndex();
-					if( ( it->GetArea().GetLimit().*getLength )() <= point && !processed[ j ] )
-					{
-						dst.Place( ClosestDistanceHeuristic( it->GetArea().GetPosition() ), it->GetItem(), it->GetArea().GetSize(), false );
-
-						processed[ j ] = true;
-					}
-				}
-
-				for( int j = count - 1; j >= 0; j-- )
-				{
-					if( !processed[ j ] )
-						dst.Place( LowestPositionHeuristic, items[ j ], items[ j ].GetSize(), true );
-
-					processed[ j ] = false;
-				}
-
-				crossoverBuffer.StoreOffspringChromosome( offspring, i );
-			}
-		}
-
-		void CspMutationOperation::operator ()(Chromosome::GaChromosome& chromosome,
-			const Chromosome::GaMutationParams& parameters) const
-		{
-			const Common::Data::GaSingleDimensionArray<Item>& items = ( (const CspConfigBlock&)*chromosome.GetConfigBlock() ).GetItems();
-
-			Sheet& sheet = ( (CspChromosome&)chromosome ).GetSheet();
-
-			const std::vector<Placement>& placements = sheet.GetPlacements();
-			int cSize = placements.size();
-			int mSize = ( (const Chromosome::GaMutationSizeParams&)parameters ).CalculateMutationSize( cSize );
-
-			Common::Data::GaSingleDimensionArray<int> removed( mSize );
-			Common::Random::GaGenerateRandomSequenceAsc( 0, cSize - 1, mSize, true, removed.GetArray() );
-
-			sheet.Remove( removed );
-
-			for( int i = mSize - 1; i >= 0; i-- )
-			{
-				const Item& item = items[ removed[ i ] ];
-				sheet.Place( LowestPositionHeuristic, item, item.GetSize(), true );
-			}
+			
 		}
 
 	}
