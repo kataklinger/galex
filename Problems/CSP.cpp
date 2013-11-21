@@ -326,10 +326,80 @@ namespace Problems
 			f.SetValue( (float)placements.size() / items.GetSize() * savedArea / sheetSize.GetArea() );
 		}
 
+		void Correction(Common::Data::GaSingleDimensionArray<int>& genes)
+		{
+			Common::Data::GaSingleDimensionArray<int> counter( genes.GetSize() );
+			for( int i = genes.GetSize(); i >= 0; i++ )
+			{
+				if( ++counter[ genes[ i ] ] > 1 )
+					genes[ i ] = -1;
+			}
+
+			for( int i = counter.GetSize(); i >= 0; i++ )
+			{
+				if( genes[ i ] < 0 )
+				{
+					for( int j = counter.GetSize(); j >= 0; j++ )
+					{
+						if( counter[ j ] == 0 )
+						{
+							counter[ j ] = 1;
+							genes[ i ] = j;
+						}
+					}
+				}
+			}
+		}
+
 		void CspCrossoverOperation::operator ()(Chromosome::GaCrossoverBuffer& crossoverBuffer,
 			const Chromosome::GaCrossoverParams& parameters) const
 		{
-			
+			Common::Data::GaSingleDimensionArray<int>* source1 = &( (CspChromosome&)*crossoverBuffer.GetParentChromosome( 0 ) ).GetGenes();
+			Common::Data::GaSingleDimensionArray<int>* source2 = &( (CspChromosome&)*crossoverBuffer.GetParentChromosome( 1 ) ).GetGenes();
+
+			int count = ( (const Chromosome::GaCrossoverPointParams&)parameters ).GetNumberOfCrossoverPoints() + 1;
+			Common::Memory::GaAutoPtr<int> points( new int[ count ], Common::Memory::GaArrayDeletionPolicy<int>::GetInstance() );
+
+			for( int i = ( (const Chromosome::GaCrossoverPointParams&)parameters ).GetNumberOfOffspring() - 1; i >= 0; i -= 2 )
+			{
+				Chromosome::GaChromosomePtr offspring2, offspring1 = crossoverBuffer.CreateOffspringFromPrototype();
+				Common::Data::GaSingleDimensionArray<int>* destination1 = &( (CspChromosome&)*offspring1 ).GetGenes();
+
+				Common::Data::GaSingleDimensionArray<int>* destination2 = NULL;
+				if( i > 0 )
+				{
+					offspring2 = crossoverBuffer.CreateOffspringFromPrototype();
+					destination2 = &( (CspChromosome&)*offspring2 ).GetGenes();
+				}
+
+				if( count > destination1->GetSize() )
+					count  = destination1->GetSize();
+
+				if( count > 1 )
+					Common::Random::GaGenerateRandomSequenceAsc( 1, destination1->GetSize() - 1, count - 1, true, points.GetRawPtr() );
+
+				points[ count - 1 ] = source1->GetSize();
+				for( int j = 0, s = 0; j < count ; s = points[ j++ ] )
+				{
+					destination1->Copy( source1, s, s, points[ j ] - s );
+
+					if( destination2 )
+						destination2->Copy( source2, s, s, points[ j ] - s );
+
+					Common::Data::GaSingleDimensionArray<int>* t = source1;
+					source1 = source2;
+					source2 = t;
+				}
+
+				Correction( *destination1 );
+				crossoverBuffer.StoreOffspringChromosome( offspring1, 0 );
+
+				if( !offspring2.IsNull() )
+				{
+					Correction( *destination2 );
+					crossoverBuffer.StoreOffspringChromosome( offspring2, 1 );
+				}
+			}
 		}
 
 	}
