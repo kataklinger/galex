@@ -106,7 +106,10 @@ void CChildView::HandleNextGeneration(int id, Common::Observing::GaEventData& da
 	//if( _generation != 1 && !stats.GetValue<Fitness::GaFitness>( Population::GADV_BEST_FITNESS ).IsChanged( 2 ) )
 	//	return;
 
-	//_placements = chromosome.GetSheet().GetPlacements();
+	Problems::CSP::Sheet sheet( ccb.GetSheetSize() );
+	Problems::CSP::PlaceItems( sheet, ccb.GetItems(), chromosome.GetGenes() );
+
+	_placements = sheet.GetPlacements();
 
 
 	const Problems::CSP::CspFitness f = (const Problems::CSP::CspFitness&)population[ 0 ].GetFitness(Population::GaChromosomeStorage::GAFT_RAW);

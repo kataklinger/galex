@@ -237,7 +237,10 @@ namespace Problems
 
 		};
 
-		bool LowestPositionHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots)
+		bool LowestPositionHeuristic(Placement& placement,
+			Size orientation,
+			bool rotation,
+			const std::vector<Slot>& slots)
 		{
 			bool placed = false;
 			for( std::vector<Slot>::const_iterator it = slots.begin(); it != slots.end(); ++it )
@@ -257,7 +260,10 @@ namespace Problems
 			return placed;
 		}
 
-		bool BestFitHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots)
+		bool BestFitHeuristic(Placement& placement,
+			Size orientation,
+			bool rotation,
+			const std::vector<Slot>& slots)
 		{
 			int fit = 0;
 			bool placed = false;
@@ -279,6 +285,14 @@ namespace Problems
 			return placed;
 		}
 
+		void PlaceItems(Sheet& sheet,
+			const Common::Data::GaSingleDimensionArray<Item>& items,
+			const Common::Data::GaSingleDimensionArray<int>& order)
+		{
+			for( int i = order.GetSize() - 1; i >= 0; i-- )
+				sheet.Place( BestFitHeuristic, items[ order[ i ] ], true );
+		}
+
 		Chromosome::GaChromosomePtr CspInitializator::operator ()(bool empty,
 			const Chromosome::GaInitializatorParams& parameters,
 			Common::Memory::GaSmartPtr<Chromosome::GaChromosomeConfigBlock> configBlock) const
@@ -289,10 +303,8 @@ namespace Problems
 			{
 				CspConfigBlock& b = ( (CspConfigBlock&)( *configBlock ) );
 
-				const Common::Data::GaSingleDimensionArray<Item>& items = b.GetItems();
-
-				chromosome->GetGenes().Copy( &b.GetItems() );
-				Common::Random::GaShuffle( chromosome->GetGenes().GetArray(), chromosome->GetGenes().GetSize() );
+				chromosome->GetGenes().SetSize( b.GetItems().GetSize() );
+				Common::Random::GaGenerateRandomSequence( 0, b.GetItems().GetSize(), chromosome->GetGenes().GetArray() );
 			}
 
 			return chromosome;
@@ -310,8 +322,7 @@ namespace Problems
 			const Common::Data::GaSingleDimensionArray<int>& order = c.GetGenes();
 
 			Sheet sheet( sheetSize );
-			for( int i = order.GetSize() - 1; i >= 0; i-- )
-				sheet.Place(BestFitHeuristic, items[ order[ i ] ], true );
+			PlaceItems( sheet, items, order );
 
 			int savedArea = 0;
 			const std::vector<Slot>& slots = sheet.GetSlots();
@@ -326,25 +337,27 @@ namespace Problems
 			f.SetValue( (float)placements.size() / items.GetSize() * savedArea / sheetSize.GetArea() );
 		}
 
-		void Correction(Common::Data::GaSingleDimensionArray<int>& genes)
+		void CspCrossoverCorrection(Common::Data::GaSingleDimensionArray<int>& genes)
 		{
 			Common::Data::GaSingleDimensionArray<int> counter( genes.GetSize() );
-			for( int i = genes.GetSize(); i >= 0; i++ )
+			for( int i = genes.GetSize() - 1; i >= 0; i-- )
 			{
 				if( ++counter[ genes[ i ] ] > 1 )
 					genes[ i ] = -1;
 			}
 
-			for( int i = counter.GetSize(); i >= 0; i++ )
+			for( int i = counter.GetSize() - 1; i >= 0; i-- )
 			{
 				if( genes[ i ] < 0 )
 				{
-					for( int j = counter.GetSize(); j >= 0; j++ )
+					for( int j = counter.GetSize() - 1; j >= 0; j-- )
 					{
 						if( counter[ j ] == 0 )
 						{
 							counter[ j ] = 1;
 							genes[ i ] = j;
+
+							break;
 						}
 					}
 				}
@@ -364,12 +377,14 @@ namespace Problems
 			{
 				Chromosome::GaChromosomePtr offspring2, offspring1 = crossoverBuffer.CreateOffspringFromPrototype();
 				Common::Data::GaSingleDimensionArray<int>* destination1 = &( (CspChromosome&)*offspring1 ).GetGenes();
+				destination1->SetSize( source1->GetSize() );
 
 				Common::Data::GaSingleDimensionArray<int>* destination2 = NULL;
 				if( i > 0 )
 				{
 					offspring2 = crossoverBuffer.CreateOffspringFromPrototype();
 					destination2 = &( (CspChromosome&)*offspring2 ).GetGenes();
+					destination2->SetSize( source2->GetSize() );
 				}
 
 				if( count > destination1->GetSize() )
@@ -391,12 +406,12 @@ namespace Problems
 					source2 = t;
 				}
 
-				Correction( *destination1 );
+				CspCrossoverCorrection( *destination1 );
 				crossoverBuffer.StoreOffspringChromosome( offspring1, 0 );
 
 				if( !offspring2.IsNull() )
 				{
-					Correction( *destination2 );
+					CspCrossoverCorrection( *destination2 );
 					crossoverBuffer.StoreOffspringChromosome( offspring2, 1 );
 				}
 			}

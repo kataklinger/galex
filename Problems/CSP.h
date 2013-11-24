@@ -300,9 +300,22 @@ namespace Problems
 
 		};
 
-		bool ClosesDistanceHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots);
-		bool LowestPositionHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots);
-		bool BestFitHeuristic(Placement& placement, Size orientation, bool rotation, const std::vector<Slot>& slots);
+		bool ClosesDistanceHeuristic(Placement& placement,
+			Size orientation,
+			bool rotation,
+			const std::vector<Slot>& slots);
+		bool LowestPositionHeuristic(Placement& placement,
+			Size orientation,
+			bool rotation,
+			const std::vector<Slot>& slots);
+		bool BestFitHeuristic(Placement& placement,
+			Size orientation,
+			bool rotation,
+			const std::vector<Slot>& slots);
+		
+		void PlaceItems(Sheet& sheet,
+			const Common::Data::GaSingleDimensionArray<Item>& items,
+			const Common::Data::GaSingleDimensionArray<int>& order);
 
 		class CspConfigBlock : public Chromosome::GaChromosomeConfigBlock
 		{
