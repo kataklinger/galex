@@ -50,6 +50,22 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 	return TRUE;
 }
 
+inline unsigned int FNV1a(unsigned char value, unsigned int hash)
+{
+	return ( value ^ hash ) * 0x01000193;
+}
+
+unsigned int FNV1a(const void* data,
+	int size,
+	unsigned int hash = 0x811C9DC5)
+{
+	const unsigned char* ptr = (const unsigned char*)data;
+	while( size-- )
+		hash = FNV1a( *ptr++, hash );
+
+	return hash;
+}
+
 void CChildView::OnPaint() 
 {
 	CPaintDC wndDC(this);
@@ -85,7 +101,19 @@ void CChildView::OnPaint()
 	dc.Rectangle( 10, 50, 10 + _sheetSize.GetWidth(), 50 + _sheetSize.GetHeight() );
 	for( std::vector<Problems::CSP::Placement>::iterator it = placements.begin(); it != placements.end(); ++it )
 	{
-		dc.Rectangle(10 + it->GetArea().GetPosition().GetX(), 50 + it->GetArea().GetPosition().GetY(), 10 + it->GetArea().GetLimit().GetX(), 50 + it->GetArea().GetLimit().GetY() );
+		int index = it->GetItem().GetIndex();
+		char* buf = (char*)&index;
+
+		int color = FNV1a( buf, sizeof( index ) ) & 0xFFFFFF;
+		
+		CBrush brush;
+		brush.CreateSolidBrush( color );
+		dc.SelectObject( brush );
+
+		dc.Rectangle( 10 + it->GetArea().GetPosition().GetX(), 50 + it->GetArea().GetPosition().GetY(), 10 + it->GetArea().GetLimit().GetX(), 50 + it->GetArea().GetLimit().GetY() );
+
+		dc.SelectStockObject( NULL_BRUSH );
+		brush.DeleteObject();
 	}
 
 	wndDC.BitBlt( 0, 0, clientRect.Width(), clientRect.Height(), &dc, 0, 0, SRCCOPY );
