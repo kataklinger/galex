@@ -1,13 +1,10 @@
 
 #include "CSPAlgorithm.h"
 
-CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler,
-	Common::Observing::GaEventHandler* stateChangedHandler) : 
+CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler) : 
 	_populationFitnessOperation(&_fitnessOperation),
 	_workflow(NULL)
 {
-	_workflow.GetEventManager().AddEventHandler( Common::Workflows::GaWorkflow::GAWE_STATE_CHANGED, stateChangedHandler );
-
 	Chromosome::GaMatingConfig matingConfiguration(
 		Chromosome::GaCrossoverSetup( &_crossover, &Chromosome::GaCrossoverPointParams( 1.0f, 2, 1 ), NULL ),
 		Chromosome::GaMutationSetup( &_mutation, &Chromosome::GaMutationSizeParams( 0.66f, true, 2L ), NULL ) );

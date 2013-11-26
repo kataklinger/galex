@@ -16,8 +16,10 @@
 // CChildView
 
 CChildView::CChildView() : _nextGenerationHandler(this, &CChildView::HandleNextGeneration),
-	_stateChangeHandler(this, &CChildView::HandleStateChange),
-	_algorithm(&_nextGenerationHandler, &_stateChangeHandler)
+	_algorithm(&_nextGenerationHandler),
+	_initialized(false),
+	_fitness(0),
+	_generation(-1)
 {
 }
 
@@ -28,9 +30,14 @@ CChildView::~CChildView()
 
 BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
+	ON_WM_ERASEBKGND()
 	ON_COMMAND(ID_FILE_NEW_TEST, &CChildView::OnFileNewTest)
 	ON_COMMAND(ID_FILE_START, &CChildView::OnFileStart)
 	ON_COMMAND(ID_FILE_STOP, &CChildView::OnFileStop)
+	ON_UPDATE_COMMAND_UI(ID_FILE_NEW_TEST, &CChildView::OnUpdateFileNewTest)
+	ON_UPDATE_COMMAND_UI(ID_FILE_START, &CChildView::OnUpdateFileStart)
+	ON_UPDATE_COMMAND_UI(ID_FILE_STOP, &CChildView::OnUpdateFileStop)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 
@@ -98,25 +105,30 @@ void CChildView::OnPaint()
 	str.Format(L"Generation: %i, Fitness: %f", _generation, _fitness );
 	dc.TextOut( 10, 10, str );
 
-	dc.Rectangle( 10, 50, 10 + _sheetSize.GetWidth(), 50 + _sheetSize.GetHeight() );
-	for( std::vector<Problems::CSP::Placement>::iterator it = placements.begin(); it != placements.end(); ++it )
+	if( _generation >= 0 )
 	{
-		int index = it->GetItem().GetIndex();
-		char* buf = (char*)&index;
+		dc.Rectangle( 10, 50, 10 + _sheetSize.GetWidth(), 50 + _sheetSize.GetHeight() );
+		for( std::vector<Problems::CSP::Placement>::iterator it = placements.begin(); it != placements.end(); ++it )
+		{
+			int index = it->GetItem().GetIndex();
+			char* buf = (char*)&index;
 
-		int color = FNV1a( buf, sizeof( index ) ) & 0xFFFFFF;
+			int color = FNV1a( buf, sizeof( index ) ) & 0xFFFFFF;
 		
-		CBrush brush;
-		brush.CreateSolidBrush( color );
-		dc.SelectObject( brush );
+			CBrush brush;
+			brush.CreateSolidBrush( color );
+			dc.SelectObject( brush );
 
-		dc.Rectangle( 10 + it->GetArea().GetPosition().GetX(), 50 + it->GetArea().GetPosition().GetY(), 10 + it->GetArea().GetLimit().GetX(), 50 + it->GetArea().GetLimit().GetY() );
+			dc.Rectangle( 10 + it->GetArea().GetPosition().GetX(), 50 + it->GetArea().GetPosition().GetY(), 10 + it->GetArea().GetLimit().GetX(), 50 + it->GetArea().GetLimit().GetY() );
 
-		dc.SelectStockObject( NULL_BRUSH );
-		brush.DeleteObject();
+			dc.SelectStockObject( NULL_BRUSH );
+			brush.DeleteObject();
+		}
 	}
 
 	wndDC.BitBlt( 0, 0, clientRect.Width(), clientRect.Height(), &dc, 0, 0, SRCCOPY );
+	dc.DeleteDC();
+	bmp.DeleteObject();
 }
 
 void CChildView::HandleNextGeneration(int id, Common::Observing::GaEventData& data)
@@ -127,43 +139,23 @@ void CChildView::HandleNextGeneration(int id, Common::Observing::GaEventData& da
 	const Problems::CSP::CspConfigBlock& ccb = (const Problems::CSP::CspConfigBlock&)*chromosome.GetConfigBlock();
 
 	const Statistics::GaStatistics& stats = population.GetStatistics();
-	//if(stats.GetCurrentGeneration() != 1)
-	//	return;
 
 	_generation = stats.GetCurrentGeneration();
-	//if( _generation != 1 && !stats.GetValue<Fitness::GaFitness>( Population::GADV_BEST_FITNESS ).IsChanged( 2 ) )
-	//	return;
 
 	Problems::CSP::Sheet sheet( ccb.GetSheetSize() );
 	Problems::CSP::PlaceItems( sheet, ccb.GetItems(), chromosome.GetGenes() );
 
 	_placements = sheet.GetPlacements();
 
-
-	const Problems::CSP::CspFitness f = (const Problems::CSP::CspFitness&)population[ 0 ].GetFitness(Population::GaChromosomeStorage::GAFT_RAW);
+	const Problems::CSP::CspFitness f = (const Problems::CSP::CspFitness&)population[ 0 ].GetFitness( Population::GaChromosomeStorage::GAFT_RAW );
 	_fitness = f.GetValue();
 
 	Invalidate();
 }
 
-void CChildView::HandleStateChange(int id, Common::Observing::GaEventData& data)
+BOOL CChildView::OnEraseBkgnd(CDC* pDC)
 {
-	Common::Workflows::GaWorkflowStateEventData& d = (Common::Workflows::GaWorkflowStateEventData&)data;
-
-	CMenu* menu = AfxGetMainWnd()->GetMenu();
-
-	if(d.GetNewState() == Common::Workflows::GAWS_RUNNING)
-	{
-		menu->EnableMenuItem( ID_FILE_NEW_TEST, FALSE );
-		menu->EnableMenuItem( ID_FILE_START, FALSE );
-		menu->EnableMenuItem( ID_FILE_STOP, TRUE );
-	}
-	else if(d.GetNewState() == Common::Workflows::GAWS_STOPPED)
-	{
-		menu->EnableMenuItem( ID_FILE_NEW_TEST, TRUE );
-		menu->EnableMenuItem( ID_FILE_START, FALSE );
-		menu->EnableMenuItem( ID_FILE_STOP, FALSE );
-	}
+	return false;
 }
 
 void CChildView::OnFileNewTest()
@@ -178,8 +170,16 @@ void CChildView::OnFileNewTest()
 		_sheetSize.SetHeight(dlg.GetSheetHeight());
 		_placements.clear();
 
-		AfxGetMainWnd()->GetMenu()->EnableMenuItem( ID_FILE_START, TRUE );
+		_generation = -1;
+		_fitness = 0.0;
+
+		_initialized = true;
 	}
+}
+
+void CChildView::OnUpdateFileNewTest(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable( _algorithm.GetState() == Common::Workflows::GAWS_STOPPED );
 }
 
 void CChildView::OnFileStart()
@@ -187,7 +187,25 @@ void CChildView::OnFileStart()
 	_algorithm.Start();
 }
 
+void CChildView::OnUpdateFileStart(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable( _initialized && _algorithm.GetState() == Common::Workflows::GAWS_STOPPED );
+}
+
 void CChildView::OnFileStop()
 {
 	_algorithm.Stop();
+}
+
+void CChildView::OnUpdateFileStop(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable( _algorithm.GetState() == Common::Workflows::GAWS_RUNNING );
+}
+
+void CChildView::OnClose()
+{
+	if( _algorithm.GetState() != Common::Workflows::GAWS_STOPPED )
+		_algorithm.Stop();
+
+	CWnd::OnClose();
 }

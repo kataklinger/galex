@@ -47,14 +47,15 @@ private:
 
 	Common::Workflows::GaWorkflow _workflow;
 
-
 public:
-	CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler, Common::Observing::GaEventHandler* stateChangedHandler);
+	CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler);
 	~CSPAlgorithm();
 
 	void SetParameters(int sWidth, int sHeight, int iMinWidth, int iMaxWidth, int iMinHeight, int iMaxHeight, int iCount);
 
 	inline void Start() { _workflow.Start(); }
 	inline void Stop() { _workflow.Stop(); }
+
+	inline Common::Workflows::GaWorkflowState GetState() { return _workflow.GetState(); }
 
 };
