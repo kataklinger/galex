@@ -47,6 +47,13 @@ private:
 
 	Common::Workflows::GaWorkflow _workflow;
 
+	Algorithm::Stubs::GaSimpleGAStub* _simpleGA;
+	Common::Workflows::GaWorkflowBarrier* _barrier;
+	Common::Workflows::GaBranchGroup* _branchGroup;
+	Common::Workflows::GaFlowStep* _stopStep;
+	Common::Workflows::GaBranchGroupTransition* _branchTransition;
+	Common::Workflows::GaFlowConnection* _transitionConnection;
+
 public:
 	CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler);
 	~CSPAlgorithm();

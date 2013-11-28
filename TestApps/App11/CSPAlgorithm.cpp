@@ -27,7 +27,7 @@ CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler) :
 	Population::GaReplacementSetup replacementSetup( &_replacement, &Population::GaReplacementParams( 50 ), &Population::GaReplacementConfig() );
 	Population::GaScalingSetup scalingSetup( &_scaling, NULL, &Population::GaScalingConfig() );
 
-	Algorithm::Stubs::GaSimpleGAStub simpleGA( WDID_POPULATION, WDID_POPULATION_STATS,
+	_simpleGA = new Algorithm::Stubs::GaSimpleGAStub( WDID_POPULATION, WDID_POPULATION_STATS,
 		Chromosome::GaInitializatorSetup(),
 		Population::GaPopulationFitnessOperationSetup( &_populationFitnessOperation, NULL,
 		&Fitness::GaFitnessOperationConfig( NULL ) ),
@@ -40,25 +40,25 @@ CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler) :
 		replacementSetup,
 		scalingSetup,
 		Population::GaFitnessComparatorSortingCriteria( fitnessComparatorSetup, Population::GaChromosomeStorage::GAFT_RAW ) );
-	simpleGA.SetBranchCount( 2 );
+	_simpleGA->SetBranchCount( 2 );
 
 	_workflow.RemoveConnection( *_workflow.GetFirstStep()->GetOutboundConnections().begin(), true );
 
-	Common::Workflows::GaWorkflowBarrier* br1 = new Common::Workflows::GaWorkflowBarrier();
-	simpleGA.Connect( _workflow.GetFirstStep(), br1 );
+	_barrier = new Common::Workflows::GaWorkflowBarrier();
+	_simpleGA->Connect( _workflow.GetFirstStep(), _barrier );
 
-	Common::Workflows::GaBranchGroup* bg1 = (Common::Workflows::GaBranchGroup*)_workflow.ConnectSteps( br1, _workflow.GetLastStep(), 0 );
+	_branchGroup = (Common::Workflows::GaBranchGroup*)_workflow.ConnectSteps( _barrier, _workflow.GetLastStep(), 0 );
 
-	Algorithm::StopCriteria::GaStopCriterionStep* stopStep = new Algorithm::StopCriteria::GaStopCriterionStep(
+	_stopStep = new Algorithm::StopCriteria::GaStopCriterionStep(
 		Algorithm::StopCriteria::GaStopCriterionSetup( &_stopCriterion,
 		&Algorithm::StopCriteria::GaStatsChangesCriterionParams(
 		Population::GADV_BEST_FITNESS, 100), NULL ), _workflow.GetWorkflowData(), WDID_POPULATION_STATS );
 
-	Common::Workflows::GaBranchGroupTransition* bt1 = new Common::Workflows::GaBranchGroupTransition();
+	_branchTransition = new Common::Workflows::GaBranchGroupTransition();
 
-	bg1->GetBranchGroupFlow()->SetFirstStep( stopStep );
-	bg1->GetBranchGroupFlow()->ConnectSteps( stopStep, bt1, 0 );
-	_workflow.ConnectSteps( bt1, simpleGA.GetStubFlow().GetFirstStep(), 1 );
+	_branchGroup->GetBranchGroupFlow()->SetFirstStep( _stopStep );
+	_branchGroup->GetBranchGroupFlow()->ConnectSteps( _stopStep, _branchTransition, 0 );
+	_transitionConnection = _workflow.ConnectSteps( _branchTransition, _simpleGA->GetStubFlow().GetFirstStep(), 1 );
 
 	Common::Workflows::GaDataCache<Population::GaPopulation> population( _workflow.GetWorkflowData(), WDID_POPULATION );
 
@@ -68,6 +68,19 @@ CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler) :
 CSPAlgorithm::~CSPAlgorithm()
 {
 	_workflow.Wait();
+
+	Common::Workflows::GaDataCache<Population::GaPopulation> population( _workflow.GetWorkflowData(), WDID_POPULATION );
+	population.GetData().GetEventManager().RemoveEventHandlers( Population::GaPopulation::GAPE_NEW_GENERATION );
+	population.Clear();
+
+	_workflow.RemoveConnection( _transitionConnection, true );
+	_branchGroup->GetBranchGroupFlow()->RemoveStep( _stopStep, true, true );
+	_branchGroup->GetBranchGroupFlow()->RemoveStep( _branchTransition, true, true );
+	_workflow.RemoveStep( _barrier, true, true );
+
+	_simpleGA->Disconnect();
+
+	delete _simpleGA;
 }
 
 void CSPAlgorithm::SetParameters(int sWidth, int sHeight, int iMinWidth, int iMaxWidth, int iMinHeight, int iMaxHeight, int iCount)

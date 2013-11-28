@@ -321,6 +321,8 @@ namespace Algorithm
 			population.GetData().UnregisterTracker( Population::GaPopulationSizeTracker::TRACKER_ID );
 			population.GetData().UnregisterTracker( Population::GaScaledFitnessTracker::TRACKER_ID );
 
+			population.Clear();
+
 			GaBasicStub::Disconnecting();
 		}
 

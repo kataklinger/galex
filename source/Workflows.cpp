@@ -1010,6 +1010,7 @@ namespace Common
 			_stateChangeEvent = Threading::GaEventPool::GetInstance()->GetEventWithAutoPtr( Threading::GaEvent::GAET_AUTO );
 			_pauseEvent = Threading::GaEventPool::GetInstance()->GetEventWithAutoPtr( Threading::GaEvent::GAET_MANUAL );
 			_endEvent = Threading::GaEventPool::GetInstance()->GetEventWithAutoPtr( Threading::GaEvent::GAET_MANUAL );
+			_endEvent->Signal();
 
 			// make the first and the last step of the workflow and connect them with branch group
 			_firstStep = new GaStartStep();

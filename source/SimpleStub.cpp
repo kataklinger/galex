@@ -323,8 +323,10 @@ namespace Algorithm
 			GaCachedPopulation population( GetWorkflowStorage(), _populationID );
 
 			// remove statistics trackers
-			for( GaStatTrackersCollection::iterator it = _statTrackers.begin(); it != _statTrackers.end(); ++it )
+			for( GaStatTrackersCollection::reverse_iterator it = _statTrackers.rbegin(); it != _statTrackers.rend(); ++it )
 				population.GetData().UnregisterTracker( it->first );
+
+			population.Clear();
 
 			GaBasicStub::Disconnecting();
 		}

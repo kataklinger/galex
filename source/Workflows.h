@@ -390,7 +390,7 @@ namespace Common
 			/// This operator is thread-safe.</summary>
 			/// <param name="entry">pointer to entry of storage object whose data should be cached.</param>
 			inline void GACALL SetData(GaEntryType* entry)
-				{ GaDataStorage::GaWorkflowDataEntry::RemoveReference( Threading::GaAtomicOps<GaEntryType*>::Xchg( &_data, (GaEntryType*)entry ) ); }
+				{ GaDataEntryBase::RemoveReference( Threading::GaAtomicOps<GaEntryType*>::Xchg( &_data, (GaEntryType*)entry ) ); }
 
 			/// <summary><c>Clear</c> method clears cache object and removes references to cached data.
 			///
