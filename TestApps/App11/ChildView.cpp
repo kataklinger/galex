@@ -37,7 +37,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_UPDATE_COMMAND_UI(ID_FILE_NEW_TEST, &CChildView::OnUpdateFileNewTest)
 	ON_UPDATE_COMMAND_UI(ID_FILE_START, &CChildView::OnUpdateFileStart)
 	ON_UPDATE_COMMAND_UI(ID_FILE_STOP, &CChildView::OnUpdateFileStop)
-	ON_WM_CLOSE()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -202,10 +202,10 @@ void CChildView::OnUpdateFileStop(CCmdUI *pCmdUI)
 	pCmdUI->Enable( _algorithm.GetState() == Common::Workflows::GAWS_RUNNING );
 }
 
-void CChildView::OnClose()
+void CChildView::OnDestroy()
 {
+	CWnd::OnDestroy();
+
 	if( _algorithm.GetState() != Common::Workflows::GAWS_STOPPED )
 		_algorithm.Stop();
-
-	CWnd::OnClose();
 }

@@ -6,8 +6,8 @@ CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler) :
 	_workflow(NULL)
 {
 	Chromosome::GaMatingConfig matingConfiguration(
-		Chromosome::GaCrossoverSetup( &_crossover, &Chromosome::GaCrossoverPointParams( 1.0f, 2, 1 ), NULL ),
-		Chromosome::GaMutationSetup( &_mutation, &Chromosome::GaMutationSizeParams( 0.66f, true, 2L ), NULL ) );
+		Chromosome::GaCrossoverSetup( &_crossover, &Chromosome::GaCrossoverPointParams( 0.80f, 2, 1 ), NULL ),
+		Chromosome::GaMutationSetup( &_mutation, &Chromosome::GaMutationSizeParams( 0.33f, true, 2L ), NULL ) );
 
 	Fitness::GaFitnessComparatorSetup fitnessComparatorSetup( &_fitnessComparator,
 		&Fitness::Comparators::GaSimpleComparatorParams( Fitness::Comparators::GACT_MAXIMIZE_ALL ), NULL );
@@ -18,13 +18,13 @@ CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler) :
 	trackers[ Population::GaScaledFitnessTracker::TRACKER_ID ] =  &_scaledTracker;
 
 	Population::GaSelectionSetup selectionSetup( &_selection,
-		&Population::SelectionOperations::GaTournamentSelectionParams( 2, -1, 2, 2, Population::SelectionOperations::GaTournamentSelectionParams::GATST_ROULETTE_WHEEL_SELECTION ),
+		&Population::SelectionOperations::GaTournamentSelectionParams( 8, -1, 2, 2, Population::SelectionOperations::GaTournamentSelectionParams::GATST_ROULETTE_WHEEL_SELECTION ),
 		&Population::SelectionOperations::GaTournamentSelectionConfig( fitnessComparatorSetup, Chromosome::GaMatingSetup() ) );
 
-	Population::GaCouplingSetup couplingSetup( &_coupling, &Population::GaCouplingParams( 50, 1 ),
+	Population::GaCouplingSetup couplingSetup( &_coupling, &Population::GaCouplingParams( 20, 1 ),
 		&Population::GaCouplingConfig( Chromosome::GaMatingSetup( &_mating, NULL, &matingConfiguration ) ) );
 
-	Population::GaReplacementSetup replacementSetup( &_replacement, &Population::GaReplacementParams( 50 ), &Population::GaReplacementConfig() );
+	Population::GaReplacementSetup replacementSetup( &_replacement, &Population::GaReplacementParams( 20 ), &Population::GaReplacementConfig() );
 	Population::GaScalingSetup scalingSetup( &_scaling, NULL, &Population::GaScalingConfig() );
 
 	_simpleGA = new Algorithm::Stubs::GaSimpleGAStub( WDID_POPULATION, WDID_POPULATION_STATS,
@@ -32,7 +32,7 @@ CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler) :
 		Population::GaPopulationFitnessOperationSetup( &_populationFitnessOperation, NULL,
 		&Fitness::GaFitnessOperationConfig( NULL ) ),
 		fitnessComparatorSetup,
-		Population::GaPopulationParams( 100, 0, Population::GaPopulationParams::GAPFO_FILL_ON_INIT ),
+		Population::GaPopulationParams( /*100*/40, 0, Population::GaPopulationParams::GAPFO_FILL_ON_INIT ),
 		trackers,
 		Chromosome::GaMatingSetup(),
 		selectionSetup,
@@ -52,7 +52,7 @@ CSPAlgorithm::CSPAlgorithm(Common::Observing::GaEventHandler* newGenHandler) :
 	_stopStep = new Algorithm::StopCriteria::GaStopCriterionStep(
 		Algorithm::StopCriteria::GaStopCriterionSetup( &_stopCriterion,
 		&Algorithm::StopCriteria::GaStatsChangesCriterionParams(
-		Population::GADV_BEST_FITNESS, 100), NULL ), _workflow.GetWorkflowData(), WDID_POPULATION_STATS );
+		Population::GADV_BEST_FITNESS, 20 ), NULL ), _workflow.GetWorkflowData(), WDID_POPULATION_STATS );
 
 	_branchTransition = new Common::Workflows::GaBranchGroupTransition();
 

@@ -57,6 +57,6 @@ public:
 	afx_msg void OnUpdateFileNewTest(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateFileStart(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateFileStop(CCmdUI *pCmdUI);
-	afx_msg void OnClose();
+	afx_msg void OnDestroy();
 };
 

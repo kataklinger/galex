@@ -211,6 +211,7 @@ namespace Population
 		// setup output chromsome group
 		output.Clear();
 		output.SetSize( parameters.GetNumberOfOffsprings() );
+		output.SetPopulation( input.GetPopulation() );
 		output.SetObjectRecycling( true );
 
 		Population::GaPopulation* population = input.GetPopulation();

@@ -602,6 +602,9 @@ namespace Population
 			const GaPopulationFitnessOperationSetup& fitnessOperation,
 			const Fitness::GaFitnessComparatorSetup& fitnessComparator);
 
+		/// <summary>Frees resources used by the popyulation.</summary>
+		~GaPopulation() { Clear( true ); }
+
 		/// <summary><c>Initialize</c> method prepares population to be used by genetic algorithm. 
 		///
 		/// This method is not thread-safe.</summary>

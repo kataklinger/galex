@@ -650,6 +650,9 @@ namespace Statistics
 			_currentHistoryDepth(0),
 			_accumulating(accumulating) { _maxHistoryDepth = owner->GetHistoryDepth(); }
 
+		/// <summary>Destructor frees memory used for value history.</summary>
+		~GaValueHistory() { Clear(); }
+
 		/// <summary><c>Next</c> method moves current value to history buffer. If the buffer is full, the oldes value stored in the buffer is discharged.
 		///
 		/// This method is not thread-safe.</summary>
