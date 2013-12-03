@@ -96,4 +96,6 @@ void CSPAlgorithm::SetParameters(int sWidth, int sHeight, int iMinWidth, int iMa
 
 	Common::Workflows::GaDataCache<Population::GaPopulation> population( _workflow.GetWorkflowData(), WDID_POPULATION );
 	population.GetData().SetInitializator( initializatorSetup );
+
+	population.GetData().Clear( true );
 }

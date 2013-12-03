@@ -399,17 +399,26 @@ namespace Population
 	// IDs of fitness operating change events
 	const int GaFitnessTracker::TrackedEvent[ 2 ] = { GaPopulation::GAPE_FITNESS_OPERATION_CHANGED, GaPopulation::GAPE_SCALED_FITNESS_PROTOTYPE_CHANGED, };
 
+	// Prepares population's statistics for the tracker
+	void GaFitnessTracker::Prepare(GaPopulation& population)
+	{
+		GaChromosomeStorage::GaFitnessType ft = (GaChromosomeStorage::GaFitnessType)_fitnessType;
+
+		// check if the fitness object that should store value is already created
+		Statistics::GaValueHistory<Fitness::GaFitness>& history = population.GetStatistics().GetValue<Fitness::GaFitness>( BindingValues[ ft ][ 2 ] );
+		if( !history.GetCurrent().HasValue() )
+		{
+			// create fitness object that will store value
+			Common::Memory::GaAutoPtr<Fitness::GaFitness> fitnessPrototype = population.CreateFitnessObject( ft );
+			if( !fitnessPrototype.IsNull() )
+				history.SetCurrent( *fitnessPrototype );
+		}
+	}
+
 	// Adds tracked values to population's statistics
 	void GaFitnessTracker::Bind(GaPopulation& population)
 	{
 		InsertValues( population.GetStatistics(), *GaDefaultValueHistoryFactory::GetInstance(), BindingValues[ _fitnessType ], BindingValuesCount );
-
-		GaChromosomeStorage::GaFitnessType ft = (GaChromosomeStorage::GaFitnessType)_fitnessType;
-
-		Common::Memory::GaAutoPtr<Fitness::GaFitness> fitnessPrototype = population.CreateFitnessObject( ft );
-		if( !fitnessPrototype.IsNull() )
-			population.GetStatistics().GetValue<Fitness::GaFitness>( BindingValues[ ft ][ 2 ] ).SetCurrent( *fitnessPrototype );
-
 		population.GetEventManager().AddEventHandler( TrackedEvent[ _fitnessType ], &_eventHandler );
 	}
 

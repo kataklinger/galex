@@ -181,6 +181,10 @@ namespace Population
 		/// <summary>Virtual destructor must be defined because this is base class.</summary>
 		virtual ~GaPopulationStatTracker() { }
 
+		/// <summary>This method pepares specified statistics object so it can be used with the tracker.</summary>
+		/// <param name="population">population which should be prepared.</param>
+		virtual void GACALL Prepare(GaPopulation& population) { }
+
 		/// <summary>This method binds tracker to the specified statistics object.</summary>
 		/// <param name="population">population to which tracker is bound.</param>
 		virtual void GACALL Bind(GaPopulation& population) = 0;
@@ -300,6 +304,12 @@ namespace Population
 		/// Use <see cref="GaChromosomeStorage::GaFitnessType" /> enum values.</param>
 		GaFitnessTracker(int fitnessType) : _fitnessType(fitnessType),
 			_eventHandler(this, &GaFitnessTracker::FitnessOperationChanged) { }
+
+		/// <summary>More details are given in specification of <see cref="GaPopulationStatTracker::Prepare" /> method.
+		///
+		/// This method is not thread-safe.</summary>
+		GAL_API
+		virtual void GACALL Prepare(GaPopulation& population);
 
 		/// <summary>More details are given in specification of <see cref="GaPopulationStatTracker::Bind" /> method.
 		///

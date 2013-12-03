@@ -48,6 +48,10 @@ namespace Population
 
 		_statistics.ResetTime();
 
+		// prepare statistics
+		for( STLEXT::hash_map<int, std::pair<bool, GaPopulationStatTracker*> >::iterator it = _registeredTrackers.begin(); it != _registeredTrackers.end(); ++it )
+			it->second.second->Prepare( *this );
+
 		if( !_chromosomes )
 		{
 			// create new array that will store chromosomes and update sorting algorithm
