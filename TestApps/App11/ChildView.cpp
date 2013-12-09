@@ -27,7 +27,6 @@ CChildView::~CChildView()
 {
 }
 
-
 BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
@@ -38,9 +37,11 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_UPDATE_COMMAND_UI(ID_FILE_START, &CChildView::OnUpdateFileStart)
 	ON_UPDATE_COMMAND_UI(ID_FILE_STOP, &CChildView::OnUpdateFileStop)
 	ON_WM_DESTROY()
+	ON_WM_HSCROLL()
+	ON_WM_VSCROLL()
+	ON_WM_SIZE()
+	ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
-
-
 
 // CChildView message handlers
 
@@ -63,8 +64,8 @@ inline unsigned int FNV1a(unsigned char value, unsigned int hash)
 }
 
 unsigned int FNV1a(const void* data,
-	int size,
-	unsigned int hash = 0x811C9DC5)
+				   int size,
+				   unsigned int hash = 0x811C9DC5)
 {
 	const unsigned char* ptr = (const unsigned char*)data;
 	while( size-- )
@@ -103,23 +104,24 @@ void CChildView::OnPaint()
 
 	CString str;
 	str.Format(L"Generation: %i, Fitness: %f", _generation, _fitness );
-	dc.TextOut( 10, 10, str );
+	dc.TextOut( sx + 10, sy + 10, str );
 
 	if( _generation >= 0 )
 	{
-		dc.Rectangle( 10, 50, 10 + _sheetSize.GetWidth(), 50 + _sheetSize.GetHeight() );
+		dc.Rectangle( sx + 10, sy + 50, sx + 10 + _sheetSize.GetWidth(), sy + 50 + _sheetSize.GetHeight() );
 		for( std::vector<Problems::CSP::Placement>::iterator it = placements.begin(); it != placements.end(); ++it )
 		{
 			int index = it->GetItem().GetIndex();
 			char* buf = (char*)&index;
 
 			int color = FNV1a( buf, sizeof( index ) ) & 0xFFFFFF;
-		
+
 			CBrush brush;
 			brush.CreateSolidBrush( color );
 			dc.SelectObject( brush );
 
-			dc.Rectangle( 10 + it->GetArea().GetPosition().GetX(), 50 + it->GetArea().GetPosition().GetY(), 10 + it->GetArea().GetLimit().GetX(), 50 + it->GetArea().GetLimit().GetY() );
+			dc.Rectangle( sx + 10 + it->GetArea().GetPosition().GetX(), sy + 50 + it->GetArea().GetPosition().GetY(),
+				sx + 10 + it->GetArea().GetLimit().GetX(), sy + 50 + it->GetArea().GetLimit().GetY() );
 
 			dc.SelectStockObject( NULL_BRUSH );
 			brush.DeleteObject();
@@ -208,4 +210,118 @@ void CChildView::OnDestroy()
 
 	if( _algorithm.GetState() != Common::Workflows::GAWS_STOPPED )
 		_algorithm.Stop();
+}
+
+void CChildView::ComputeScrollBars()
+{
+	CRect cr;
+	GetClientRect( cr );
+
+	SCROLLINFO hsi;
+	hsi.cbSize = sizeof( hsi );
+	hsi.fMask = SIF_RANGE | SIF_PAGE;
+	hsi.nMin = 0;
+	hsi.nMax = _sheetSize.GetWidth() + 20;
+	hsi.nPage = cr.Width();
+
+	SetScrollInfo( SB_HORZ, &hsi, TRUE );
+
+	hsi.nMax = _sheetSize.GetHeight() + 100;
+	hsi.nPage = cr.Height();
+
+	SetScrollInfo( SB_VERT, &hsi, TRUE );
+}
+
+void CChildView::Scroll(int scrollBar, int nSBCode, int nPos)
+{
+	int minpos, maxpos, curpos;
+
+	GetScrollRange( SB_HORZ, &minpos, &maxpos ); 
+	maxpos = GetScrollLimit( scrollBar );
+	curpos = GetScrollPos( scrollBar );
+
+	switch( nSBCode )
+	{
+	case SB_LEFT:
+		curpos = minpos;
+		break;
+
+	case SB_RIGHT:
+		curpos = maxpos;
+		break;
+
+	case SB_ENDSCROLL:
+		break;
+
+	case SB_LINELEFT:
+		if( curpos > minpos )
+			curpos--;
+		break;
+
+	case SB_LINERIGHT:
+		if( curpos < maxpos )
+			curpos++;
+		break;
+
+	case SB_PAGELEFT:
+		{
+			SCROLLINFO   info;
+			GetScrollInfo( scrollBar, &info, SIF_ALL);
+
+			if( curpos > minpos )
+				curpos = max(minpos, curpos - (int) info.nPage);
+		}
+		break;
+
+	case SB_PAGERIGHT:
+		{
+			SCROLLINFO info;
+			GetScrollInfo( scrollBar, &info, SIF_ALL);
+
+			if( curpos < maxpos )
+				curpos = min( maxpos, curpos + (int)info.nPage );
+		}
+		break;
+
+	case SB_THUMBPOSITION:
+		curpos = nPos;
+		break;
+
+	case SB_THUMBTRACK:
+		curpos = nPos;
+		break;
+	}
+
+	SetScrollPos( scrollBar, curpos);
+}
+
+void CChildView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	Scroll( SB_HORZ, nSBCode, nPos );
+	Invalidate();
+
+	CWnd::OnHScroll(nSBCode, nPos, pScrollBar);
+}
+
+void CChildView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	Scroll( SB_VERT, nSBCode, nPos );
+	Invalidate();
+
+	CWnd::OnVScroll(nSBCode, nPos, pScrollBar);
+}
+
+void CChildView::OnSize(UINT nType, int cx, int cy)
+{
+	CWnd::OnSize(nType, cx, cy);
+
+	ComputeScrollBars();
+}
+
+BOOL CChildView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	SetScrollPos( SB_VERT, GetScrollPos( SB_VERT ) - zDelta );
+	Invalidate();
+
+	return CWnd::OnMouseWheel(nFlags, zDelta, pt);
 }
