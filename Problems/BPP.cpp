@@ -67,7 +67,7 @@ namespace Problems
 					float s2 = s1 + items[ n2->GetValue() ]._size;
 					for( ItemList::GaNodeType* n3 = n2->GetNext(); n3 != NULL && !replaced; n3 = n3->GetNext() )
 					{
-						float s3 = s2 + items[ n2->GetValue() ]._size;
+						float s3 = s2 + items[ n3->GetValue() ]._size;
 
 						if( s0 > s3 && ( _fill - s3 + s0 ) < _capacity )
 						{
